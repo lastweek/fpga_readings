@@ -12,8 +12,7 @@ module counter(input clk, input reset, input enable,
 	always @ (posedge clk) begin
 		if (reset == 1'b1) begin
 			out <= 4'b0000;
-		end
-		else if (enable == 1'b1) begin
+		end else if (enable == 1'b1) begin
 			out <= out + 1;
 		end
 	end

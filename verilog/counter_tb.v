@@ -17,12 +17,12 @@
 module counter_tb();
 
 	reg clk, reset, enable;
-	wire [3:0] counter;
+	wire [3:0] counter1, counter2;
 
 	initial begin
-		$display("Time clk reset enable counter");
-		$monitor("%g %b %b %b %b",
-			$time, clk, reset, enable, counter);
+		$display("Time clk reset enable counter1 counter2");
+		$monitor("%g %b %b %b %b %b",
+			$time, clk, reset, enable, counter1, counter2);
 		
 		clk = 1;
 		reset = 0;
@@ -42,6 +42,7 @@ module counter_tb();
 		#5 clk = ~clk;
 	end
 
-	counter counter_foo(clk, reset, enable, counter);
+	counter counter_foo(clk, reset, enable, counter1);
+	counter counter_bar(clk, reset, enable, counter2);
 
 endmodule
