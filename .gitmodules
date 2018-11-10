@@ -7,3 +7,9 @@
 [submodule "submodules/parallella-oh"]
 	path = submodules/parallella-oh
 	url = https://github.com/parallella/oh
+[submodule "submodules/FPGA-Bitcoin-Miner"]
+	path = submodules/FPGA-Bitcoin-Miner
+	url = https://github.com/progranism/Open-Source-FPGA-Bitcoin-Miner
+[submodule "submodules/aws-fpga"]
+	path = submodules/aws-fpga
+	url = https://github.com/aws/aws-fpga
