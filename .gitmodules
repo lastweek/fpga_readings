@@ -13,3 +13,9 @@
 [submodule "submodules/aws-fpga"]
 	path = submodules/aws-fpga
 	url = https://github.com/aws/aws-fpga
+[submodule "submodules/xilinx-HLx_Examples"]
+	path = submodules/xilinx-HLx_Examples
+	url = https://github.com/Xilinx/HLx_Examples
+[submodule "submodules/xilinx-ChaiDNN"]
+	path = submodules/xilinx-ChaiDNN
+	url = https://github.com/Xilinx/CHaiDNN
