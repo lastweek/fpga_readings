@@ -1,0 +1,9 @@
+[submodule "submodules/verilog_sample_seldridge"]
+	path = submodules/verilog_sample_seldridge
+	url = https://github.com/seldridge/verilog
+[submodule "submodules/verilog-ethernet"]
+	path = submodules/verilog-ethernet
+	url = https://github.com/alexforencich/verilog-ethernet
+[submodule "submodules/parallella-oh"]
+	path = submodules/parallella-oh
+	url = https://github.com/parallella/oh
