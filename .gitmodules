@@ -19,3 +19,12 @@
 [submodule "submodules/xilinx-ChaiDNN"]
 	path = submodules/xilinx-ChaiDNN
 	url = https://github.com/Xilinx/CHaiDNN
+[submodule "submodules/arachne-pnr"]
+	path = submodules/arachne-pnr
+	url = https://github.com/YosysHQ/arachne-pnr
+[submodule "submodules/yosys"]
+	path = submodules/yosys
+	url = https://github.com/YosysHQ/yosys
+[submodule "submodules/icestorm"]
+	path = submodules/icestorm
+	url = https://github.com/cliffordwolf/icestorm
