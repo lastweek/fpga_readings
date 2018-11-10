@@ -1,8 +1,15 @@
-# FPGA
+# FPGA Random Notes
 
-Time to play with FPGAs.
+System community has never been so excited about FPGA. And you can tell FPGA is
+the next big thing. I was not a fan of HDL (Hard and Difficult Language), mainly
+because there wasn't project interesting enough. But things have changed.
+I have envisioned a large FPGA infrastructure platform for datacenter. And I alway
+like hardcore coding. So it's time to get started.
+This repo is really just a collection of stuff along my way learning FPGA.
+Contributions in whatever form are welcomed.
 
-## Languages
+
+## Get Started
 
 Verilog
 - [The Digital World](http://web.mit.edu/6.111/volume2/www/f2018/handouts/TheDigitalWorld.pdf)
@@ -18,6 +25,9 @@ Courses
 - [MIT 6.111 Introductory Digital Systems Laboratory](http://web.mit.edu/6.111/volume2/www/f2018/index.html)
 - [MIT 6.375 Complex Digital Systems](http://csg.csail.mit.edu/6.375/6_375_2016_www/index.html)
 - [UCB EECS 151/251A](http://inst.eecs.berkeley.edu/~eecs151/sp18/)
+
+Books
+- [Parallel Programming for FPGAs](https://arxiv.org/abs/1805.03648)
 
 ## Papers about FPGA
 
