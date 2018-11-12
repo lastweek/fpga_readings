@@ -28,3 +28,6 @@
 [submodule "submodules/icestorm"]
 	path = submodules/icestorm
 	url = https://github.com/cliffordwolf/icestorm
+[submodule "submodules/netfpage"]
+	path = submodules/netfpage
+	url = https://github.com/NetFPGA/netfpga
