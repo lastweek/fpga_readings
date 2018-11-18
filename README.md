@@ -11,6 +11,10 @@ Contributions in whatever form are welcomed.
 
 ## Get Started
 
+Basic
+- [Configure FPGA](https://www.fpga4fun.com/FPGAinfo7.html)
+    - After FPGA boot, we need to transfer the bitstream into FPGA, which is a process called "configure FPGA". There are several ways to do so. 1) JTAG, 2) microcontroller + NVRAM. The JTAG way is useful for debugging. The second way is good for production usage, because the FPGA can be configured automatically after boot.
+
 Verilog
 - [The Digital World](http://web.mit.edu/6.111/volume2/www/f2018/handouts/TheDigitalWorld.pdf)
 - [Verilog Introduction](http://www.lsi.upc.edu/~jordicf/Teaching/secretsofhardware/VerilogIntroduction_Nyasulu.pdf)
