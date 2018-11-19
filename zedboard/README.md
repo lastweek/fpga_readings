@@ -15,10 +15,10 @@ This directory has resources related to ZedBoard.
 
 ## About Ethernet
 
-Ethernet PHY and Ethernet MAC are seperated.
-This Zedboard has a Marvell Ethernet PHY. The SoC has a Ethernet MAC.
+Ethernet PHY and Ethernet MAC are separated.
+This ZedBoard has a Marvell Ethernet PHY. The SoC has a Ethernet MAC.
 
-- IEEE Standard 802.3. Check the layer architecture figure
+- IEEE Standard 802.3. Check the layer architecture figure. Mainly MAC and PHY.
 - [SerDes](https://en.wikipedia.org/wiki/SerDes)
 	- [Multi-gigabit transceiver](https://en.wikipedia.org/wiki/Multi-gigabit_transceiver)
 - [Media-independent interface (MII)](https://en.wikipedia.org/wiki/Media-independent_interface)
@@ -26,20 +26,14 @@ This Zedboard has a Marvell Ethernet PHY. The SoC has a Ethernet MAC.
 	- For example, RMII, GMII, RGMII, SGMII.
 	- I came across th RGMII and SGMII while reading [Xilinx Zynq®-7000 Technical Reference Manual, page 34](https://www.xilinx.com/support/documentation/user_guides/ug585-Zynq-7000-TRM.pdf): 1) RGMII interface using MIO pins and external PHY, 2) SGMII interface using PL GTP or GTX transceivers
 
-- [Low Latency 40- and 100-Gbps Ethernet MAC and PHY MegaCore Function User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_ll_40_100gbe.pdf)
-    - Figure 3.1: In the transmit direction, the MAC accepts client frames, and inserts inter-packet gap (IPG), preamble,
-start of frame delimiter (SFD), padding, and CRC bits before passing them to the PHY. The PHY encodes
-the MAC frame as required for reliable transmission over the media to the remote end.
-    - Figure 3.1: In the receive direction, the PHY passes frames to the MAC. The MAC accepts frames from the PHY,
-performs checks, updates statistics counters, strips out the CRC, preamble, and SFD, and passes the rest of
-the frame to the client. In RX preamble pass-through mode, the MAC passes on the preamble and SFD to
-the client instead of stripping them out. In RX CRC pass-through mode (bit 1 of the CRC_CONFIG register
-has the value of 1), the MAC passes on the CRC bytes to the client and asserts the EOP signal in the same
-clock cycle with the nal CRC byte.
-    - !!! The TX MAC module receives the client payload data with the destination and source addresses and then
-adds, appends, or updates various header elds in accordance with the conguration specied. The MAC
-does not modify the destination address, the source address, or the payload received from the client.
-However, the TX MAC module adds a preamble (if the IP core is not congured to receive the preamble
-from user logic), pads the payload of frames greater than eight bytes to satisfy the minimum Ethernet
-frame payload of 46 bytes, and if you set Enable TX CRC insertion or turn on flow control, calculates the
-CRC over the entire MAC frame.
+- [Intel Ethernet Controller Datasheet](https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/xl710-10-40-controller-datasheet.pdf?asset=8356)
+	- This is a real ethernet network interface adaptor. Check figure 1-4. The most underlying part of the diagram is Ethernet MAC and NIC. Above that, there are many additional known features, such as RSS, SR-IOV. Interesting.
+	- It has an `Internal switch` above MAC layer
+	- Section 3.2 on Ethernet Connection. This subsection presents a lot MAC and PHY internals. It also includes a lot figures mapped to 802.3 spec (those evil layers between MAC and PHY).
+	- `MAC` (sec 3.2.1): It describes the general CRC, padding etc features provided by all MAC IP.
+	- `PHY` (sec 3.2.2): The X710/XXV710/XL710 provides up to four Ethernet MAC ports with integrated PHY interfaces to connect either directly to the medium (backplane or direct attached twin-axial copper cable assemblies) or to external PHYs. The X710/XXV710/XL710 Ethernet physical interfaces are multi-rate `Medium Attachment Unit Interfaces (MAUI)` that can be configured for operation at 40 Gb/s, 10 Gb/s or 1 Gb/s link speeds. The X710/XXV710/XL710 supports eight physical high speed `SerDes` lanes, each capable of operating at up to 10.3125 GBaud.
+	- NVM (sec 3.4): Okay, Intel folks truly have planned this early on. Not too much info was revealed.
+
+- [Intel Low Latency 40- and 100-Gbps Ethernet MAC and PHY MegaCore Function User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_ll_40_100gbe.pdf)
+	- Figure 3.1: In the transmit direction, the MAC accepts client frames, and inserts inter-packet gap (IPG), preamble, start of frame delimiter (SFD), padding, and CRC bits before passing them to the PHY. The PHY encodes the MAC frame as required for reliable transmission over the media to the remote end.
+	- !!! The TX MAC module receives the client payload data with the destination and source addresses and then adds, appends, or updates various header fields in accordance with the configuration specified. The MAC does not modify the destination address, the source address, or the payload received from the client. However, the TX MAC module adds a preamble (if the IP core is not configured to receive the preamble from user logic), pads the payload of frames greater than eight bytes to satisfy the minimum Ethernet frame payload of 46 bytes, and if you set Enable TX CRC insertion or turn on flow control, calculates the CRC over the entire MAC frame.
