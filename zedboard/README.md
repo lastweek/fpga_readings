@@ -12,6 +12,9 @@ This directory has resources related to ZedBoard.
 		- LUT:  46,200
 		- Flip-Flops:  106,400
 		- BRAM: 4.9 Mb
+	- Figure 2.1 shows the signals between PS and PL: AXI, EMIO, JTAG, and misc signals
+	- Sec 2.5 PS-PL MIO-EMIO signals and interfaces.
+
 
 ## About Ethernet
 
