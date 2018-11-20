@@ -14,6 +14,8 @@ This directory has resources related to ZedBoard.
 		- BRAM: 4.9 Mb
 	- Figure 2.1 shows the signals between PS and PL: AXI, EMIO, JTAG, and misc signals
 	- Sec 2.5 PS-PL MIO-EMIO signals and interfaces.
+	- Figure 2.3 shows all possible signal routing through MIO and EMIO
+	- Figure 16-2 Ethernet System Viewpoint. Damn. Thos two Ethernet MAC IP are behind MIO and EMIO. For eth0, zedboard already has `Marvell PHY -> MIO -> ETH`. But for eth1, `(empty) -> PL -> EMIO -> ETH`. Basically, for eth1, we need a PHY. I saw we can use FMC/LPC. There is something called ethernetfmc. Anyhow, this isn't the ideal case for us.
 
 
 ## About Ethernet

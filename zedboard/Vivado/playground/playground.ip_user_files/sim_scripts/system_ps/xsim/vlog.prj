@@ -1,0 +1,7 @@
+verilog xil_defaultlib --include "../../../../playground.srcs/sources_1/bd/system_ps/ipshared/ec67/hdl" --include "../../../../playground.srcs/sources_1/bd/system_ps/ipshared/5bb9/hdl/verilog" --include "../../../../playground.srcs/sources_1/bd/system_ps/ipshared/70fd/hdl" \
+"../../../bd/system_ps/sim/system_ps.v" \
+"../../../bd/system_ps/ip/system_ps_processing_system7_0_0/sim/system_ps_processing_system7_0_0.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort
