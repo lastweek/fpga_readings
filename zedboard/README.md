@@ -5,6 +5,9 @@ This directory has resources related to ZedBoard.
 ## The FPGA Chip
 
 - [Zynq-7000 SoC Data Sheet: Overview](https://www.xilinx.com/support/documentation/data_sheets/ds190-Zynq-7000-Overview.pdf)
+- [Zynq-7000 SoC Packaging and Pinout](https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf)
+	- Explains the name of each pin
+	- Useful when figuring out IO
 - [Xilinx Zynq®-7000 Technical Reference Manual](https://www.xilinx.com/support/documentation/user_guides/ug585-Zynq-7000-TRM.pdf)
 	- Dual-core ARM Cortex-A9 MPCore™ with CoreSight™
 	- 667 MHz (-1); 766 MHz (-2); 866 MHz (-3)
