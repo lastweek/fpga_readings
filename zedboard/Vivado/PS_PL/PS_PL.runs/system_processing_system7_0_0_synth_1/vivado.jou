@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2.2 (64-bit)
+# SW Build 2348494 on Mon Oct  1 18:25:39 MDT 2018
+# IP Build 2318053 on Mon Oct  1 21:44:26 MDT 2018
+# Start of session at: Tue Nov 20 16:26:01 2018
+# Process ID: 2410
+# Current directory: /home/ys/Github/fpga-related/FPGA/zedboard/Vivado/PS_PL/PS_PL.runs/system_processing_system7_0_0_synth_1
+# Command line: vivado -log system_processing_system7_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_processing_system7_0_0.tcl
+# Log file: /home/ys/Github/fpga-related/FPGA/zedboard/Vivado/PS_PL/PS_PL.runs/system_processing_system7_0_0_synth_1/system_processing_system7_0_0.vds
+# Journal file: /home/ys/Github/fpga-related/FPGA/zedboard/Vivado/PS_PL/PS_PL.runs/system_processing_system7_0_0_synth_1/vivado.jou
+#-----------------------------------------------------------
+source system_processing_system7_0_0.tcl -notrace

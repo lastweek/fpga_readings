@@ -1,4 +1,4 @@
-11:55:16 **** Build of project hello_world_bsp ****
+15:08:51 **** Build of project GPIO_LD9_bsp ****
 make -k all 
 Running Make include in ps7_cortexa9_0/libsrc/dmaps_v2_3/src
 make -C ps7_cortexa9_0/libsrc/dmaps_v2_3/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
@@ -103,57 +103,32 @@ Running Make libs in ps7_cortexa9_0/libsrc/scutimer_v2_1/src
 make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -g -Wall -Wextra"
 Compiling scutimer
 Finished building libraries
-11:55:23 **** Build of configuration Debug for project hello_world ****
+15:08:59 **** Build of configuration Debug for project GPIO_LD9 ****
 make pre-build main-build 
 a9-linaro-pre-build-step
  
 Building file: ../src/helloworld.c
 Invoking: ARM v7 gcc compiler
-arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../hello_world_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../GPIO_LD9_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
 Finished building: ../src/helloworld.c
  
 Building file: ../src/platform.c
 Invoking: ARM v7 gcc compiler
-arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../hello_world_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../GPIO_LD9_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
 Finished building: ../src/platform.c
  
-Building target: hello_world.elf
+Building target: GPIO_LD9.elf
 Invoking: ARM v7 gcc linker
-arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../hello_world_bsp/ps7_cortexa9_0/lib -o "hello_world.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
-Finished building target: hello_world.elf
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../GPIO_LD9_bsp/ps7_cortexa9_0/lib -o "GPIO_LD9.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: GPIO_LD9.elf
  
 Invoking: ARM v7 Print Size
-arm-none-eabi-size hello_world.elf  |tee "hello_world.elf.size"
+arm-none-eabi-size GPIO_LD9.elf  |tee "GPIO_LD9.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  19352	   1144	  22568	  43064	   a838	hello_world.elf
-Finished building: hello_world.elf.size
+  19352	   1144	  22568	  43064	   a838	GPIO_LD9.elf
+Finished building: GPIO_LD9.elf.size
  
-11:55:25 **** Auto Build of configuration Debug for project hello_world ****
-make pre-build main-build 
-a9-linaro-pre-build-step
- 
-make: Nothing to be done for 'main-build'.
-11:58:08 **** Auto Build of configuration Debug for project hello_world ****
-make pre-build main-build 
-a9-linaro-pre-build-step
- 
-Building file: ../src/helloworld.c
-Invoking: ARM v7 gcc compiler
-arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/helloworld.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../hello_world_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.o" -o "src/helloworld.o" "../src/helloworld.c"
-Finished building: ../src/helloworld.c
- 
-Building target: hello_world.elf
-Invoking: ARM v7 gcc linker
-arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../hello_world_bsp/ps7_cortexa9_0/lib -o "hello_world.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
-Finished building target: hello_world.elf
- 
-Invoking: ARM v7 Print Size
-arm-none-eabi-size hello_world.elf  |tee "hello_world.elf.size"
-   text	   data	    bss	    dec	    hex	filename
-  19400	   1144	  22568	  43112	   a868	hello_world.elf
-Finished building: hello_world.elf.size
- 
-11:58:11 **** Incremental Build of configuration Debug for project hello_world ****
+15:09:00 **** Auto Build of configuration Debug for project GPIO_LD9 ****
 make pre-build main-build 
 a9-linaro-pre-build-step
  

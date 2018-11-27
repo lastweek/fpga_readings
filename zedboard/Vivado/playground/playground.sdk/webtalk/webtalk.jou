@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2018.2.2 (64-bit)
+# SW Build 2348494 on Mon Oct  1 18:25:39 MDT 2018
+# 
+# Start of session at: Tue Nov 20 15:53:27 2018
+# Process ID: 25140
+# Current directory: /home/ys/Github/fpga-related/FPGA/zedboard/Vivado/playground/playground.sdk/webtalk
+# Command line: wbtcv -mode batch -source sdk_webtalk.tcl
+# Log file: /home/ys/Github/fpga-related/FPGA/zedboard/Vivado/playground/playground.sdk/webtalk/webtalk.log
+# Journal file: /home/ys/Github/fpga-related/FPGA/zedboard/Vivado/playground/playground.sdk/webtalk/webtalk.jou
+#-----------------------------------------------------------
+source sdk_webtalk.tcl
