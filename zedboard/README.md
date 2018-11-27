@@ -18,8 +18,19 @@ This directory has resources related to ZedBoard.
 	- Figure 2.1 shows the signals between PS and PL: AXI, EMIO, JTAG, and misc signals
 	- Sec 2.5 PS-PL MIO-EMIO signals and interfaces.
 	- Figure 2.3 shows all possible signal routing through MIO and EMIO
-	- Figure 16-2 Ethernet System Viewpoint. Damn. Thos two Ethernet MAC IP are behind MIO and EMIO. For eth0, zedboard already has `Marvell PHY -> MIO -> ETH`. But for eth1, `(empty) -> PL -> EMIO -> ETH`. Basically, for eth1, we need a PHY. I saw we can use FMC/LPC. There is something called ethernetfmc. Anyhow, this isn't the ideal case for us.
+	- Figure 16-2 Ethernet System Viewpoint. Damn. Thos two Ethernet MAC IP are behind MIO and EMIO. For eth0, zedboard already has `Marvell PHY -> MIO -> ETH`. But for eth1, `(empty) -> PL -> EMIO -> ETH`. Basically, for eth1, we need a PHY. I saw we can use FMC/LPC. There is something called ethernet fmc. Anyhow, this isn't the ideal case for us.
+	- `Section 16.6.4 RGMII Interface via MIO`, this is the ZedBoard design for ETH0
+	- `Section 16.6.5 GMII/MII Interface via EMIO`, is for extra FMC PHY design
+	- I guess now the key question I need to ask myself is: should MAC DMA the packets to/from DRAM, or to/from FPGA logic?
 
+## About Interconnect
+
+We have [Advanced Microcontroller Bus Architecture (AMBA)](https://en.wikipedia.org/wiki/Advanced_Microcontroller_Bus_Architecture). __The AMBA specification defines an on-chip communications standard for designing high-performance embedded microcontrollers.__ It has many generations:
+- Advanced System Bus (ASB) and Advanced Peripheral Bus (APB)
+- AMBA High-performance Bus (AHB)
+- Advanced Extensible Interface (AXI)
+- AXI4 and AMBA 4 ACE
+- AMBA 5 CHI (Coherent Hub Interface)
 
 ## About Ethernet
 
