@@ -31,3 +31,6 @@
 [submodule "submodules/netfpage"]
 	path = submodules/netfpage
 	url = https://github.com/NetFPGA/netfpga
+[submodule "submodules/fpga-network-stack"]
+	path = submodules/fpga-network-stack
+	url = https://github.com/fpgasystems/fpga-network-stack
