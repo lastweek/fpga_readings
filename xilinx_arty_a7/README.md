@@ -2,6 +2,7 @@
 
 - Arty A7-100T
 	- FPGA part: XC7A100TCSG324-1
+	- [Pin map](https://www.xilinx.com/support/packagefiles/a7packages/xc7a100tcsg324pkg.txt)
 
 - [Digilent Resource Center](https://reference.digilentinc.com/reference/programmable-logic/arty-a7/start)
 - [XDC Files](https://github.com/Digilent/digilent-xdc/)
