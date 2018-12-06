@@ -1,0 +1,17 @@
+{
+   ExpandedHierarchyInLayout: "",
+   guistr: "# # String gsaved with Nlview 6.8.5  2018-01-30 bk=1.4354 VDI=40 GEI=35 GUI=JA:1.6 TLS
+#  -string -flagsOSRD
+preplace port DDR -pg 1 -y 60 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -y 80 -defaultsOSRD
+preplace inst ten_gig_eth_mac_0 -pg 1 -lvl 1 -y 50 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 2 -y 10 -defaultsOSRD
+preplace netloc processing_system7_0_DDR 1 2 1 380J
+preplace netloc processing_system7_0_FIXED_IO 1 2 1 370J
+levelinfo -pg 1 -320 -160 210 430 -top -160 -bot 600
+",
+}
+{
+   da_mb_cnt: "1",
+   da_ps7_cnt: "3",
+}
