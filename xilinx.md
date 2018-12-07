@@ -4,3 +4,6 @@
     - Logic Optimization
     - Technology Mapping
     - Place and Route
+- [Using Tcl Scripting v2018](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_2/ug894-vivado-tcl-scripting.pdf)
+- [What is `.xdc`?](https://github.com/Digilent/digilent-xdc/)
+	- [Using Constraints v2017](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_4/ug903-vivado-using-constraints.pdf)

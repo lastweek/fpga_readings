@@ -4,6 +4,8 @@
 	- FPGA part: XC7A100TCSG324-1
 	- [Pin map](https://www.xilinx.com/support/packagefiles/a7packages/xc7a100tcsg324pkg.txt)
 
+- [PHY TI DP83848J](http://www.ti.com/product/DP83848J)
+
 - [Digilent Resource Center](https://reference.digilentinc.com/reference/programmable-logic/arty-a7/start)
-- [XDC Files](https://github.com/Digilent/digilent-xdc/)
-	- [Vivado Design Suite Tutorial Using Constraints 2017](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_4/ug903-vivado-using-constraints.pdf)
+- [Ethernet on Arty-A7 Board](http://www.fpga-cores.com/tutorials/ethernet-on-arty-a7-board/)
+	- 12/06/18: I'm trying to add a MAC and connect it with TI PHY. After that, I will write some logic to loopback any packets it get. Hopefully I could write that in HLS.
