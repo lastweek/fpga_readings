@@ -14,3 +14,4 @@
 		- [Tri-Mode Ethernet MAC v9.0](https://www.xilinx.com/products/intellectual-property/temac.html)
 		- [AXI 1G/2.5G Ethernet Subsystem](https://www.xilinx.com/products/intellectual-property/axi_ethernet.html#documentation)
 		- [AXI Ethernet LITE](https://www.xilinx.com/products/intellectual-property/axi_ethernetlite.html)
+	- [Clock Wizard](https://www.xilinx.com/products/intellectual-property/clocking_wizard.html#documentation)

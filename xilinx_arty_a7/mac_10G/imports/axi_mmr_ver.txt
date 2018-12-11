@@ -1,0 +1,202 @@
+  integer axi_mmr_wr_cnt  = 0;
+  integer axi_mmr_rd_cnt  = 0;
+  integer axi_mmr_err_cnt = 0;
+  integer axi_mmr_war_cnt = 0;
+  integer time_out        = 10;
+  
+  wire         aclk;
+  reg  [3 :0]  awid     = 'b0;
+  reg  [10:0]  awaddr   = 'b0; 
+  reg          awvalid  = 'b0;
+  wire         awready;
+  reg  [3 :0]  wid      = 'b0; 
+  reg  [31:0]  wdata    = 'b0; 
+  reg  [31:0]  wstrb    = 'b0; 
+  reg          wvalid   = 'b0;
+  wire         wready;
+  wire [3 :0]  bid;
+  wire [1 :0]  bresp;
+  wire         bvalid;
+  reg          bready   = 'b0;
+  reg  [3 :0]  arid     = 'b0;
+  reg  [10:0]  araddr   = 'b0;
+  reg          arvalid  = 'b0;
+  wire         arready;
+  wire [3 :0]  rid;
+  wire [31:0]  rdata;
+  wire [1 :0]  rresp;
+  wire         rvalid;
+  reg          rready   = 'b0;
+  
+  
+  //----------------------------
+  task reg_write(input [3:0] id,input [10:0] addr,input [31:0] data,input [3:0] strb); 
+  
+    begin
+  
+      @(posedge aclk);
+      awid    = id;
+      wid     = id;
+      awaddr  = addr;
+      wdata   = data;
+      wstrb   = strb;
+      awvalid = 1'b1;
+      wvalid  = 1'b1;
+     //bready = 1'b1;
+  
+      begin:break1
+        repeat(time_out) begin
+          @(posedge aclk);
+          if(awready == 1'b1) begin
+            awvalid  = 1'b0;
+          end
+          if(wready == 1'b1) begin
+            wvalid   = 1'b0;
+          end
+          if(wvalid == 1'b0 && awvalid == 1'b0) begin
+            disable break1;
+          end
+        end
+      end
+      
+      if(awvalid == 1'b1) begin
+        $display("ERROR:Write address channel timed out");
+        awvalid = 1'b0;
+        axi_mmr_err_cnt = axi_mmr_err_cnt+1;
+      end
+      
+      if(wvalid == 1'b1) begin
+        $display("ERROR:Write data channel timed out");
+        wvalid = 1'b0;
+        axi_mmr_err_cnt = axi_mmr_err_cnt+1;
+      end
+      
+  
+      bready = 1'b1;
+      begin:break2
+        repeat(time_out) begin
+          @(posedge aclk);
+          if(bvalid == 1'b1) begin
+            bready = 1'b0;
+            if(bid == id) begin
+              if(bresp == 2'b10) begin
+                axi_mmr_err_cnt = axi_mmr_err_cnt+1;
+                $display("ERROR: SLVERR Received");
+              end 
+              else begin
+                $display("Data is written at given address sucessfully");
+              end
+            end 
+            else begin
+                axi_mmr_err_cnt = axi_mmr_err_cnt+1;
+                $display("ERROR: Responce id mismatch with AWID");
+            end
+     disable break2;
+          end
+        end
+      end
+  
+      if(bready == 1'b1) begin
+        $display("ERROR:Write Response channel timed out");
+        bready = 1'b0;
+        axi_mmr_err_cnt = axi_mmr_err_cnt+1;
+      end
+  
+      $display("TXN:WRITE,id:%0b,addr:%0b,data:%0b,wstrb:%0b",id,addr,data,wstrb);
+      axi_mmr_wr_cnt = axi_mmr_wr_cnt+1;
+    end
+  endtask
+  
+  
+  //---------------------------
+  task reg_read(input [3:0] id,input [10:0] addr,output [31:0] data,output [1:0] resp);
+    begin
+      @(posedge aclk);
+      arid    = id;
+      araddr  = addr;
+      arvalid = 1'b1;
+      rready  = 1'b1;
+      resp    = 2'b00;
+      
+      begin:break1
+        repeat(time_out) begin
+          @(posedge aclk);
+          if(arready == 1'b1) begin
+            arvalid = 1'b0;
+     disable break1;
+          end
+        end
+      end
+      
+      if(arvalid == 1'b1) begin
+        $display("ERROR:Read address channel timed out");
+        arvalid = 1'b0;
+        axi_mmr_err_cnt = axi_mmr_err_cnt+1;
+      end
+  
+      begin:break2
+        repeat(time_out) begin
+          @(posedge aclk);
+          if(rvalid == 1'b1) begin
+            rready = 1'b0;
+            if(rid == id) begin
+              if(rresp == 2'b10) begin
+                axi_mmr_err_cnt = axi_mmr_err_cnt+1;
+                $display("ERROR: SLVERR Received");
+              end 
+              else begin
+                $display("Data is read from given address sucessfully");
+                data = rdata;
+         resp = rresp;
+              end
+            end 
+            else begin
+                axi_mmr_err_cnt = axi_mmr_err_cnt+1;
+                $display("ERROR: Responce id mismach with ARID");
+            end    
+     disable break2;
+          end
+        end
+      end
+      
+      if(rready == 1'b1) begin
+        $display("ERROR:Read data channel timed out");
+        rready = 1'b0;
+        axi_mmr_err_cnt = axi_mmr_err_cnt+1;
+      end
+  
+      $display("TXN:READ,id:%0b,addr:%0b,data:%0b,resp:%0b",id,addr,data,resp);
+      axi_mmr_rd_cnt = axi_mmr_rd_cnt+1;
+    end
+  endtask
+  
+  //---------------------------
+  task null_cycles(input num);
+    begin
+      awvalid = 1'b0;
+      wvalid  = 1'b0;
+      bready  = 1'b0;
+      arvalid = 1'b0;
+      rready  = 1'b0;
+      repeat(num) begin
+        @(posedge aclk);
+      end
+    end
+  endtask
+  
+  //--------------------------
+  task summary();
+    begin
+    $display("===============================");
+    $display("SUMMARY:");
+    $display("--------");
+    $display("Number of Writes   :%0d",axi_mmr_wr_cnt);
+    $display("Number of Reads    :%0d",axi_mmr_rd_cnt);
+    $display("Number of Errors   :%0d",axi_mmr_err_cnt);
+    $display("Number of Warnings :%0d",axi_mmr_war_cnt);
+    $display("===============================");
+  end
+  endtask
+  
+  //----------------------------
+  
