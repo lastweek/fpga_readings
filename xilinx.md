@@ -8,6 +8,27 @@
 - [What is `.xdc`?](https://github.com/Digilent/digilent-xdc/)
 	- [Using Constraints v2017](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_4/ug903-vivado-using-constraints.pdf)
 
+- `How to connect IPs?` I came to this question when I tried to build blocks in HLS and Verilog, and was thinking about how should I connect those blocks? There are so many clk, reset, valid signal combinations, is there a standard for this communication protocol? Indeed, there are. This thread collects information about this topic.
+	- [Some basic knowledge](http://que.no/index.php/2016/03/13/principles-of-fpga-ip-interconnect/)
+	- [Introduction to AXI Protocol: Understanding the AXI interface](https://community.arm.com/soc/b/blog/posts/introduction-to-axi-protocol-understanding-the-axi-interface)
+	- [Xilinx AXI4, AXI-Lite, AXI-Stream Homepage](https://www.xilinx.com/products/intellectual-property/axi.html#details)
+	- AMBA® 4 AXI4-Stream Protocol
+		- The AXI4-Stream protocol requires that all transfers remain __ordered__. It does not permit the reordering of transfers.
+		- __AXI4-Stream removes the requirement for an address phase altogether and allows unlimited data burst size. AXI4-Stream interfaces and transfers do not have address phases and are therefore not considered to be memory-mapped.__
+	- Summary:
+		- AXI4 has many channels, each channel has its own TVALID,
+		TREADY and more. AXI-Lite is a subset of AXI4. AXI-stream is more
+		simpilifed, in the sense that it actually only has one channel, which
+		means only one TVALID, TREADY signals. AXI-stream is unidirectional
+		between master and slave.
+		- Like the tri-mode MAC, it is using AXI-stream for both TX and
+		RX path. That means, if I want to build a new IP block to talk
+		with MAC, my new IP only needs to conform with AXI-stream
+		protocol.
+	- `UG1037: AXI Reference`.
+	- `PG035: AXI4-Stream Interconnect`.
+	- `PG085 AXI4-Stream Infrastructure IP Suite`.
+
 
 - [I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug899-vivado-io-clock-planning.pdf)
 
