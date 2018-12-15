@@ -3,7 +3,7 @@
 - [Design Hubs](https://www.xilinx.com/support/documentation-navigation/design-hubs.html)
 
 - [What's `Implementation` in Xilinx?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm)
-	- Xilinx Implementation happens after Synthesis, so it must include several important steps:
+	- Xilinx Implementation happens after Synthesis, so it must include several important steps
         	- Logic Optimization (which is `Translate` here). This step will take `constraints` into account.
         	- Technology Mapping (which is `Map` here). This step map to FPGA logic islands, IOB, BRAM, etc.
         	- Place and Route
