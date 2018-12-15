@@ -14,6 +14,21 @@ Contributions in whatever form are welcomed.
 Basic
 - [Configure FPGA](https://www.fpga4fun.com/FPGAinfo7.html)
     - After FPGA boot, we need to transfer the bitstream into FPGA, which is a process called "configure FPGA". There are several ways to do so. 1) JTAG, 2) microcontroller + NVRAM. The JTAG way is useful for debugging. The second way is good for production usage, because the FPGA can be configured automatically after boot.
+- Physical design flow (Synthesis to PAR)
+    - Based on the `netlist`, the physical design process begins. In the first phase the gates of the
+netlist are placed on the available two-dimensional space. Initially, structures that should be placed
+close together are identified—a process known as `floorplanning`. Then, based on the `floorplan`,
+the `placer tool` assigns a physical location to each gate of the netlist. After initial placement, the
+clock tree is inserted and placement decisions are re-evaluated. Multiple iterations are typically
+necessary to find a satisfying placement for all gates.
+    - From the placed-gates netlist and the geometric information about the cells provided by
+the technology library, the `router tool` derives the physical paths of the nets that connect gates,
+as well as the power supply lines. Again, multiple iterations are typically necessary, and gates
+might be relocated in the routing phase. The fully routed physical netlist is the final result of
+the entire design flow. It consists of the gates of a circuit, their exact placement, and “drawn”
+interconnecting wires. In essence, the circuit design is now ready for fabrication. What follows
+is typically a number of physical design verification steps carried out in software before a first
+prototype of the circuit is produced by an IC vendor.
 
 Verilog
 - [The Digital World](http://web.mit.edu/6.111/volume2/www/f2018/handouts/TheDigitalWorld.pdf)
