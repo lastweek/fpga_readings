@@ -1,5 +1,7 @@
 # About Xilinx
 
+- [Design Hubs](https://www.xilinx.com/support/documentation-navigation/design-hubs.html)
+
 - [What's `Implementation` in Xilinx?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm)
 	- Xilinx Implementation happens after Synthesis, so it must include several important steps: 1) Logic Optimization, 2) Technology Mapping, 3) Place and Route. Afte this, you can generate bitstream and push into FPGAs.
 
@@ -9,8 +11,18 @@
 	- [Vivado Design Hub - Applying Design Constraints](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0004-vivado-applying-design-constraints-hub.html)
 	- [Using Constraints v2017](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_4/ug903-vivado-using-constraints.pdf)
 	- By default, all XDC files and Tcl scripts added to a constraint set are used for both synthesis and implementation. Set the `USED_IN_SYNTHESIS` and `USED_IN_IMPLEMENTATION` properties on the XDC file or the Tcl script to change this behavior.
+	- Timing Constrains
+	- Placement Constrains
+	- Synthesis Constrains
 
-- [What is `external port`?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/platform_studio/ps_p_hdw_making_external_port_connects.htm)
+- [Floorplanning](https://en.wikipedia.org/wiki/Floorplan_(microelectronics))
+  - allows to place blocks of logic in an FPGA device, to reduce route delays for certain logics.
+  - [Floorplanning Methodology Guide](https://www.xilinx.com/support/documentation/sw_manuals/xilinx14_5/Floorplanning_Methodology_Guide.pdf)
+
+- [I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug899-vivado-io-clock-planning.pdf)
+	- [Vivado Design Hub - I/O and Clock Planning](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0007-vivado-pin-planning-hub.html)
+
+- [External port](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/platform_studio/ps_p_hdw_making_external_port_connects.htm)
 
 - `How to connect IPs?`
 	- I came to this question when I tried to build blocks in HLS and Verilog, and was thinking about how should I connect those blocks? There are so many clk, reset, valid signal combinations, is there a standard for this communication protocol? Indeed, there are. This thread collects information about this topic.
@@ -35,7 +47,6 @@
 	- `PG035: AXI4-Stream Interconnect`.
 	- `PG085 AXI4-Stream Infrastructure IP Suite`.
 
-- [I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug899-vivado-io-clock-planning.pdf)
 
 - IP
 	- [Ethernet](https://www.xilinx.com/products/technology/ethernet.html)
