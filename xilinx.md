@@ -1,6 +1,10 @@
 # About Xilinx
 
 - [Design Hubs](https://www.xilinx.com/support/documentation-navigation/design-hubs.html)
+	- [__UG888__: Vivado Design Suite Tutorial: Design Flows Overview](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug888-vivado-design-flows-overview-tutorial.pdf)
+	- [__UG949__: UltraFast Design Methodology Guide for the Vivado Design Suite](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2018_3/ug949-vivado-design-methodology.pdf)
+		- A very good entry level introduction to overall design flow considerations.
+	- [__UG1231__: UltraFast Design Methodology Quick Reference Guide](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug1231-ultrafast-design-methodology-quick-reference.pdf)
 
 - [What's `Implementation` in Xilinx?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm)
 	- Xilinx Implementation happens after Synthesis, so it must include several important steps
