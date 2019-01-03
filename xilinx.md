@@ -12,7 +12,15 @@
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
 - HLS related
+	- The arXiv book
+	- [Vivado Design Hub - High-Level Synthesis (C based)](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0012-vivado-high-level-synthesis-hub.html)
 	- UG1197: UltraFast High-Level Productivity Design Methodology Guide
+	- UG871: Vivado Design Suite Tutorial High-Level Synthesis
+		- Lab: great way to start coding HLS
+	- UG902: Vivado Design Suite User Guide High-Level Synthesis
+		- [Properly Defining Interfaces in High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug902-vivado-high-level-synthesis.pdf#nameddest=InterfaceSynthesis)
+	- XAPP1209: Designing Protocol Processing Systems with Vivado High-Level Synthesis
+	- XAPP1273: Reed-Solomon Erasure Codec Design Using Vivado High-Level Synthesis Application Note
 
 
 - [What's `Implementation` in Xilinx?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm)
