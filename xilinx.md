@@ -20,14 +20,16 @@
 - Clock
 	- [Clock Generator (v4.03a)](https://www.xilinx.com/support/documentation/ip_documentation/clock_generator/v4_03_a/clock_generator.pdf)
 	- Clock Wizard IP
-	- [URL: ](http://zone.ni.com/reference/en-XX/help/372614J-01/target5devicehelp/pxie_base_clocks/)
+	- [URL: NI PXIe-796xR Base Clocks](http://zone.ni.com/reference/en-XX/help/372614J-01/target5devicehelp/pxie_base_clocks/)
 		- shows how Oscillator is connected to FPGA, and how PLL
 		generates multiple clocks.
 	- [URL: Clock Signal Management: Clock Resources of FPGAs](https://www.allaboutcircuits.com/technical-articles/clock-management-clock-resources-of-fpgas/)
+		- Nice into about PLL and DLL
+		- Global clocks, regional clocks
+		- [H Tree](https://en.wikipedia.org/wiki/H_tree)
 	- [URL: FPGA Clock Schemes](https://www.embedded.com/design/configurable-systems/4024526/FPGA-Clock-Schemes)
-	- [H Tree](https://en.wikipedia.org/wiki/H_tree)
-	- Global clocks, regional clocks
-	- PLL and DLL
+	- UG472 7 Series FPGAs Clocking Resources
+		- Clocking architecture about series 7. Must read.
 
 - HLS related
 	- The arXiv book
