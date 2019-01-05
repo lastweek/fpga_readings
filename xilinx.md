@@ -11,6 +11,24 @@
 			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
+- IO
+	- HP: high-performance IO banks
+	- HR: high-range IO banks
+		- The HP I/O banks are designed to meet the performance requirements of high-speed memory and other chip-to-chip interfaces with voltages up to 1.8V. The HR I/O banks are designed to support a wider range of I/O standards with voltages up to 3.3V.
+	- IDELAY allows incoming signals to be delayed on an individual input pin basis
+
+- Clock
+	- [Clock Generator (v4.03a)](https://www.xilinx.com/support/documentation/ip_documentation/clock_generator/v4_03_a/clock_generator.pdf)
+	- Clock Wizard IP
+	- [URL: ](http://zone.ni.com/reference/en-XX/help/372614J-01/target5devicehelp/pxie_base_clocks/)
+		- shows how Oscillator is connected to FPGA, and how PLL
+		generates multiple clocks.
+	- [URL: Clock Signal Management: Clock Resources of FPGAs](https://www.allaboutcircuits.com/technical-articles/clock-management-clock-resources-of-fpgas/)
+	- [URL: FPGA Clock Schemes](https://www.embedded.com/design/configurable-systems/4024526/FPGA-Clock-Schemes)
+	- [H Tree](https://en.wikipedia.org/wiki/H_tree)
+	- Global clocks, regional clocks
+	- PLL and DLL
+
 - HLS related
 	- The arXiv book
 	- [Vivado Design Hub - High-Level Synthesis (C based)](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0012-vivado-high-level-synthesis-hub.html)
@@ -21,6 +39,17 @@
 		- [Properly Defining Interfaces in High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug902-vivado-high-level-synthesis.pdf#nameddest=InterfaceSynthesis)
 	- XAPP1209: Designing Protocol Processing Systems with Vivado High-Level Synthesis
 	- XAPP1273: Reed-Solomon Erasure Codec Design Using Vivado High-Level Synthesis Application Note
+  	- `Data I/O protocols`: those are directives that control how the input/output signals interact with outside users.
+    	- ap_hs
+    	- ap_vld
+		- ap_ack
+	- `Block-level I/O protocols`: this allows the RTL design to be controlled by additional ports independently of the data I/O ports.
+    	- ap_ctrl_hs
+    	- ap_ctrl_none
+    	- ap_ctrl_chained
+    	- s_axilite
+    	- which one should I use?
+
 
 
 - [What's `Implementation` in Xilinx?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm)
@@ -80,15 +109,3 @@
 		- [AXI Ethernet LITE](https://www.xilinx.com/products/intellectual-property/axi_ethernetlite.html)
 		- [10G MAC](https://www.xilinx.com/products/intellectual-property/do-di-10gemac.html#documentation)
 	- [Clock Wizard](https://www.xilinx.com/products/intellectual-property/clocking_wizard.html#documentation)
-
-- HLS
-  	- `Data I/O protocols`: those are directives that control how the input/output signals interact with outside users.
-    	- ap_hs
-    	- ap_vld
-		- ap_ack
-	- `Block-level I/O protocols`: this allows the RTL design to be controlled by additional ports independently of the data I/O ports.
-    	- ap_ctrl_hs
-    	- ap_ctrl_none
-    	- ap_ctrl_chained
-    	- s_axilite
-    	- which one should I use?
