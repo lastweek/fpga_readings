@@ -16,6 +16,8 @@
 	- HR: high-range IO banks
 		- The HP I/O banks are designed to meet the performance requirements of high-speed memory and other chip-to-chip interfaces with voltages up to 1.8V. The HR I/O banks are designed to support a wider range of I/O standards with voltages up to 3.3V.
 	- IDELAY allows incoming signals to be delayed on an individual input pin basis
+	- `IBUF`: is automatically inserted (inferred) by the synthesis tool to any signal directly connected to a top-level input or in-out port of the design. (UG768: Xilinx 7 Series FPGA Libraries Guide for HDL Designs)
+	- `IBUFDS`: is NOT inserted (inferred) by the synthesis tool, you have to manually write code to instantiation. In IBUFDS, a design level interface signal is represented as two distinct ports (I and IB), one deemed the "master" and the other the "slave." The master and the slave are opposite phases of the same logical signal. (Leant this from tri-mode reference code)
 
 - BRAM
 	- TODO
