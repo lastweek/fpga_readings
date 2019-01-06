@@ -20,6 +20,21 @@
 - BRAM
 	- TODO
 
+- Constraints
+	- UG945: Vivado Using Constraints __Tutorial__
+	- UG903: Vivado Using Constraints
+		- Ch.3 Defining Clocks
+        		- Primary clocks
+                		- `create_clock -period 10 [get_ports sysclk]
+				- `create_clock -name devclk -period 10 -waveform {2.5 5} [get_ports ClkIn]`
+        		- Virtual clocks
+				- `create_clock -name clk_virt -period 10`
+        		- Generated clocks
+				- `create_generated_clock -name clkdiv2 -source [get_ports clkin] -divide_by 2 [get_pins REGA/Q]`
+	- UG912: Vivado Properties Reference Guide
+		- It's a reference.
+	- UG949
+
 - Clock
 	- [Wiki: Frequency synthesizer](Frequency synthesizer)
 		- A frequency synthesizer is an electronic circuit that generates a range of frequencies from a single reference frequency.
@@ -36,6 +51,12 @@
 	- [URL: Programmable Logic Design FPGA clocking schemes](http://www.ue.pwr.wroc.pl/pld/pld_10.pdf)
 	- UG472 7 Series FPGAs Clocking Resources
 		- Clocking architecture about series 7. Must read.
+	- UG903 Ch.3 Defining Clocks
+		- Primary clocks
+		- Virtual clocks
+		- Generated clocks
+		- .. and many other stuff
+
 
 - HLS
 	- The arXiv book
@@ -106,7 +127,6 @@
 	- `UG1037: AXI Reference`.
 	- `PG035: AXI4-Stream Interconnect`.
 	- `PG085 AXI4-Stream Infrastructure IP Suite`.
-
 
 - IP
 	- [Ethernet](https://www.xilinx.com/products/technology/ethernet.html)
