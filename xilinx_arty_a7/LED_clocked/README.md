@@ -18,4 +18,4 @@ Some basic concepts:
 	  those IO buf and clock buf. I have not fully understand yet.
 	  Anyhow, at least I know that these are automatically generated.
 
-- Yup, now I know. The IBUF, BUFG, and OBUF are automatically interted by synthesis. Check my comments at xilix.md. In general, those are generated for top-level IO ports.
+- Yup, now I know. The IBUF, BUFG, and OBUF are automatically interted by synthesis. Check my comments at xilix.md. In general, those are generated for top-level IO ports. But IBUFDS is different, you have to manually code it.
