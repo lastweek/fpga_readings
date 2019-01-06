@@ -20,20 +20,7 @@
 - BRAM
 	- TODO
 
-- Constraints
-	- UG945: Vivado Using Constraints __Tutorial__
-	- UG903: Vivado Using Constraints
-		- Ch.3 Defining Clocks
-        		- Primary clocks
-                		- `create_clock -period 10 [get_ports sysclk]
-				- `create_clock -name devclk -period 10 -waveform {2.5 5} [get_ports ClkIn]`
-        		- Virtual clocks
-				- `create_clock -name clk_virt -period 10`
-        		- Generated clocks
-				- `create_generated_clock -name clkdiv2 -source [get_ports clkin] -divide_by 2 [get_pins REGA/Q]`
-	- UG912: Vivado Properties Reference Guide
-		- It's a reference.
-	- UG949
+- Constraints: check xilinx_constraints.md
 
 - Clock
 	- [Wiki: Frequency synthesizer](Frequency synthesizer)
@@ -97,8 +84,10 @@
 	- Synthesis Constrains
 
 - [Floorplanning](https://en.wikipedia.org/wiki/Floorplan_(microelectronics))
-  - allows to place blocks of logic in an FPGA device, to reduce route delays for certain logics.
-  - [Floorplanning Methodology Guide](https://www.xilinx.com/support/documentation/sw_manuals/xilinx14_5/Floorplanning_Methodology_Guide.pdf)
+	- allows to place blocks of logic in an FPGA device, to reduce route delays for certain logics.
+	- [Floorplanning Methodology Guide](https://www.xilinx.com/support/documentation/sw_manuals/xilinx14_5/Floorplanning_Methodology_Guide.pdf)
+	- [Design Rule Checking (DRC) Messages](https://www.xilinx.com/support/documentation/sw_manuals/xilinx10/isehelp/pfp_r_drc_messages.htm)
+
 
 - [I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug899-vivado-io-clock-planning.pdf)
 	- [Vivado Design Hub - I/O and Clock Planning](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0007-vivado-pin-planning-hub.html)
