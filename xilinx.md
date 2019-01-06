@@ -17,7 +17,12 @@
 		- The HP I/O banks are designed to meet the performance requirements of high-speed memory and other chip-to-chip interfaces with voltages up to 1.8V. The HR I/O banks are designed to support a wider range of I/O standards with voltages up to 3.3V.
 	- IDELAY allows incoming signals to be delayed on an individual input pin basis
 
+- BRAM
+	- TODO
+
 - Clock
+	- [Wiki: Frequency synthesizer](Frequency synthesizer)
+		- A frequency synthesizer is an electronic circuit that generates a range of frequencies from a single reference frequency.
 	- [Clock Generator (v4.03a)](https://www.xilinx.com/support/documentation/ip_documentation/clock_generator/v4_03_a/clock_generator.pdf)
 	- Clock Wizard IP
 	- [URL: NI PXIe-796xR Base Clocks](http://zone.ni.com/reference/en-XX/help/372614J-01/target5devicehelp/pxie_base_clocks/)
@@ -28,10 +33,11 @@
 		- Global clocks, regional clocks
 		- [H Tree](https://en.wikipedia.org/wiki/H_tree)
 	- [URL: FPGA Clock Schemes](https://www.embedded.com/design/configurable-systems/4024526/FPGA-Clock-Schemes)
+	- [URL: Programmable Logic Design FPGA clocking schemes](http://www.ue.pwr.wroc.pl/pld/pld_10.pdf)
 	- UG472 7 Series FPGAs Clocking Resources
 		- Clocking architecture about series 7. Must read.
 
-- HLS related
+- HLS
 	- The arXiv book
 	- [Vivado Design Hub - High-Level Synthesis (C based)](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0012-vivado-high-level-synthesis-hub.html)
 	- UG1197: UltraFast High-Level Productivity Design Methodology Guide
@@ -51,8 +57,6 @@
     	- ap_ctrl_chained
     	- s_axilite
     	- which one should I use?
-
-
 
 - [What's `Implementation` in Xilinx?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm)
 	- Xilinx Implementation happens after Synthesis, so it must include several important steps

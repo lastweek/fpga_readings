@@ -35,3 +35,9 @@ Anyhow, the common practice should be
 - 1) build a general FIFO layer that is used by all upper layer apps
 - 2) Port FIFO for each specific MAC IP
 - 3) Who does not love indirection?
+
+## Dark Web
+
+- [Arty FPGA 02: Clocks, Counting, & Colour](https://timetoexplore.net/blog/arty-fpga-verilog-02)
+	- I like this blog, simple yet explained a lot things.
+	- This one uses clock input. We should add a clock wizard to try more.
