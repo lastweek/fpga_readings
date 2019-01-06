@@ -4,6 +4,7 @@ This example tries to demonstrate how to use the on-board clock.
 The program takes `board_clk` and `switch` as input, and output is LED.
 
 Some basic concepts:
+
 	- The clock source is the on-board oscillator, which connects to pin E3.
 	  This is the ONLY global clock source on the entire Arty board.
 	  The common practice is we take this clock as input, and then use PLL/DLL/whatever
