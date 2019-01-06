@@ -34,3 +34,6 @@
 [submodule "submodules/fpga-network-stack"]
 	path = submodules/fpga-network-stack
 	url = https://github.com/fpgasystems/fpga-network-stack
+[submodule "submodules/timetoexplore"]
+	path = submodules/timetoexplore
+	url = https://github.com/WillGreen/timetoexplore
