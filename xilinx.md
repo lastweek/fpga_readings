@@ -51,15 +51,16 @@
 	- [URL: Programmable Logic Design FPGA clocking schemes](http://www.ue.pwr.wroc.pl/pld/pld_10.pdf)
 	- [Xilinx Clock Generator IP (v4.03a)](https://www.xilinx.com/support/documentation/ip_documentation/clock_generator/v4_03_a/clock_generator.pdf)
 	- Clock Wizard IP
-	- UG472 7 Series FPGAs Clocking Resources
-		- Clocking architecture about series 7. Must read.
+		- I suspect this is just a wrapper around CMT (MMCM and PLL).
 	- UG903 Ch.3 Defining Clocks
 		- Primary clocks
 		- Virtual clocks
 		- Generated clocks
 		- .. and many other stuff
-	- Clock buffer
-		-
+	- UG472 7 Series FPGAs Clocking Resources
+		- Clocking architecture about series 7. Must read.
+		- Ch.3: In 7 series FPGAs, the clock management tile (CMT) includes a mixed-mode clock manager (MMCM) and a phase-locked loop (PLL). The PLL contains a subset of the MMCM functions.
+	- `MMCME2_BASE`, `MMCME2_ADV`, `PLLE2_BASE`, `PLLE2_ADV`: Check UG472 ch.3 and UG768 for details. These are used to manipulate clocks, and I believe this is the building block of clock wizard. I encountered one MMCME2_ADV in tri-mode mac reference design.
 
 - HLS
 	- The arXiv book
