@@ -27,6 +27,7 @@
 - Clock
 	- [Wiki: Frequency synthesizer](Frequency synthesizer)
 		- A frequency synthesizer is an electronic circuit that generates a range of frequencies from a single reference frequency.
+	- [Slides: Clocks Basics in 10 Minutes or Less](http://www.ti.com/ww/mx/multimedia/webcasts/TI_webinar_25-06-2010.pdf)
 	- [Clock Generator (v4.03a)](https://www.xilinx.com/support/documentation/ip_documentation/clock_generator/v4_03_a/clock_generator.pdf)
 	- Clock Wizard IP
 	- [URL: NI PXIe-796xR Base Clocks](http://zone.ni.com/reference/en-XX/help/372614J-01/target5devicehelp/pxie_base_clocks/)
@@ -45,7 +46,7 @@
 		- Virtual clocks
 		- Generated clocks
 		- .. and many other stuff
-
+	- [URL: Differential versus Single-ended Clocks](https://www.silabs.com/community/timing/knowledge-base.entry.html/2012/12/17/differential_versus-wMdt)
 
 - HLS
 	- The arXiv book
