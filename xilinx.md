@@ -11,25 +11,35 @@
 			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
-- IO
-	- HP: high-performance IO banks
-	- HR: high-range IO banks
-		- The HP I/O banks are designed to meet the performance requirements of high-speed memory and other chip-to-chip interfaces with voltages up to 1.8V. The HR I/O banks are designed to support a wider range of I/O standards with voltages up to 3.3V.
-	- IDELAY allows incoming signals to be delayed on an individual input pin basis
-	- `IBUF`: is automatically inserted (inferred) by the synthesis tool to any signal directly connected to a top-level input or in-out port of the design. (UG768: Xilinx 7 Series FPGA Libraries Guide for HDL Designs)
-	- `IBUFDS`: is NOT inserted (inferred) by the synthesis tool, you have to manually write code to instantiation. In IBUFDS, a design level interface signal is represented as two distinct ports (I and IB), one deemed the "master" and the other the "slave." The master and the slave are opposite phases of the same logical signal. (Leant this from tri-mode reference code)
-
 - BRAM
 	- TODO
 
 - Constraints: check xilinx_constraints.md
 
+- Buffer (Q: why IOBUF? why clock buffer? why there is an awkward buffer in the middle?)
+	- [URL: Digital Buffer Tutorial](https://www.electronics-tutorials.ws/logic/logic_9.html)
+	- [URL: Buffer Gate](https://en.wikichip.org/wiki/buffer_gate)
+	- [Wiki: Digital buffer](https://en.wikipedia.org/wiki/Digital_buffer)
+	- [Wiki: Buffer amplifier](https://en.wikipedia.org/wiki/Buffer_amplifier)
+	- [StackExchange: What is the purpose of a buffer gate?](https://electronics.stackexchange.com/questions/236666/what-is-the-purpose-of-a-buffer-gate)
+
+- IO
+	- HP: high-performance IO banks
+	- HR: high-range IO banks
+		- The HP I/O banks are designed to meet the performance requirements of high-speed memory and other chip-to-chip interfaces with voltages up to 1.8V. The HR I/O banks are designed to support a wider range of I/O standards with voltages up to 3.3V.
+	- IDELAY allows incoming signals to be delayed on an individual input pin basis
+	- IO Buffers
+        	- `IBUF`: is automatically inserted (inferred) by the synthesis tool to any signal directly connected to a top-level input or in-out port of the design. (UG768: Xilinx 7 Series FPGA Libraries Guide for HDL Designs)
+        	- `IBUFDS`: is NOT inserted (inferred) by the synthesis tool, you have to manually write code to instantiation. In IBUFDS, a design level interface signal is represented as two distinct ports (I and IB), one deemed the "master" and the other the "slave." The master and the slave are opposite phases of the same logical signal. (Leant this from tri-mode reference code)
+	- Each top-level port is within the scope of SelectIO. We can use constraints to define what IO standard, what package pin, what drive length etc our top-level ports want. The whole thing is described as SelectIO by Xilinx. We should check each series's SelectIO guide to know what IO standards our FPGA support. SelectIO will also automatically add IO buffers into our design, such as IBUF, OBUF.
+
 - Clock
-	- [Wiki: Frequency synthesizer](Frequency synthesizer)
-		- A frequency synthesizer is an electronic circuit that generates a range of frequencies from a single reference frequency.
 	- [Slides: Clocks Basics in 10 Minutes or Less](http://www.ti.com/ww/mx/multimedia/webcasts/TI_webinar_25-06-2010.pdf)
-	- [Clock Generator (v4.03a)](https://www.xilinx.com/support/documentation/ip_documentation/clock_generator/v4_03_a/clock_generator.pdf)
-	- Clock Wizard IP
+	- [Slides: Clock Tree 101](http://www.mouser.com/pdfdocs/clock-tree-101-timing-basics.pdf)
+	- [Slides: FPGA IO Resources](https://wiki.dcae.pub.ro/images/b/bd/FPGA_SERDES.pdf)
+	- [URL: Differential versus Single-ended Clocks](https://www.silabs.com/community/timing/knowledge-base.entry.html/2012/12/17/differential_versus-wMdt)
+	- [Wiki: Frequency synthesizer](https://en.wikipedia.org/wiki/Frequency_synthesizer)
+		- A frequency synthesizer is an electronic circuit that generates a range of frequencies from a single reference frequency.
 	- [URL: NI PXIe-796xR Base Clocks](http://zone.ni.com/reference/en-XX/help/372614J-01/target5devicehelp/pxie_base_clocks/)
 		- shows how Oscillator is connected to FPGA, and how PLL
 		generates multiple clocks.
@@ -39,6 +49,8 @@
 		- [H Tree](https://en.wikipedia.org/wiki/H_tree)
 	- [URL: FPGA Clock Schemes](https://www.embedded.com/design/configurable-systems/4024526/FPGA-Clock-Schemes)
 	- [URL: Programmable Logic Design FPGA clocking schemes](http://www.ue.pwr.wroc.pl/pld/pld_10.pdf)
+	- [Xilinx Clock Generator IP (v4.03a)](https://www.xilinx.com/support/documentation/ip_documentation/clock_generator/v4_03_a/clock_generator.pdf)
+	- Clock Wizard IP
 	- UG472 7 Series FPGAs Clocking Resources
 		- Clocking architecture about series 7. Must read.
 	- UG903 Ch.3 Defining Clocks
@@ -46,7 +58,8 @@
 		- Virtual clocks
 		- Generated clocks
 		- .. and many other stuff
-	- [URL: Differential versus Single-ended Clocks](https://www.silabs.com/community/timing/knowledge-base.entry.html/2012/12/17/differential_versus-wMdt)
+	- Clock buffer
+		-
 
 - HLS
 	- The arXiv book
