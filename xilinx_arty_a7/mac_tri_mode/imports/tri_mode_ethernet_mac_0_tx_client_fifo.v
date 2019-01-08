@@ -127,7 +127,9 @@ module tri_mode_ethernet_mac_0_tx_client_fifo #
 
     // FIFO collision and retransmission requests from MAC
     input            tx_collision,
-    input            tx_retransmit
+    input            tx_retransmit,
+    
+    output           user_LED
   );
 
 
@@ -290,9 +292,22 @@ module tri_mode_ethernet_mac_0_tx_client_fifo #
   wire        tx_fifo_reset;
   wire        tx_mac_reset;
 
+  reg   [31:0]         frame_activity_count = 32'b0;
+
+
   // invert reset sense as architecture is optimised for active high resets
   assign tx_fifo_reset = !tx_fifo_resetn;
   assign tx_mac_reset  = !tx_mac_resetn;
+
+
+always @(posedge tx_mac_aclk)
+  begin
+     if (rd_state == FINISH_s)
+         frame_activity_count = frame_activity_count + 1;
+end
+
+assign user_LED = frame_activity_count[11];
+//assign user_LED = tx_axis_mac_tready;
 
   //----------------------------------------------------------------------------
   // Begin FIFO architecture
