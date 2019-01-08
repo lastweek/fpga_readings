@@ -135,26 +135,30 @@ module tri_mode_ethernet_mac_0_example_design
       // asynchronous reset
       input         glbl_rst,
 
+/*
       // 200MHz clock input from board
       input         clk_in_p,
       input         clk_in_n,
+*/
+
+      // 100MHz clock input from board
+      input clk_in,
+    
       // 125 MHz clock from MMCM
-      output        gtx_clk_bufg_out,
+      //output        gtx_clk_bufg_out,
 
       output        phy_resetn,
 
 
-      // GMII Interface
+      // MII Interface
       //---------------
-
-      output [7:0]  gmii_txd,
-      output        gmii_tx_en,
-      output        gmii_tx_er,
-      output        gmii_tx_clk,
-      input  [7:0]  gmii_rxd,
-      input         gmii_rx_dv,
-      input         gmii_rx_er,
-      input         gmii_rx_clk,
+      output [3:0]  mii_txd,
+      output        mii_tx_en,
+      //output        mii_tx_er,
+      input  [3:0]  mii_rxd,
+      input         mii_rx_dv,
+      input         mii_rx_er,
+      input         mii_rx_clk,
       input         mii_tx_clk,
 
       
@@ -186,7 +190,21 @@ module tri_mode_ethernet_mac_0_example_design
       output        frame_error,
       output        frame_errorn,
       output        activity_flash,
-      output        activity_flashn
+
+
+      /*
+       * I changed the original one. This one now indicate
+       * package generation activity.
+       */
+      output        activity_flash_gen,
+
+
+      /*
+       * I added this. This indicates if packet generation is enabled.
+       * It directly reflects gen_tx_data switch.
+       * It is now connected to LD3 blue light
+       */
+      output        pkt_gen_enabled
 
     );
 
@@ -197,7 +215,6 @@ module tri_mode_ethernet_mac_0_example_design
    // example design clocks
    wire                 gtx_clk_bufg;
    
-   wire                 refclk_bufg;
    wire                 s_axi_aclk;
    wire                 rx_mac_aclk;
    wire                 tx_mac_aclk;
@@ -265,6 +282,37 @@ module tri_mode_ethernet_mac_0_example_design
    wire                 s_axi_awready;
    wire  [31:0]         s_axi_wdata;
    wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
+   wire                 s_axi_wvalid;
    wire                 s_axi_wready;
    wire  [1:0]          s_axi_bresp;
    wire                 s_axi_bvalid;
@@ -280,6 +328,7 @@ module tri_mode_ethernet_mac_0_example_design
 
    wire                 int_frame_error;
    wire                 int_activity_flash;
+   wire                 int_activity_flash_gen;
 
    // set board defaults - only updated when reprogrammed
    reg                  enable_address_swap = 1;
@@ -290,7 +339,22 @@ module tri_mode_ethernet_mac_0_example_design
    wire  [7:0]          tx_ifg_delay = 0;    // not used in this example
 
    assign activity_flash  = int_activity_flash;
-   assign activity_flashn = !int_activity_flash;
+   assign activity_flash_gen = int_activity_flash_gen;
+
+   wire                 mdio_i;
+   wire                 mdio_o;
+   wire                 mdio_t;
+
+    wire mii_tx_er;
+
+  //----------------------------------------------------------------------------
+  // Begin the logic description
+  //----------------------------------------------------------------------------
+
+  // want to infer an IOBUF on the mdio port
+  assign mdio = mdio_t ? 1'bz : mdio_o;
+
+  assign mdio_i = mdio;
 
 
   assign frame_error  = int_frame_error;
@@ -321,8 +385,9 @@ module tri_mode_ethernet_mac_0_example_design
   tri_mode_ethernet_mac_0_example_design_clocks example_clocks
    (
       // differential clock inputs
-      .clk_in_p         (clk_in_p),
-      .clk_in_n         (clk_in_n),
+      //.clk_in_p         (clk_in_p),
+      //.clk_in_n         (clk_in_n),
+      .clk_in             (clk_in),
 
       // asynchronous control/resets
       .glbl_rst         (glbl_rst),
@@ -330,13 +395,11 @@ module tri_mode_ethernet_mac_0_example_design
 
       // clock outputs
       .gtx_clk_bufg     (gtx_clk_bufg),
-      .refclk_bufg      (refclk_bufg),
       .s_axi_aclk       (s_axi_aclk)
    );
 
     // Pass the GTX clock to the Test Bench
-   assign gtx_clk_bufg_out = gtx_clk_bufg;
-   
+   //assign gtx_clk_bufg_out = gtx_clk_bufg;
 
   //----------------------------------------------------------------------------
   // Generate the user side clocks for the axi fifos
@@ -536,9 +599,6 @@ module tri_mode_ethernet_mac_0_example_design
       .rx_axi_rstn                  (1'b1),
       .tx_axi_rstn                  (1'b1),
 
-      // Reference clock for IDELAYCTRL's
-      .refclk                       (refclk_bufg),
-
       // Receiver Statistics Interface
       //---------------------------------------
       .rx_mac_aclk                  (rx_mac_aclk),
@@ -579,23 +639,24 @@ module tri_mode_ethernet_mac_0_example_design
       .pause_req                    (pause_req),
       .pause_val                    (pause_val),
 
-      // GMII Interface
-      //-----------------
-      .gmii_txd                     (gmii_txd),
-      .gmii_tx_en                   (gmii_tx_en),
-      .gmii_tx_er                   (gmii_tx_er),
-      .gmii_tx_clk                  (gmii_tx_clk),
-      .gmii_rxd                     (gmii_rxd),
-      .gmii_rx_dv                   (gmii_rx_dv),
-      .gmii_rx_er                   (gmii_rx_er),
-      .gmii_rx_clk                  (gmii_rx_clk),
+      // MII Interface
+      //---------------
+      .mii_txd                      (mii_txd),
+      .mii_tx_en                    (mii_tx_en),
+      .mii_tx_er                    (mii_tx_er),
+      .mii_rxd                      (mii_rxd),
+      .mii_rx_dv                    (mii_rx_dv),
+      .mii_rx_er                    (mii_rx_er),
+      .mii_rx_clk                   (mii_rx_clk),
       .mii_tx_clk                   (mii_tx_clk),
 
       
       // MDIO Interface
       //---------------
-      .mdio                         (mdio),
       .mdc                          (mdc),
+      .mdio_i                       (mdio_i),
+      .mdio_o                       (mdio_o),
+      .mdio_t                       (mdio_t),
 
       // AXI-Lite Interface
       //---------------
@@ -652,7 +713,9 @@ module tri_mode_ethernet_mac_0_example_design
       .tx_axis_tready               (tx_axis_fifo_tready),
 
       .frame_error                  (int_frame_error),
-      .activity_flash               (int_activity_flash)
+      .activity_flash               (int_activity_flash),
+      .activity_flash_gen              (int_activity_flash_gen),
+      .pkt_gen_enabled              (pkt_gen_enabled)
    );
    
 

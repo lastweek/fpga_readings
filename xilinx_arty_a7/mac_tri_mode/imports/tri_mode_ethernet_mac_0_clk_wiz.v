@@ -58,9 +58,6 @@
 //----------------------------------------------------------------------------
 // CLK_OUT1   125.000      0.000      50.0       91.364     85.928
 // CLK_OUT2   100.000      0.000      50.0       70.716     85.928
-  
-// CLK_OUT2   200.000      0.000      50.0            
-            
 //
 //----------------------------------------------------------------------------
 // Input Clock   Input Freq (MHz)   Input Jitter (UI)
@@ -75,7 +72,6 @@ module tri_mode_ethernet_mac_0_clk_wiz
   // Clock out ports
   output        CLK_OUT1,
   output        CLK_OUT2,
-  output        CLK_OUT3,
   // Status and control signals
   input         RESET,
   output        LOCKED
@@ -108,7 +104,7 @@ module tri_mode_ethernet_mac_0_clk_wiz
     .COMPENSATION         ("ZHOLD"),
     
     .DIVCLK_DIVIDE        (1),
-    .CLKFBOUT_MULT_F      (5.000),
+    .CLKFBOUT_MULT_F      (10.000),
     .CLKFBOUT_PHASE       (0.000),
     .CLKOUT0_DIVIDE_F     (8.000),
     .CLKOUT0_PHASE        (0.000),
@@ -121,7 +117,7 @@ module tri_mode_ethernet_mac_0_clk_wiz
   
     .CLKOUT2_PHASE        (0.000),
     .CLKOUT2_DUTY_CYCLE   (0.500),
-    .CLKIN1_PERIOD        (5.000),
+    .CLKIN1_PERIOD        (10.000),
     .REF_JITTER1          (0.010))
   mmcm_adv_inst
     // Output clocks
@@ -177,10 +173,5 @@ module tri_mode_ethernet_mac_0_clk_wiz
    (.O   (CLK_OUT2),
     .CE  (1'b1),
     .I   (clkout1));
-
-  BUFGCE clkout3_buf
-   (.O   (CLK_OUT3),
-    .CE  (1'b1),
-    .I   (clkout2));
 
 endmodule

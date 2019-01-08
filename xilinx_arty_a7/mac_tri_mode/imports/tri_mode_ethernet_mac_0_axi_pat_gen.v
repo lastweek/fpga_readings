@@ -64,8 +64,8 @@
 `timescale 1 ps/1 ps
 
 module tri_mode_ethernet_mac_0_axi_pat_gen #(
-   parameter               DEST_ADDR      = 48'hda0102030405,
-   parameter               SRC_ADDR       = 48'h5a0102030405,
+   parameter               DEST_ADDR      = 48'h64006a54ad7d,
+   parameter               SRC_ADDR       = 48'h00183E02E5EB,
    parameter               MAX_SIZE       = 16'd500,
    parameter               MIN_SIZE       = 16'd64,
    parameter               ENABLE_VLAN    = 1'b0,
@@ -81,7 +81,10 @@ module tri_mode_ethernet_mac_0_axi_pat_gen #(
    output reg  [7:0]       tdata,
    output                  tvalid,
    output reg              tlast,
-   input                   tready
+   input                   tready,
+   
+   output                  activity_flash_gen,
+   output                  pkt_gen_enabled
 );
 
 localparam     IDLE        = 3'b000,
@@ -120,7 +123,13 @@ reg         [7:0]          basic_rc_counter;
 reg                        add_credit;
 reg         [12:0]         credit_count;
 
+reg   [15:0]         frame_activity_count = 16'b0;
+
 wire                       axi_treset;
+
+assign pkt_gen_enabled = enable_pat_gen;
+
+assign activity_flash = frame_activity_count[0];
 
 assign axi_treset = !axi_tresetn;
 
@@ -371,5 +380,16 @@ end
 
 assign tvalid = tvalid_int;
 
+// now need a counter for frame activity to provide some feedback that frames are being received
+// a 16 bit counter is used as this should give a slow flash rate at 10M and a very fast rate at 1G
+always @(posedge axi_tclk)
+begin
+   if (axi_treset)
+      frame_activity_count <= 0;
+   else begin
+      if (tlast)
+         frame_activity_count <= frame_activity_count + 1;
+   end
+end
 
 endmodule

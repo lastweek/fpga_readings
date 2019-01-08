@@ -61,15 +61,13 @@
 //    example design thinking it is real hardware
 
 // and its design example:
-//  - Five frames are then pushed into the receiver from the PHY
+//  - Four frames are then pushed into the receiver from the PHY
 //    interface (GMII/MII or RGMII):
 //    The first is of minimum length (Length/Type = Length = 46 bytes).
 //    The second frame sets Length/Type to Type = 0x8000.
 //    The third frame has an error inserted.
 //    The fourth frame only sends 4 bytes of data: the remainder of the
 //    data field is padded up to the minimum frame length i.e. 46 bytes.
-//    The address of fifth frame does not match with the value the address
-//    filter is set to therefore gets dropped.
 
 //  - These frames are then parsed from the MAC into the MAC's design
 //    example.  The design example provides a MAC user loopback
@@ -77,10 +75,8 @@
 //    looped back to the MAC transmitter and transmitted back to the
 //    testbench.  The testbench verifies that this data matches that
 //    previously injected into the receiver.
-//    The last frame gets dropped by the address filter due to
-//    address mismatch.
 
-//  - The five frames are then re-sent at 100Mb/s, 10Mb/s and finally 1Gb/s again.
+//  - The four frames are then re-sent at 10Mb/s.
 
 
 //----------------------------------------------------------------------
@@ -126,9 +122,6 @@ module demo_tb;
   
   parameter TB_MODE = "DEMO";
 
-  // The following parameter does not control the value the address filter is set to
-  // it is only used in the testbench
-  parameter address_filter_value = 96'h06050403025A_0605040302DA ; //SA and DA
   `define FRAME_TYP [8*62+62+62+8*4+4+4+8*4+4+4+1:1]
 
   //----------------------------------------------------------------------------
@@ -139,7 +132,6 @@ module demo_tb;
    tri_mode_ethernet_mac_0_frame_typ frame1();
    tri_mode_ethernet_mac_0_frame_typ frame2();
    tri_mode_ethernet_mac_0_frame_typ frame3();
-   tri_mode_ethernet_mac_0_frame_typ frame4();
    tri_mode_ethernet_mac_0_frame_typ rx_stimulus_working_frame();
    tri_mode_ethernet_mac_0_frame_typ tx_monitor_working_frame();
 
@@ -436,75 +428,6 @@ module demo_tb;
     // No error in this frame
     frame3.bad_frame  = 1'b0;
 
-    //-----------
-    // Frame 4
-    //-----------
-    frame4.data[0]  = 8'hDB;  frame4.valid[0]  = 1'b1;  frame4.error[0]  = 1'b0; // Destination Address (DA)
-    frame4.data[1]  = 8'h02;  frame4.valid[1]  = 1'b1;  frame4.error[1]  = 1'b0;
-    frame4.data[2]  = 8'h03;  frame4.valid[2]  = 1'b1;  frame4.error[2]  = 1'b0;
-    frame4.data[3]  = 8'h04;  frame4.valid[3]  = 1'b1;  frame4.error[3]  = 1'b0;
-    frame4.data[4]  = 8'h05;  frame4.valid[4]  = 1'b1;  frame4.error[4]  = 1'b0;
-    frame4.data[5]  = 8'h06;  frame4.valid[5]  = 1'b1;  frame4.error[5]  = 1'b0;
-    frame4.data[6]  = 8'h5A;  frame4.valid[6]  = 1'b1;  frame4.error[6]  = 1'b0; // Source Address  (5A)
-    frame4.data[7]  = 8'h02;  frame4.valid[7]  = 1'b1;  frame4.error[7]  = 1'b0;
-    frame4.data[8]  = 8'h03;  frame4.valid[8]  = 1'b1;  frame4.error[8]  = 1'b0;
-    frame4.data[9]  = 8'h04;  frame4.valid[9]  = 1'b1;  frame4.error[9]  = 1'b0;
-    frame4.data[10] = 8'h05;  frame4.valid[10] = 1'b1;  frame4.error[10] = 1'b0;
-    frame4.data[11] = 8'h06;  frame4.valid[11] = 1'b1;  frame4.error[11] = 1'b0;
-    frame4.data[12] = 8'h00;  frame4.valid[12] = 1'b1;  frame4.error[12] = 1'b0;
-    frame4.data[13] = 8'h03;  frame4.valid[13] = 1'b1;  frame4.error[13] = 1'b0; // Length/Type = Length = 03
-    frame4.data[14] = 8'h01;  frame4.valid[14] = 1'b1;  frame4.error[14] = 1'b0; // Therefore padding is required
-    frame4.data[15] = 8'h02;  frame4.valid[15] = 1'b1;  frame4.error[15] = 1'b0;
-    frame4.data[16] = 8'h03;  frame4.valid[16] = 1'b1;  frame4.error[16] = 1'b0;
-    frame4.data[17] = 8'h00;  frame4.valid[17] = 1'b1;  frame4.error[17] = 1'b0; // Padding starts here
-    frame4.data[18] = 8'h00;  frame4.valid[18] = 1'b1;  frame4.error[18] = 1'b0;
-    frame4.data[19] = 8'h00;  frame4.valid[19] = 1'b1;  frame4.error[19] = 1'b0;
-    frame4.data[20] = 8'h00;  frame4.valid[20] = 1'b1;  frame4.error[20] = 1'b0;
-    frame4.data[21] = 8'h00;  frame4.valid[21] = 1'b1;  frame4.error[21] = 1'b0;
-    frame4.data[22] = 8'h00;  frame4.valid[22] = 1'b1;  frame4.error[22] = 1'b0;
-    frame4.data[23] = 8'h00;  frame4.valid[23] = 1'b1;  frame4.error[23] = 1'b0;
-    frame4.data[24] = 8'h00;  frame4.valid[24] = 1'b1;  frame4.error[24] = 1'b0;
-    frame4.data[25] = 8'h00;  frame4.valid[25] = 1'b1;  frame4.error[25] = 1'b0;
-    frame4.data[26] = 8'h00;  frame4.valid[26] = 1'b1;  frame4.error[26] = 1'b0;
-    frame4.data[27] = 8'h00;  frame4.valid[27] = 1'b1;  frame4.error[27] = 1'b0;
-    frame4.data[28] = 8'h00;  frame4.valid[28] = 1'b1;  frame4.error[28] = 1'b0;
-    frame4.data[29] = 8'h00;  frame4.valid[29] = 1'b1;  frame4.error[29] = 1'b0;
-    frame4.data[30] = 8'h00;  frame4.valid[30] = 1'b1;  frame4.error[30] = 1'b0;
-    frame4.data[31] = 8'h00;  frame4.valid[31] = 1'b1;  frame4.error[31] = 1'b0;
-    frame4.data[32] = 8'h00;  frame4.valid[32] = 1'b1;  frame4.error[32] = 1'b0;
-    frame4.data[33] = 8'h00;  frame4.valid[33] = 1'b1;  frame4.error[33] = 1'b0;
-    frame4.data[34] = 8'h00;  frame4.valid[34] = 1'b1;  frame4.error[34] = 1'b0;
-    frame4.data[35] = 8'h00;  frame4.valid[35] = 1'b1;  frame4.error[35] = 1'b0;
-    frame4.data[36] = 8'h00;  frame4.valid[36] = 1'b1;  frame4.error[36] = 1'b0;
-    frame4.data[37] = 8'h00;  frame4.valid[37] = 1'b1;  frame4.error[37] = 1'b0;
-    frame4.data[38] = 8'h00;  frame4.valid[38] = 1'b1;  frame4.error[38] = 1'b0;
-    frame4.data[39] = 8'h00;  frame4.valid[39] = 1'b1;  frame4.error[39] = 1'b0;
-    frame4.data[40] = 8'h00;  frame4.valid[40] = 1'b1;  frame4.error[40] = 1'b0;
-    frame4.data[41] = 8'h00;  frame4.valid[41] = 1'b1;  frame4.error[41] = 1'b0;
-    frame4.data[42] = 8'h00;  frame4.valid[42] = 1'b1;  frame4.error[42] = 1'b0;
-    frame4.data[43] = 8'h00;  frame4.valid[43] = 1'b1;  frame4.error[43] = 1'b0;
-    frame4.data[44] = 8'h00;  frame4.valid[44] = 1'b1;  frame4.error[44] = 1'b0;
-    frame4.data[45] = 8'h00;  frame4.valid[45] = 1'b1;  frame4.error[45] = 1'b0;
-    frame4.data[46] = 8'h00;  frame4.valid[46] = 1'b1;  frame4.error[46] = 1'b0;
-    frame4.data[47] = 8'h00;  frame4.valid[47] = 1'b1;  frame4.error[47] = 1'b0;
-    frame4.data[48] = 8'h00;  frame4.valid[48] = 1'b1;  frame4.error[48] = 1'b0;
-    frame4.data[49] = 8'h00;  frame4.valid[49] = 1'b1;  frame4.error[49] = 1'b0;
-    frame4.data[50] = 8'h00;  frame4.valid[50] = 1'b1;  frame4.error[50] = 1'b0;
-    frame4.data[51] = 8'h00;  frame4.valid[51] = 1'b1;  frame4.error[51] = 1'b0;
-    frame4.data[52] = 8'h00;  frame4.valid[52] = 1'b1;  frame4.error[52] = 1'b0;
-    frame4.data[53] = 8'h00;  frame4.valid[53] = 1'b1;  frame4.error[53] = 1'b0;
-    frame4.data[54] = 8'h00;  frame4.valid[54] = 1'b1;  frame4.error[54] = 1'b0;
-    frame4.data[55] = 8'h00;  frame4.valid[55] = 1'b1;  frame4.error[55] = 1'b0;
-    frame4.data[56] = 8'h00;  frame4.valid[56] = 1'b1;  frame4.error[56] = 1'b0;
-    frame4.data[57] = 8'h00;  frame4.valid[57] = 1'b1;  frame4.error[57] = 1'b0;
-    frame4.data[58] = 8'h00;  frame4.valid[58] = 1'b1;  frame4.error[58] = 1'b0;
-    frame4.data[59] = 8'h00;  frame4.valid[59] = 1'b1;  frame4.error[59] = 1'b0;
-    // unused
-    frame4.data[60] = 8'h00;  frame4.valid[60] = 1'b0;  frame4.error[60] = 1'b0;
-    frame4.data[61] = 8'h00;  frame4.valid[61] = 1'b0;  frame4.error[61] = 1'b0;
-
-    // No error in this frame
-    frame4.bad_frame  = 1'b0;
 
   end
 
@@ -577,7 +500,7 @@ module demo_tb;
   // Delay to provide setup and hold timing at the GMII/RGMII.
   parameter dly = 4800;  // relaxed timing from requirement of 6ns
 
-  parameter gtx_period = 2500;  // ps
+  parameter gtx_period = 5000;  // ps
 
 
   // testbench signals
@@ -594,20 +517,18 @@ module demo_tb;
   reg         mdio_read;
   reg         mdio_addr;
   reg         mdio_fail;
-  wire        gmii_tx_clk;
-  wire        gmii_tx_en;
-  wire        gmii_tx_er;
-  wire [7:0]  gmii_txd;
-  wire        gmii_rx_clk;
-  reg         gmii_rx_dv;
-  reg         gmii_rx_er;
-  reg  [7:0]  gmii_rxd;
+  wire        mii_tx_en;
+  wire        mii_tx_er;
+  wire [3:0]  mii_txd;
+  wire        mii_rx_clk;
+  reg         mii_rx_dv;
+  reg         mii_rx_er;
+  reg  [3:0]  mii_rxd;
   reg         mii_tx_clk100;
   reg         mii_tx_clk10;
   reg         mii_tx_clk;
 
   // testbench control semaphores
-  reg  tx_monitor_finished_1G;
   reg  tx_monitor_finished_10M;
   reg  tx_monitor_finished_100M;
   reg  management_config_finished;
@@ -616,9 +537,9 @@ module demo_tb;
   reg [1:0] mac_speed;
   reg       update_speed;
 
-  wire [7:0]   gmii_rxd_dut;
-  wire         gmii_rx_dv_dut;
-  wire         gmii_rx_er_dut;
+  wire [3:0]   mii_rxd_dut;
+  wire         mii_rx_dv_dut;
+  wire         mii_rx_er_dut;
 
   reg          gen_tx_data;
   reg          check_tx_data;
@@ -631,9 +552,9 @@ module demo_tb;
 
 
   // select between loopback or local data
-  assign gmii_rxd_dut   = (TB_MODE == "BIST") ? gmii_txd   : gmii_rxd;
-  assign gmii_rx_dv_dut = (TB_MODE == "BIST") ? gmii_tx_en : gmii_rx_dv;
-  assign gmii_rx_er_dut = (TB_MODE == "BIST") ? gmii_tx_er : gmii_rx_er;
+  assign mii_rxd_dut   = (TB_MODE == "BIST") ? mii_txd   : mii_rxd;
+  assign mii_rx_dv_dut = (TB_MODE == "BIST") ? mii_tx_en : mii_rx_dv;
+  assign mii_rx_er_dut = (TB_MODE == "BIST") ? mii_tx_er : mii_rx_er;
 
   //----------------------------------------------------------------------------
   // Wire up Device Under Test
@@ -644,26 +565,24 @@ module demo_tb;
       // asynchronous reset
       .glbl_rst                   (reset),
 
-      // 200MHz clock input from board
-      .clk_in_p                   (mmcm_clk_in),
-      .clk_in_n                   (!mmcm_clk_in),
+      // 100MHz clock input from board
+      .clk_in                   (mmcm_clk_in),
+ 
       // 125 MHz clock output from MMCM
       .gtx_clk_bufg_out           (gtx_clk),
 
       .phy_resetn                 (),
 
 
-      // GMII Interface
+      // MII Interface
       //---------------
-
-      .gmii_txd                   (gmii_txd),
-      .gmii_tx_en                 (gmii_tx_en),
-      .gmii_tx_er                 (gmii_tx_er),
-      .gmii_tx_clk                (gmii_tx_clk),
-      .gmii_rxd                   (gmii_rxd_dut),
-      .gmii_rx_dv                 (gmii_rx_dv_dut),
-      .gmii_rx_er                 (gmii_rx_er_dut),
-      .gmii_rx_clk                (gmii_rx_clk),
+      .mii_txd                    (mii_txd),
+      .mii_tx_en                  (mii_tx_en),
+      .mii_tx_er                  (mii_tx_er),
+      .mii_rxd                    (mii_rxd_dut),
+      .mii_rx_dv                  (mii_rx_dv_dut),
+      .mii_rx_er                  (mii_rx_er_dut),
+      .mii_rx_clk                 (mii_rx_clk),
       .mii_tx_clk                 (mii_tx_clk),
 
       // MDIO Interface
@@ -802,7 +721,7 @@ module demo_tb;
   //----------------------------------------------------------------------------
   
 
-  //drives input to an MMCM at 200MHz which creates gtx_clk at 125 MHz
+  //drives input to an MMCM at 100MHz which creates gtx_clk at 125 MHz
   initial
   begin
     
@@ -864,10 +783,8 @@ module demo_tb;
   end
 
 
-  // Receiver and transmitter clocks are the same in this simulation: connect
-  // the appropriate Tx clock source (based on operating speed) to the receiver
-  // clock
-  assign gmii_rx_clk = (phy_speed == 2'b10)? gmii_tx_clk : mii_tx_clk;
+  // Receiver and transmitter clocks are the same in this simulation
+  assign mii_rx_clk = mii_tx_clk;
 
 
 
@@ -909,8 +826,8 @@ module demo_tb;
   initial
   begin : p_management
 
-    mac_speed <= 2'b10;
-    phy_speed <= 2'b10;
+    mac_speed <= 2'b01;
+    phy_speed <= 2'b01;
     update_speed <= 1'b0;
     gen_tx_data <= 1'b0;
     check_tx_data <= 1'b0;
@@ -958,38 +875,15 @@ module demo_tb;
        // be allowed to run.
        management_config_finished = 1;
 
-       // The stimulus process will now send 5 frames at 1Gb/s.
+       // The stimulus process will now send 4 frames at 100Mb/s.
        //------------------------------------------------------------------
 
-       // Wait for 1G monitor process to complete.
-       wait (tx_monitor_finished_1G == 1);
-       management_config_finished = 0;
-
-       // Change the speed to 100Mb/s and send the 4 frames
-       //------------------------------------------------------------------
-
-       @(posedge gtx_clk);
-       mac_speed <= 2'b01;
-       update_speed <= 1'b1;
-       @(posedge gtx_clk);
-       @(posedge gtx_clk);
-       @(posedge gtx_clk);
-       update_speed <= 1'b0;
-
-       // wait for the mdio access and remainder of setup accesses (internal)
-       wait (mdio_count == 8);
-       phy_speed <= 2'b01;
-       wait (mdio_count == 32);
-       wait (mdio_count == 0);
-       // Signal that configuration is complete.  Other processes will now
-       // be allowed to run.
-       management_config_finished = 1;
 
        // Wait for 100M monitor process to complete.
        wait (tx_monitor_finished_100M == 1);
        management_config_finished = 0;
 
-       // Change the speed to 10Mb/s and send the 5 frames
+       // Change the speed to 10Mb/s and send the 4 frames
        //------------------------------------------------------------------
 
        @(posedge gtx_clk);
@@ -1012,25 +906,6 @@ module demo_tb;
        wait (tx_monitor_finished_10M == 1);
        management_config_finished = 0;
 
-       // Change the speed back to 1Gb/s and send the 4 frames
-       //------------------------------------------------------------------
-
-       @(posedge gtx_clk);
-       mac_speed <= 2'b10;
-       phy_speed <= 2'b10;
-       update_speed <= 1'b1;
-       @(posedge gtx_clk);
-       @(posedge gtx_clk);
-       @(posedge gtx_clk);
-       update_speed <= 1'b0;
-
-       // wait for the mdio access and remainder of setup accesses (internal)
-       wait (mdio_count == 8);
-       wait (mdio_count == 32);
-       wait (mdio_count == 0);
-
-       management_config_finished = 1;
-       wait (tx_monitor_finished_1G == 1);
 
        // Our work here is done
        if (demo_mode_error == 1'b0 && bist_mode_error == 1'b0) begin
@@ -1041,81 +916,6 @@ module demo_tb;
      end
   end // p_management
 
-
-
-  //----------------------------------------------------------------------------
-  // Procedure to inject a frame into the receiver at 1Gb/s
-  //----------------------------------------------------------------------------
-  task send_frame_1g;
-    input   `FRAME_TYP frame;
-    integer column_index;
-    integer I;
-    reg [31:0] fcs;
-
-    begin
-      // import the frame into scratch space
-      rx_stimulus_working_frame.frombits(frame);
-
-      column_index = 0;
-
-      // Reset the FCS calculation
-      fcs = 32'b0;
-      @(posedge gmii_rx_clk);
-
-      // Adding the preamble field
-      for (I = 0; I < 7; I = I + 1)
-      begin
-        #dly;
-        gmii_rxd   <= 8'h55;
-        gmii_rx_dv <= 1'b1;
-        @(posedge gmii_rx_clk);
-      end
-
-      // Adding the Start of Frame Delimiter (SFD)
-      #dly;
-      gmii_rxd   <= 8'hD5;
-      gmii_rx_dv <= 1'b1;
-      @(posedge gmii_rx_clk);
-
-      // loop over columns in frame.
-      while (rx_stimulus_working_frame.valid[column_index] !== 1'b0)
-      begin
-        // send one column of data
-        #dly;
-        gmii_rxd    <= rx_stimulus_working_frame.data[column_index];
-        gmii_rx_dv  <= rx_stimulus_working_frame.valid[column_index];
-        gmii_rx_er  <= rx_stimulus_working_frame.error[column_index];
-        calc_crc(rx_stimulus_working_frame.data[column_index], fcs);
-        column_index = column_index + 1;
-        @(posedge gmii_rx_clk);
-      end
-
-      // Send the CRC.
-      for (I = 0; I < 4; I = I + 1)
-      begin
-        #dly;
-        case(I)
-           0 : gmii_rxd    <= fcs[7:0];
-           1 : gmii_rxd    <= fcs[15:8];
-           2 : gmii_rxd    <= fcs[23:16];
-           3 : gmii_rxd    <= fcs[31:24];
-        endcase
-        gmii_rx_dv  <= 1'b1;
-        gmii_rx_er  <= 1'b0;
-        @(posedge gmii_rx_clk);
-      end
-
-      // Clear the data lines.
-      #dly;
-      gmii_rxd       <= 8'h0;
-      gmii_rx_dv     <= 1'b0;
-
-      // Adding the minimum Interframe gap for a receiver (8 idles)
-      for (I = 0; I < 9; I = I + 1)
-        @(posedge gmii_rx_clk);
-
-    end
-  endtask // send_frame_1g;
 
 
   //----------------------------------------------------------------------------
@@ -1135,39 +935,39 @@ module demo_tb;
       // Reset the FCS calculation
       fcs = 32'b0;
 
-      @(posedge gmii_rx_clk);
+      @(posedge mii_rx_clk);
 
       // Adding the preamble field
       for (I = 0; I < 15; I = I + 1)
       begin
         #30000;
-        gmii_rxd   <= 8'h05;
-        gmii_rx_dv <= 1'b1;
-        @(posedge gmii_rx_clk);
+        mii_rxd   <= 4'h5;
+        mii_rx_dv <= 1'b1;
+        @(posedge mii_rx_clk);
       end
 
       // Adding the Start of Frame Delimiter (SFD)
       #30000;
-      gmii_rxd   <= 8'h0D;
-      gmii_rx_dv <= 1'b1;
-      @(posedge gmii_rx_clk);
+      mii_rxd   <= 4'hD;
+      mii_rx_dv <= 1'b1;
+      @(posedge mii_rx_clk);
 
       // loop over columns in frame.
       while (rx_stimulus_working_frame.valid[column_index] !== 1'b0)
       begin
         // send one column of data
         #30000;
-        gmii_rxd   <= {4'h0, rx_stimulus_working_frame.data[column_index][3:0]};
-        gmii_rx_dv <= rx_stimulus_working_frame.valid[column_index];
-        gmii_rx_er <= rx_stimulus_working_frame.error[column_index];
-        @(posedge gmii_rx_clk);
+        mii_rxd   <= {rx_stimulus_working_frame.data[column_index][3:0]};
+        mii_rx_dv <= rx_stimulus_working_frame.valid[column_index];
+        mii_rx_er <= rx_stimulus_working_frame.error[column_index];
+        @(posedge mii_rx_clk);
         #30000;
-        gmii_rxd   <= {4'h0, rx_stimulus_working_frame.data[column_index][7:4]};
-        gmii_rx_dv <= rx_stimulus_working_frame.valid[column_index];
-        gmii_rx_er <= rx_stimulus_working_frame.error[column_index];
+        mii_rxd   <= {rx_stimulus_working_frame.data[column_index][7:4]};
+        mii_rx_dv <= rx_stimulus_working_frame.valid[column_index];
+        mii_rx_er <= rx_stimulus_working_frame.error[column_index];
         calc_crc(rx_stimulus_working_frame.data[column_index], fcs);
         column_index = column_index + 1;
-        @(posedge gmii_rx_clk);
+        @(posedge mii_rx_clk);
     end
 
       // Send the CRC.
@@ -1175,35 +975,35 @@ module demo_tb;
       begin
         #30000;
         case(I)
-           0 : gmii_rxd    <= fcs[3:0];
-           1 : gmii_rxd    <= fcs[11:8];
-           2 : gmii_rxd    <= fcs[19:16];
-           3 : gmii_rxd    <= fcs[27:24];
+           0 : mii_rxd    <= fcs[3:0];
+           1 : mii_rxd    <= fcs[11:8];
+           2 : mii_rxd    <= fcs[19:16];
+           3 : mii_rxd    <= fcs[27:24];
         endcase
-        gmii_rx_dv  <= 1'b1;
-        gmii_rx_er  <= 1'b0;
+        mii_rx_dv  <= 1'b1;
+        mii_rx_er  <= 1'b0;
 
-        @(posedge gmii_rx_clk);
+        @(posedge mii_rx_clk);
         #30000;
         case(I)
-           0 : gmii_rxd    <= fcs[7:4];
-           1 : gmii_rxd    <= fcs[15:12];
-           2 : gmii_rxd    <= fcs[23:20];
-           3 : gmii_rxd    <= fcs[31:28];
+           0 : mii_rxd    <= fcs[7:4];
+           1 : mii_rxd    <= fcs[15:12];
+           2 : mii_rxd    <= fcs[23:20];
+           3 : mii_rxd    <= fcs[31:28];
         endcase
-        gmii_rx_dv  <= 1'b1;
-        gmii_rx_er  <= 1'b0;
-        @(posedge gmii_rx_clk);
+        mii_rx_dv  <= 1'b1;
+        mii_rx_er  <= 1'b0;
+        @(posedge mii_rx_clk);
       end
 
       // Clear the data lines.
       #30000;
-      gmii_rxd       <= 8'h0;
-      gmii_rx_dv     <= 1'b0;
+      mii_rxd       <= 4'h0;
+      mii_rx_dv     <= 1'b0;
 
       // Adding the minimum Interframe gap for a receiver (8 idles)
       for (I = 0; I < 15; I = I + 1)
-        @(posedge gmii_rx_clk);
+        @(posedge mii_rx_clk);
 
     end
   endtask // send_frame_10_100m;
@@ -1217,9 +1017,9 @@ module demo_tb;
   begin : p_rx_stimulus
 
     // Initialise stimulus
-    gmii_rxd       = 8'h0;
-    gmii_rx_dv     = 1'b0;
-    gmii_rx_er     = 1'b0;
+    mii_rxd        = 4'h0;
+    mii_rx_dv      = 1'b0;
+    mii_rx_er      = 1'b0;
 
     // Send four frames through the MAC and Design Exampled
     // at each state Ethernet speed
@@ -1230,34 +1030,15 @@ module demo_tb;
     //-----------------------------------------------------
 
 
-
-    // 1 Gb/s speed
-    //-----------------------------------------------------
-    // Wait for the Management MDIO transaction to finish.
-    while (management_config_finished !== 1)
-    // wait for the internal resets to settle before staring to send traffic
-    #800000;
-    $display("Rx Stimulus: sending 5 frames at 1G ... ");
-
-    send_frame_1g(frame0.tobits(0));
-    send_frame_1g(frame1.tobits(1));
-    send_frame_1g(frame2.tobits(2));
-    send_frame_1g(frame3.tobits(3));
-    send_frame_1g(frame4.tobits(4));
-
-    wait (tx_monitor_finished_1G == 1);
-    #10000;
-
     // 100 Mb/s speed
     //-----------------------------------------------------
     while (management_config_finished !== 1) @(posedge management_config_finished);
-    $display("Rx Stimulus: sending 5 frames at 100M ... ");
+    $display("Rx Stimulus: sending 4 frames at 100M ... ");
 
     send_frame_10_100m(frame0.tobits(0));
     send_frame_10_100m(frame1.tobits(1));
     send_frame_10_100m(frame2.tobits(2));
     send_frame_10_100m(frame3.tobits(3));
-    send_frame_10_100m(frame4.tobits(4));
 
     wait (tx_monitor_finished_100M == 1);
     #10000;
@@ -1265,206 +1046,16 @@ module demo_tb;
     // 10 Mb/s speed
     //-----------------------------------------------------
     while (management_config_finished !== 1) @(posedge management_config_finished);
-    $display("Rx Stimulus: sending 5 frames at 10M ... ");
+    $display("Rx Stimulus: sending 4 frames at 10M ... ");
 
     send_frame_10_100m(frame0.tobits(0));
     send_frame_10_100m(frame1.tobits(1));
     send_frame_10_100m(frame2.tobits(2));
     send_frame_10_100m(frame3.tobits(3));
-    send_frame_10_100m(frame4.tobits(4));
-
-    wait (tx_monitor_finished_10M == 1);
-    #10000;
-
-    // 1 Gb/s speed
-    //-----------------------------------------------------
-    while (management_config_finished !== 1) @(posedge management_config_finished);
-    $display("Rx Stimulus: sending 5 frames at 1G ... ");
-
-    send_frame_1g(frame0.tobits(0));
-    send_frame_1g(frame1.tobits(1));
-    send_frame_1g(frame2.tobits(2));
-    send_frame_1g(frame3.tobits(3));
-    send_frame_1g(frame4.tobits(4));
 
 
   end // p_rx_stimulus
 
-
-
-  //----------------------------------------------------------------------------
-  // A Task to check a transmitted frame at 1Gb/s
-  //----------------------------------------------------------------------------
-  task check_frame_1g;
-    input `FRAME_TYP frame;
-    integer column_index;
-    integer I,J;
-    reg [8*4:0] frame_type;
-    reg [31:0] fcs;
-    reg [95:0] addr_comp_reg;
-    reg frame_filtered ;
-
-  begin
-    // import the frame into scratch space
-    tx_monitor_working_frame.frombits(frame);
-
-    column_index = 0;
-
-   frame_filtered = 1'b0 ;
-   addr_comp_reg = 0;
-
-   while (tx_monitor_working_frame.valid[column_index] !== 1'b0 && column_index < 12)
-    begin
-        for (J = 0; J < 8; J = J + 1) begin
-        addr_comp_reg[column_index*8+J] = tx_monitor_working_frame.data[column_index][J];
-        end
-    column_index = column_index + 1;
-    end
-       if (addr_comp_reg == address_filter_value) begin
-           frame_filtered = 0;
-       end
-       else begin
-           frame_filtered = 1;
-       end
-    column_index = 0;
-    if  (frame_filtered == 1'b1) begin
-    $display("FRAME DROPPED by Address Filter");
-    end
-
-    // If the current frame had an error inserted then it would have
-    // been dropped by the FIFO in the design example. Therefore
-    // exit this task and move immediately on to the next frame.
-    // Move to the next frame also when the frame has been dropped by
-    // the address filter.
-   if (tx_monitor_working_frame.bad_frame !== 1'b1 && frame_filtered != 1'b1)
-    begin
-
-      // Reset the fcs calculation
-      fcs = 32'b0;
-
-      // wait until the first real column of data to come out of RX client
-      while (gmii_tx_en !== 1'b1)
-        @(posedge gmii_tx_clk);
-
-      // Parse over the preamble field
-      while (gmii_txd === 8'h55)
-        @(posedge gmii_tx_clk);
-
-      // Parse over the SFD
-      if (gmii_txd !== 8'hd5) begin
-        $display("** ERROR: SFD not present at %t", $realtime, "ps");
-        demo_mode_error <= 1;
-      end
-      @(posedge gmii_tx_clk);
-
-      if (TB_MODE == "DEMO") begin
-         // Start comparing transmitted data to received data
-         $display("** Note: Comparing Transmitted Frame with Injected Frame");
-
-         // frame has started, loop over columns of frame
-         while (tx_monitor_working_frame.valid[column_index] !== 1'b0)
-         begin
-
-           // The transmitted Destination Address was the Source Address
-           // of the injected frame
-           if (column_index < 6)
-           begin
-             if (gmii_tx_en !== tx_monitor_working_frame.valid[column_index+6]) begin
-               $display("** ERROR: gmii_tx_en incorrect during Destination Address at %t", $realtime, "ps");
-               demo_mode_error <= 1;
-             end
-
-             if (gmii_txd !== tx_monitor_working_frame.data[(column_index+6)]) begin
-               $display("** ERROR: gmii_txd incorrect during Destination Address at %t", $realtime, "ps");
-               demo_mode_error <= 1;
-             end
-           end
-
-           // The transmitted Source Address was the Destination Address
-           // of the injected frame
-           else if (column_index < 12)
-           begin
-             if (gmii_tx_en !== tx_monitor_working_frame.valid[column_index-6]) begin
-               $display("** ERROR: gmii_tx_en incorrect during Source Address at %t", $realtime, "ps");
-               demo_mode_error <= 1;
-             end
-
-             if (gmii_txd !== tx_monitor_working_frame.data[(column_index-6)]) begin
-               $display("** ERROR: gmii_txd incorrect during Source Address at %t", $realtime, "ps");
-               demo_mode_error <= 1;
-             end
-           end
-
-           // check all other data in the frame
-           else
-           begin
-             if (gmii_tx_en !== tx_monitor_working_frame.valid[column_index]) begin
-               $display("** ERROR: gmii_tx_en incorrect at %t", $realtime, "ps");
-               demo_mode_error <= 1;
-             end
-
-             if (gmii_txd !== tx_monitor_working_frame.data[column_index]) begin
-               $display("** ERROR: gmii_txd incorrect at %t", $realtime, "ps");
-               demo_mode_error <= 1;
-             end
-           end
-
-           // calculate expected crc for the frame
-           calc_crc(gmii_txd, fcs);
-
-           // wait for next column of data
-           column_index = column_index + 1;
-           @(posedge gmii_tx_clk);
-         end
-
-         // Check the FCS
-         // Having checked all data columns, txd must contain FCS.
-         for (I = 0; I < 4; I = I + 1)
-         begin
-           if (gmii_tx_en !== 1'b1) begin
-             $display("** ERROR: gmii_tx_en incorrect during FCS field at %t", $realtime, "ps");
-             demo_mode_error <= 1;
-           end
-
-           case(I)
-             0 :  if (gmii_txd !== fcs[7:0]) begin
-                    $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
-                    demo_mode_error <= 1;
-                  end
-             1 :  if (gmii_txd !== fcs[15:8]) begin
-                    $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
-                    demo_mode_error <= 1;
-                  end
-             2 :  if (gmii_txd !== fcs[23:16]) begin
-                    $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
-                    demo_mode_error <= 1;
-                  end
-             3 :  if (gmii_txd !== fcs[31:24]) begin
-                    $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
-                    demo_mode_error <= 1;
-                  end
-           endcase
-
-           @(posedge gmii_tx_clk);
-         end
-      end
-      else begin
-         // this is the BIST tb mode - want to idnetify the frame type  - VLAN or not to help with the bandwidth calc
-         // check the type field and if equal to 81 then classify as vlan (could do more but that should be adequate)
-         frame_type = "";
-         while (gmii_tx_en) begin
-            if (column_index == 12 & gmii_txd == 8'h81) begin
-               frame_type = "VLAN";
-            end
-
-            // wait for next column of data
-            column_index = column_index + 1;
-            @(posedge gmii_tx_clk);
-         end
-      end
-    end
-   end
-  endtask // check_frame_1g
 
 
   //----------------------------------------------------------------------------
@@ -1473,10 +1064,9 @@ module demo_tb;
   task check_frame_10_100m;
     input `FRAME_TYP frame;
     integer column_index;
-    integer I,J;
+    integer I;
     reg [31:0] fcs;
-    reg [95:0] addr_comp_reg;
-    reg frame_filtered ;
+
   begin
     $timeformat(-9, 0, "ns", 7);
 
@@ -1484,50 +1074,23 @@ module demo_tb;
     tx_monitor_working_frame.frombits(frame);
 
     column_index = 0;
-   frame_filtered = 1'b0 ;
-   addr_comp_reg = 0;
-
-   while (tx_monitor_working_frame.valid[column_index] !== 1'b0 && column_index < 12)
-    begin
-        for (J = 0; J < 8; J = J + 1) begin
-        addr_comp_reg[column_index*8+J] = tx_monitor_working_frame.data[column_index][J];
-        end
-    column_index = column_index + 1;
-    end
-       if (addr_comp_reg == address_filter_value) begin
-           frame_filtered = 0;
-       end
-       else begin
-           frame_filtered = 1;
-       end
-    column_index = 0;
-    if  (frame_filtered == 1'b1) begin
-    $display("FRAME DROPPED by Address Filter");
-    end
-
-    // If the current frame had an error inserted then it would have
-    // been dropped by the FIFO in the design example. Therefore
-    // exit this task and move immediately on to the next frame.
-    // Move to the next frame also when the frame has been dropped by
-    // the address filter.
-   if (tx_monitor_working_frame.bad_frame !== 1'b1 && frame_filtered != 1'b1)
-
 
     // If the current frame had an error inserted then it would have
     // been dropped by the FIFO in the design example.  Therefore
     // exit this task and move immediately on to the next frame.
     if (tx_monitor_working_frame.bad_frame !== 1'b1)
+
     begin
 
-      // Reset the FCS calculation
-      fcs = 32'b0;
+        // Reset the FCS calculation
+        fcs = 32'b0;
 
       // wait until the first real column of data to come out of RX client
-      while (gmii_tx_en !== 1'b1)
+      while (mii_tx_en !== 1'b1)
         @(posedge mii_tx_clk);
 
       // Parse over the preamble field
-      while (gmii_txd === 8'h05)
+      while (mii_txd === 8'h05)
         @(posedge mii_tx_clk);
 
       // Parse over the SFD
@@ -1545,25 +1108,25 @@ module demo_tb;
         if (column_index < 6)
         begin
           calc_crc(tx_monitor_working_frame.data[column_index+6], fcs);
-          if (gmii_tx_en !== tx_monitor_working_frame.valid[column_index+6]) begin
-            $display("** ERROR: gmii_tx_en incorrect during Destination Address at %t", $realtime, "ps");
+          if (mii_tx_en !== tx_monitor_working_frame.valid[column_index+6]) begin
+            $display("** ERROR: mii_tx_en incorrect during Destination Address");
             demo_mode_error <= 1;
           end
 
-          if (gmii_txd !== {4'h0, tx_monitor_working_frame.data[(column_index+6)][3:0]}) begin
-            $display("** ERROR: gmii_txd incorrect during Destination Addres at %t", $realtime, "pss");
+          if (mii_txd !== {tx_monitor_working_frame.data[(column_index+6)][3:0]}) begin
+            $display("** ERROR: mii_txd incorrect during Destination Address");
             demo_mode_error <= 1;
           end
 
           @(posedge mii_tx_clk);
 
-          if (gmii_tx_en !== tx_monitor_working_frame.valid[column_index+6]) begin
-            $display("** ERROR: gmii_tx_en incorrect during Destination Address at %t", $realtime, "ps");
+          if (mii_tx_en !== tx_monitor_working_frame.valid[column_index+6]) begin
+            $display("** ERROR: mii_tx_en incorrect during Destination Address");
             demo_mode_error <= 1;
           end
 
-          if (gmii_txd !== {4'h0, tx_monitor_working_frame.data[(column_index+6)][7:4]}) begin
-            $display("** ERROR: gmii_txd incorrect during Destination Address at %t", $realtime, "ps");
+          if (mii_txd !== {tx_monitor_working_frame.data[(column_index+6)][7:4]}) begin
+            $display("** ERROR: mii_txd incorrect during Destination Address");
             demo_mode_error <= 1;
           end
         end
@@ -1573,25 +1136,25 @@ module demo_tb;
         else if (column_index < 12)
         begin
           calc_crc(tx_monitor_working_frame.data[column_index-6], fcs);
-          if (gmii_tx_en !== tx_monitor_working_frame.valid[column_index-6]) begin
-            $display("** ERROR: gmii_tx_en incorrect during Source Address at %t", $realtime, "ps");
+          if (mii_tx_en !== tx_monitor_working_frame.valid[column_index-6]) begin
+            $display("** ERROR: mii_tx_en incorrect during Source Address");
             demo_mode_error <= 1;
           end
 
-          if (gmii_txd !== {4'h0, tx_monitor_working_frame.data[(column_index-6)][3:0]}) begin
-            $display("** ERROR: gmii_txd incorrect during Source Addres at %t", $realtime, "pss");
+          if (mii_txd !== {tx_monitor_working_frame.data[(column_index-6)][3:0]}) begin
+            $display("** ERROR: mii_txd incorrect during Source Address");
             demo_mode_error <= 1;
           end
 
           @(posedge mii_tx_clk);
 
-          if (gmii_tx_en !== tx_monitor_working_frame.valid[column_index-6]) begin
-            $display("** ERROR: gmii_tx_en incorrect during Source Address at %t", $realtime, "ps");
+          if (mii_tx_en !== tx_monitor_working_frame.valid[column_index-6]) begin
+            $display("** ERROR: mii_tx_en incorrect during Source Address");
             demo_mode_error <= 1;
           end
 
-          if (gmii_txd !== {4'h0, tx_monitor_working_frame.data[(column_index-6)][7:4]}) begin
-            $display("** ERROR: gmii_txd incorrect during Source Address at %t", $realtime, "ps");
+          if (mii_txd !== {tx_monitor_working_frame.data[(column_index-6)][7:4]}) begin
+            $display("** ERROR: mii_txd incorrect during Source Address");
             demo_mode_error <= 1;
           end
         end
@@ -1600,25 +1163,25 @@ module demo_tb;
         else
         begin
           calc_crc(tx_monitor_working_frame.data[column_index], fcs);
-          if (gmii_tx_en !== tx_monitor_working_frame.valid[column_index]) begin
-            $display("** ERROR: gmii_tx_en incorrect at %t", $realtime, "ps");
+          if (mii_tx_en !== tx_monitor_working_frame.valid[column_index]) begin
+            $display("** ERROR: mii_tx_en incorrect");
             demo_mode_error <= 1;
           end
 
-          if (gmii_txd !== {4'h0, tx_monitor_working_frame.data[column_index][3:0]}) begin
-            $display("** ERROR: gmii_txd incorrect at %t", $realtime, "ps");
+          if (mii_txd !== {tx_monitor_working_frame.data[column_index][3:0]}) begin
+            $display("** ERROR: mii_txd incorrect");
             demo_mode_error <= 1;
           end
 
           @(posedge mii_tx_clk);
 
-          if (gmii_tx_en !== tx_monitor_working_frame.valid[column_index]) begin
-            $display("** ERROR: gmii_tx_en incorrect at %t", $realtime, "ps");
+          if (mii_tx_en !== tx_monitor_working_frame.valid[column_index]) begin
+            $display("** ERROR: mii_tx_en incorrect");
             demo_mode_error <= 1;
           end
 
-          if (gmii_txd !== {4'h0, tx_monitor_working_frame.data[column_index][7:4]}) begin
-            $display("** ERROR: gmii_txd incorrect at %t", $realtime, "ps");
+          if (mii_txd !== {tx_monitor_working_frame.data[column_index][7:4]}) begin
+            $display("** ERROR: mii_txd incorrect");
             demo_mode_error <= 1;
           end
         end
@@ -1632,51 +1195,47 @@ module demo_tb;
       // Having checked all data columns, txd must contain FCS.
       for (I = 0; I < 4; I = I + 1)
       begin
-        if (gmii_tx_en !== 1'b1) begin
-          $display("** ERROR: gmii_tx_en incorrect during FCS field at %t", $realtime, "ps");
-          demo_mode_error <= 1;
-        end
+        if (mii_tx_en !== 1'b1)
+          $display("** ERROR: mii_tx_en incorrect during FCS field at %t", $realtime, "ps");
 
         case(I)
-          0 :  if (gmii_txd !== fcs[3:0]) begin
-                 $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
+          0 :  if (mii_txd !== fcs[3:0]) begin
+                 $display("** ERROR: mii_txd incorrect during FCS field at %t", $realtime, "ps");
                  demo_mode_error <= 1;
                end
-          1 :  if (gmii_txd !== fcs[11:8]) begin
-                 $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
+          1 :  if (mii_txd !== fcs[11:8]) begin
+                 $display("** ERROR: mii_txd incorrect during FCS field at %t", $realtime, "ps");
                  demo_mode_error <= 1;
                end
-          2 :  if (gmii_txd !== fcs[19:16]) begin
-                 $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
+          2 :  if (mii_txd !== fcs[19:16]) begin
+                 $display("** ERROR: mii_txd incorrect during FCS field at %t", $realtime, "ps");
                  demo_mode_error <= 1;
                end
-          3 :  if (gmii_txd !== fcs[27:24]) begin
-                 $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
+          3 :  if (mii_txd !== fcs[27:24]) begin
+                 $display("** ERROR: mii_txd incorrect during FCS field at %t", $realtime, "ps");
                  demo_mode_error <= 1;
                end
         endcase
 
         @(posedge mii_tx_clk);
-        if (gmii_tx_en !== 1'b1) begin
-          $display("** ERROR: gmii_tx_en incorrect during FCS field at %t", $realtime, "ps");
-          demo_mode_error <= 1;
-        end
+        if (mii_tx_en !== 1'b1)
+          $display("** ERROR: mii_tx_en incorrect during FCS field at %t", $realtime, "ps");
 
         case(I)
-          0 :  if (gmii_txd !== fcs[7:4]) begin
-                 $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
+          0 :  if (mii_txd !== fcs[7:4]) begin
+                 $display("** ERROR: mii_txd incorrect during FCS field at %t", $realtime, "ps");
                  demo_mode_error <= 1;
                end
-          1 :  if (gmii_txd !== fcs[15:12]) begin
-                 $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
+          1 :  if (mii_txd !== fcs[15:12]) begin
+                 $display("** ERROR: mii_txd incorrect during FCS field at %t", $realtime, "ps");
                  demo_mode_error <= 1;
                end
-          2 :  if (gmii_txd !== fcs[23:20]) begin
-                 $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
+          2 :  if (mii_txd !== fcs[23:20]) begin
+                 $display("** ERROR: mii_txd incorrect during FCS field at %t", $realtime, "ps");
                  demo_mode_error <= 1;
                end
-          3 :  if (gmii_txd !== fcs[31:28]) begin
-                 $display("** ERROR: gmii_txd incorrect during FCS field at %t", $realtime, "ps");
+          3 :  if (mii_txd !== fcs[31:28]) begin
+                 $display("** ERROR: mii_txd incorrect during FCS field at %t", $realtime, "ps");
                  demo_mode_error <= 1;
                end
         endcase
@@ -1689,7 +1248,6 @@ module demo_tb;
   endtask // check_frame_10_100m
 
 
-
   //----------------------------------------------------------------------------
   // Monitor process. This process checks the data coming out of the
   // transmitter to make sure that it matches that inserted into the
@@ -1698,7 +1256,6 @@ module demo_tb;
 
   initial
   begin : p_tx_monitor
-    tx_monitor_finished_1G    <= 0;
     tx_monitor_finished_100M  <= 0;
     tx_monitor_finished_10M   <= 0;
 
@@ -1714,19 +1271,6 @@ module demo_tb;
        // wait for the reset to complete before starting monitor
        @(negedge reset);
 
-       // 1 Gb/s speed
-       //-----------------------------------------------------
-
-       // Check the frames
-       check_frame_1g(frame0.tobits(0));
-       check_frame_1g(frame1.tobits(0));
-       check_frame_1g(frame2.tobits(0));
-       check_frame_1g(frame3.tobits(0));
-       check_frame_1g(frame4.tobits(0));
-
-       #200000
-       tx_monitor_finished_1G  <= 1;
-
        // 100 Mb/s speed
        //-----------------------------------------------------
 
@@ -1735,11 +1279,9 @@ module demo_tb;
        check_frame_10_100m(frame1.tobits(0));
        check_frame_10_100m(frame2.tobits(0));
        check_frame_10_100m(frame3.tobits(0));
-       check_frame_10_100m(frame4.tobits(0));
 
        #200000
        tx_monitor_finished_100M  <= 1;
-       tx_monitor_finished_1G    <= 0;
 
        // 10 Mb/s speed
        //-----------------------------------------------------
@@ -1749,27 +1291,12 @@ module demo_tb;
        check_frame_10_100m(frame1.tobits(0));
        check_frame_10_100m(frame2.tobits(0));
        check_frame_10_100m(frame3.tobits(0));
-       check_frame_10_100m(frame4.tobits(0));
 
        #200000
        tx_monitor_finished_10M  <= 1;
 
-       // 1 Gb/s speed
-       //-----------------------------------------------------
-
-       // Check the frames
-       check_frame_1g(frame0.tobits(0));
-       check_frame_1g(frame1.tobits(0));
-       check_frame_1g(frame2.tobits(0));
-       check_frame_1g(frame3.tobits(0));
-       check_frame_1g(frame4.tobits(0));
-
-       #200000
-       tx_monitor_finished_1G  <= 1;
-
      end
      else begin
-       forever check_frame_1g(frame0.tobits(0));
      end
 
   end // p_tx_monitor
