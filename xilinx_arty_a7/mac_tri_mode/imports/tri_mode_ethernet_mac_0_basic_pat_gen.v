@@ -65,8 +65,8 @@
 
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module tri_mode_ethernet_mac_0_basic_pat_gen #(
-    parameter                            DEST_ADDR       = 48'hda0102030405,
-    parameter                            SRC_ADDR        = 48'h5a0102030405,
+    parameter                            DEST_ADDR       = 48'h64006a54ad7d,
+    parameter                            SRC_ADDR        = 48'h00183E02E5EB,
     parameter                            MAX_SIZE        = 16'd500,
     parameter                            MIN_SIZE        = 16'd64,
     parameter                            ENABLE_VLAN     = 1'b0,
@@ -95,7 +95,9 @@ module tri_mode_ethernet_mac_0_basic_pat_gen #(
     input                                tx_axis_tready,
 
     output                               frame_error,
-    output                               activity_flash
+    output                               activity_flash,
+    output                               activity_flash_gen,
+    output                               pkt_gen_enabled
 );
 
 wire     [7:0]       rx_axis_tdata_int;
@@ -150,7 +152,10 @@ tri_mode_ethernet_mac_0_axi_pat_gen #(
    .tdata                     (pat_gen_tdata),
    .tvalid                    (pat_gen_tvalid),
    .tlast                     (pat_gen_tlast),
-   .tready                    (pat_gen_tready)
+   .tready                    (pat_gen_tready),
+   
+   .activity_flash_gen        (activity_flash_gen),
+   .pkt_gen_enabled           (pkt_gen_enabled)
 );
 
 tri_mode_ethernet_mac_0_axi_pat_check #(

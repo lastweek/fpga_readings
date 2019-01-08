@@ -113,12 +113,8 @@ localparam  STARTUP               = 0,
            CNFG_MDIO             = 18,
            CNFG_FLOW             = 19,
            CNFG_FILTER           = 22,
-           CNFG_FRM_FILTER_1     = 31,
-           CNFG_FRM_FILTER_2     = 32,
-           CNFG_FRM_FILTER_3     = 33,
-           CNFG_FRM_FILTER_MASK_1      = 34,
-           CNFG_FRM_FILTER_MASK_2      = 35,
-           CNFG_FRM_FILTER_MASK_3      = 36,
+           CNFG_LO_ADDR          = 20,
+           CNFG_HI_ADDR          = 21,
 
            CHECK_SPEED           = 25;
 
@@ -161,23 +157,6 @@ localparam CONFIG_UNI1_CTRL_ADD   = 17'h704;
 // Address Filter configuration register address (0x708)
 localparam CONFIG_ADDR_CTRL_ADD   = 17'h708;
 
-   // Frame filter bytes (3 to 0)  register address (0x710)
-localparam CONFIG_FRAME_FILTER_1   = 17'h710;
-
-   // Frame filter bytes (7 to 4)  register address (0x714)
-localparam CONFIG_FRAME_FILTER_2   = 17'h714;
-
-   // Frame filter bytes (11 to 8) register address (0x718)
-localparam CONFIG_FRAME_FILTER_3   = 17'h718;
-
-   // Frame filter mask bytes (3 to 0) register address (0x750)
-localparam CONFIG_FRAME_FILTER_MASK_1   = 17'h750;
-
-   // Frame filter mask bytes (7 to 4) register address (0x754)
-localparam CONFIG_FRAME_FILTER_MASK_2   = 17'h754;
-
-   // Frame filter mask bytes (11 to 8) register address (0x758)
-localparam CONFIG_FRAME_FILTER_MASK_3   = 17'h758;
 
       
 // MDIO registers
@@ -206,8 +185,7 @@ reg      [31:0]   axi_wr_data;
 reg      [31:0]   mdio_wr_data;
 
   
-reg      [5:0]    axi_state;           // main state machine to configure example design
-reg               design_on_board = 1'b0;
+reg      [4:0]    axi_state;           // main state machine to configure example design
       
   
 reg      [1:0]    mdio_access_sm;      // mdio state machine to handle mdio register config
@@ -331,11 +309,9 @@ begin
             if (axi_rd_data[16:0] == 17'h1ffff) begin
                // if status is all ones then no PHY exists at this address
                // (this is used by the tri_mode_ethernet_mac_0_demo_tb to avoid performing lots of phy accesses)
-               design_on_board <= 1'b0;
                axi_state      <= RESET_MAC_RX;
                end
             else begin
-               design_on_board <= 1'b1;
                axi_state      <= MDIO_1G;
                end
          end
@@ -451,69 +427,30 @@ begin
             writenread     <= 1;
             addr           <= CONFIG_FLOW_CTRL_ADD;
             axi_wr_data    <= 32'h0;
+            axi_state      <= CNFG_LO_ADDR;
+         end
+         CNFG_LO_ADDR : begin
+            $display("** Note: Configuring unicast address(low word)....");
+            start_access   <= 1;
+            writenread     <= 1;
+            addr           <= CONFIG_UNI0_CTRL_ADD;
+            axi_wr_data    <= 32'h040302DA;
+            axi_state      <= CNFG_HI_ADDR;
+         end
+         CNFG_HI_ADDR : begin
+            $display("** Note: Configuring unicast address(high word)....");
+            start_access   <= 1;
+            writenread     <= 1;
+            addr           <= CONFIG_UNI1_CTRL_ADD;
+            axi_wr_data    <= 32'h0605;
             axi_state      <= CNFG_FILTER;
          end
-        CNFG_FILTER : begin
-         
-            if (design_on_board == 1'b0) begin
-                $display("** Note: Setting core to non-promiscuous mode ...");
-                end
-            else begin
-                $display("** Note: Setting core to promiscuous mode ...");
-            end
+         CNFG_FILTER : begin
+            $display("** Note: Setting core to promiscuous mode....");
             start_access   <= 1;
             writenread     <= 1;
             addr           <= CONFIG_ADDR_CTRL_ADD;
-            axi_wr_data    <= {design_on_board ,31'h00000000};
-            axi_state      <= CNFG_FRM_FILTER_1;
-         end
-         
-         CNFG_FRM_FILTER_1 : begin
-            $display("** Note: Configuring FRAME FILTER 1 ...");
-            start_access   <= 1;
-            writenread     <= 1;
-            addr           <= CONFIG_FRAME_FILTER_1;
-            axi_wr_data    <= 32'h040302DA;
-            axi_state      <= CNFG_FRM_FILTER_MASK_1;
-         end
-         CNFG_FRM_FILTER_MASK_1 : begin
-            $display("** Note: Configuring FRAME FILTER mask 1 ...");
-            start_access   <= 1;
-            writenread     <= 1;
-            addr           <= CONFIG_FRAME_FILTER_MASK_1;
-            axi_wr_data    <= 32'hFFFFFFFF;
-            axi_state      <= CNFG_FRM_FILTER_2;
-         end
-          CNFG_FRM_FILTER_2 : begin
-            $display("** Note: Configuring FRAME FILTER 2 ...");
-            start_access   <= 1;
-            writenread     <= 1;
-            addr           <= CONFIG_FRAME_FILTER_2;
-            axi_wr_data    <= 32'h025A0605;
-            axi_state      <= CNFG_FRM_FILTER_MASK_2;
-         end
-         CNFG_FRM_FILTER_MASK_2 : begin
-            $display("** Note: Configuring FRAME FILTER mask 2 ...");
-            start_access   <= 1;
-            writenread     <= 1;
-            addr           <= CONFIG_FRAME_FILTER_MASK_2;
-            axi_wr_data    <= 32'hFFFFFFF;
-            axi_state      <= CNFG_FRM_FILTER_3;
-         end
-         CNFG_FRM_FILTER_3 : begin
-            $display("** Note: Configuring FRAME FILTER 3 ...");
-            start_access   <= 1;
-            writenread     <= 1;
-            addr           <= CONFIG_FRAME_FILTER_3;
-            axi_wr_data    <= 32'h06050403;
-            axi_state      <= CNFG_FRM_FILTER_MASK_3;
-         end
-         CNFG_FRM_FILTER_MASK_3 : begin
-            $display("** Note: Configuring FRAME FILTER mask 3 ...");
-            start_access   <= 1;
-            writenread     <= 1;
-            addr           <= CONFIG_FRAME_FILTER_MASK_3;
-            axi_wr_data    <= 32'hFFFFFFFF;
+            axi_wr_data    <= 32'h80000000;
             axi_state      <= CHECK_SPEED;
          end
          CHECK_SPEED : begin

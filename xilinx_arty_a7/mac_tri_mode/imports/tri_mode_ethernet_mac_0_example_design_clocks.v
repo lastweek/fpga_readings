@@ -56,8 +56,9 @@
 module tri_mode_ethernet_mac_0_example_design_clocks
    (
    // differential clock inputs
-   input          clk_in_p,
-   input          clk_in_n,
+   //input          clk_in_p,
+   //input          clk_in_n,
+   input          clk_in,
 
    // asynchronous control/resets
    input          glbl_rst,
@@ -66,7 +67,6 @@ module tri_mode_ethernet_mac_0_example_design_clocks
    // clock outputs
    output         gtx_clk_bufg,
    
-   output         refclk_bufg,
    output         s_axi_aclk
    );
 
@@ -79,12 +79,18 @@ module tri_mode_ethernet_mac_0_example_design_clocks
    reg            dcm_locked_reg = 1;
    reg            dcm_locked_edge = 1;
 
+/*
+    // No need for manual buffering
+    // arty a7 is using single-ended clock
+
   // Input buffering
   //------------------------------------
   IBUFDS clkin1_buf
    (.O  (clkin1),
     .I  (clk_in_p),
     .IB (clk_in_n));
+*/
+   assign clkin1 = clk_in;
 
   // route clkin1 through a BUFGCE for the MMCM reset generation logic
   BUFGCE bufg_clkin1 (.I(clkin1), .CE  (1'b1), .O(clkin1_bufg));
@@ -120,12 +126,12 @@ module tri_mode_ethernet_mac_0_example_design_clocks
 
   tri_mode_ethernet_mac_0_clk_wiz clock_generator
   (
-      // Clock in ports
+      // 100MHz Clock in ports
       .CLK_IN1       (clkin1),
+      
       // Clock out ports
       .CLK_OUT1      (gtx_clk_bufg),
       .CLK_OUT2      (s_axi_aclk),
-      .CLK_OUT3      (refclk_bufg),
       // Status and control signals
       .RESET         (mmcm_rst),
       .LOCKED        (dcm_locked_int)

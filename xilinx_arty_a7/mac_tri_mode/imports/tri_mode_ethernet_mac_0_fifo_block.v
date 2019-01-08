@@ -94,9 +94,6 @@ module tri_mode_ethernet_mac_0_fifo_block (
       input         rx_axi_rstn,
       input         tx_axi_rstn,
 
-      // Reference clock for IDELAYCTRL's
-      input         refclk,
-
       // Receiver Statistics Interface
       //---------------------------------------
       output        rx_mac_aclk,
@@ -139,22 +136,23 @@ module tri_mode_ethernet_mac_0_fifo_block (
       input         pause_req,
       input  [15:0] pause_val,
 
-      // GMII Interface
-      //-----------------
-      output [7:0]  gmii_txd,
-      output        gmii_tx_en,
-      output        gmii_tx_er,
-      output        gmii_tx_clk,
-      input  [7:0]  gmii_rxd,
-      input         gmii_rx_dv,
-      input         gmii_rx_er,
-      input         gmii_rx_clk,
+      // MII Interface
+      //---------------
+      output [3:0]  mii_txd,
+      output        mii_tx_en,
+      output        mii_tx_er,
+      input  [3:0]  mii_rxd,
+      input         mii_rx_dv,
+      input         mii_rx_er,
+      input         mii_rx_clk,
       input         mii_tx_clk,
 
       
       // MDIO Interface
       //---------------
-      inout         mdio,
+      input         mdio_i,
+      output        mdio_o,
+      output        mdio_t,
       output        mdc,
 
       // AXI-Lite Interface
@@ -241,7 +239,6 @@ module tri_mode_ethernet_mac_0_fifo_block (
       .rx_axis_mac_tvalid   (rx_axis_mac_tvalid),
       .rx_axis_mac_tlast    (rx_axis_mac_tlast),
       .rx_axis_mac_tuser    (rx_axis_mac_tuser),
-      .rx_axis_filter_tuser (),
 
       // Transmitter Interface
       .tx_enable             (),
@@ -262,29 +259,27 @@ module tri_mode_ethernet_mac_0_fifo_block (
       .pause_req            (pause_req),
       .pause_val            (pause_val),
 
-      // Reference clock for IDELAYCTRL's
-      .refclk               (refclk),
-
       // Speed Control
       .speedis100           (),
       .speedis10100         (),
 
-      // GMII Interface
-      .gmii_txd             (gmii_txd),
-      .gmii_tx_en           (gmii_tx_en),
-      .gmii_tx_er           (gmii_tx_er),
-      .gmii_tx_clk          (gmii_tx_clk),
-      .gmii_rxd             (gmii_rxd),
-      .gmii_rx_dv           (gmii_rx_dv),
-      .gmii_rx_er           (gmii_rx_er),
-      .gmii_rx_clk          (gmii_rx_clk),
+      // MII Interface
+      .mii_txd              (mii_txd),
+      .mii_tx_en            (mii_tx_en),
+      .mii_tx_er            (mii_tx_er),
+      .mii_rxd              (mii_rxd),
+      .mii_rx_dv            (mii_rx_dv),
+      .mii_rx_er            (mii_rx_er),
+      .mii_rx_clk           (mii_rx_clk),
       .mii_tx_clk           (mii_tx_clk),
 
       
       // MDIO Interface
       //---------------
-      .mdio                 (mdio),
       .mdc                  (mdc),
+      .mdio_i               (mdio_i),
+      .mdio_o               (mdio_o),
+      .mdio_t               (mdio_t),
 
       // AXI lite interface
       .s_axi_aclk           (s_axi_aclk),
