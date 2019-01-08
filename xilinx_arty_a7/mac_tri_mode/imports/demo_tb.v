@@ -506,6 +506,8 @@ module demo_tb;
   // testbench signals
   
   wire        gtx_clk;
+  wire        s_axi_aclk;
+  
   reg         mmcm_clk_in;
   reg         reset;
   reg         demo_mode_error = 1'b0;
@@ -570,6 +572,12 @@ module demo_tb;
  
       // 125 MHz clock output from MMCM
       .gtx_clk_bufg_out           (gtx_clk),
+      
+      //100 MHz clock output from MMCM
+      .s_axi_aclk_out              (s_axi_aclk),
+
+      //25 MHz clock output from MMCM to PHY
+      .mii_ref_clk_out                 (mii_ref_clk),
 
       .phy_resetn                 (),
 
@@ -578,7 +586,7 @@ module demo_tb;
       //---------------
       .mii_txd                    (mii_txd),
       .mii_tx_en                  (mii_tx_en),
-      .mii_tx_er                  (mii_tx_er),
+      //.mii_tx_er                  (mii_tx_er),
       .mii_rxd                    (mii_rxd_dut),
       .mii_rx_dv                  (mii_rx_dv_dut),
       .mii_rx_er                  (mii_rx_er_dut),
@@ -609,9 +617,9 @@ module demo_tb;
       .chk_tx_data                (check_tx_data),
       .reset_error                (1'b0),
       .frame_error                (frame_error),
-      .frame_errorn               (),
+      .user_LED               (),
       .activity_flash             (),
-      .activity_flashn            ()
+      .activity_flash_gen            ()
 
     );
 

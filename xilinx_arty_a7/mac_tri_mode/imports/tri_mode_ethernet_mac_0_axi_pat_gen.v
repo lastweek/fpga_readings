@@ -127,9 +127,11 @@ reg   [15:0]         frame_activity_count = 16'b0;
 
 wire                       axi_treset;
 
+// Indicate if packagt is enabled or not
 assign pkt_gen_enabled = enable_pat_gen;
 
-assign activity_flash = frame_activity_count[0];
+// Indicate activity
+assign activity_flash_gen = frame_activity_count[11];
 
 assign axi_treset = !axi_tresetn;
 
@@ -387,7 +389,7 @@ begin
    if (axi_treset)
       frame_activity_count <= 0;
    else begin
-      if (tlast)
+      if (gen_state == HEADER)
          frame_activity_count <= frame_activity_count + 1;
    end
 end

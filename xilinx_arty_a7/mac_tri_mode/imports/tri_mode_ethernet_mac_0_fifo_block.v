@@ -179,8 +179,9 @@ module tri_mode_ethernet_mac_0_fifo_block (
       output [31:0] s_axi_rdata,
       output [1:0]  s_axi_rresp,
       output        s_axi_rvalid,
-      input         s_axi_rready
+      input         s_axi_rready,
 
+      output        user_LED
    );
 
 
@@ -373,7 +374,9 @@ module tri_mode_ethernet_mac_0_fifo_block (
       .rx_axis_mac_tuser      (rx_axis_mac_tuser),
 
       .rx_fifo_status         (),
-      .rx_fifo_overflow       ()
+      .rx_fifo_overflow       (),
+      
+      .user_LED               (user_LED)
   );
 
 

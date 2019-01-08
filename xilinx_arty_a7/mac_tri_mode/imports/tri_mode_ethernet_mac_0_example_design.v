@@ -144,8 +144,23 @@ module tri_mode_ethernet_mac_0_example_design
       // 100MHz clock input from board
       input clk_in,
     
-      // 125 MHz clock from MMCM
+      /*
+       * 125 MHz
+       * 100 MHz
+       * Generated Output clocks from MMCM
+       * We output these two to testbench.
+       * No needed for real hardware.
+       */
       //output        gtx_clk_bufg_out,
+      //output        s_axi_aclk_out,
+
+      /*
+       * 25 MHZ clock for PHY x1
+       * specific for arty a7 100 board
+       * Somehow the PHY does not have any clock input
+       * and we need to feed it.
+       */
+      output        mii_ref_clk_out,
 
       output        phy_resetn,
 
@@ -188,8 +203,9 @@ module tri_mode_ethernet_mac_0_example_design
       input         chk_tx_data,
       input         reset_error,
       output        frame_error,
-      output        frame_errorn,
       output        activity_flash,
+
+      output        user_LED,
 
 
       /*
@@ -214,8 +230,9 @@ module tri_mode_ethernet_mac_0_example_design
 
    // example design clocks
    wire                 gtx_clk_bufg;
-   
    wire                 s_axi_aclk;
+   wire                 mii_ref_clk;
+   
    wire                 rx_mac_aclk;
    wire                 tx_mac_aclk;
    // resets (and reset generation)
@@ -282,37 +299,6 @@ module tri_mode_ethernet_mac_0_example_design
    wire                 s_axi_awready;
    wire  [31:0]         s_axi_wdata;
    wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
-   wire                 s_axi_wvalid;
    wire                 s_axi_wready;
    wire  [1:0]          s_axi_bresp;
    wire                 s_axi_bvalid;
@@ -355,10 +341,8 @@ module tri_mode_ethernet_mac_0_example_design
   assign mdio = mdio_t ? 1'bz : mdio_o;
 
   assign mdio_i = mdio;
-
-
+  
   assign frame_error  = int_frame_error;
-  assign frame_errorn = !int_frame_error;
   
   // when the config_board button is pushed capture and hold the
   // state of the gne/chek tx_data inputs.  These values will persist until the
@@ -395,11 +379,18 @@ module tri_mode_ethernet_mac_0_example_design
 
       // clock outputs
       .gtx_clk_bufg     (gtx_clk_bufg),
-      .s_axi_aclk       (s_axi_aclk)
+      .s_axi_aclk       (s_axi_aclk),
+   
+      .mii_ref_clk      (mii_ref_clk)
    );
 
-    // Pass the GTX clock to the Test Bench
-   //assign gtx_clk_bufg_out = gtx_clk_bufg;
+    /*
+     * Pass the GTX clock to the Test Bench
+     * Not needed for real hardware
+     */
+    //assign gtx_clk_bufg_out = gtx_clk_bufg;
+    //assign s_axi_aclk_out = s_axi_aclk;
+    assign mii_ref_clk_out = mii_ref_clk;
 
   //----------------------------------------------------------------------------
   // Generate the user side clocks for the axi fifos
@@ -682,7 +673,9 @@ module tri_mode_ethernet_mac_0_example_design
       .s_axi_rdata                  (s_axi_rdata),
       .s_axi_rresp                  (s_axi_rresp),
       .s_axi_rvalid                 (s_axi_rvalid),
-      .s_axi_rready                 (s_axi_rready)
+      .s_axi_rready                 (s_axi_rready),
+
+      .user_LED                     (user_LED)
 
    );
 

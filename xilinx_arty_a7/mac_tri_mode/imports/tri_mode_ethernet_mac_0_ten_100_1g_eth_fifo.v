@@ -115,7 +115,9 @@ module tri_mode_ethernet_mac_0_ten_100_1g_eth_fifo #
    input             rx_axis_mac_tuser,
    // rx fifo status outputs
    output   [3:0]    rx_fifo_status,
-   output            rx_fifo_overflow
+   output            rx_fifo_overflow,
+   
+   output user_LED
   );
 
 
@@ -149,7 +151,8 @@ module tri_mode_ethernet_mac_0_ten_100_1g_eth_fifo #
     .fifo_status        (tx_fifo_status),
 
     .tx_collision       (tx_collision),
-    .tx_retransmit      (tx_retransmit)
+    .tx_retransmit      (tx_retransmit),
+    .user_LED (user_LED)
   );
 
 

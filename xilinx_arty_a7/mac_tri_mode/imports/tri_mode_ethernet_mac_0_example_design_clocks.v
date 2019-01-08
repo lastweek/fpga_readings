@@ -67,7 +67,10 @@ module tri_mode_ethernet_mac_0_example_design_clocks
    // clock outputs
    output         gtx_clk_bufg,
    
-   output         s_axi_aclk
+   output         s_axi_aclk,
+   
+   // 25MHz for PHY
+   output         mii_ref_clk
    );
 
 
@@ -132,6 +135,7 @@ module tri_mode_ethernet_mac_0_example_design_clocks
       // Clock out ports
       .CLK_OUT1      (gtx_clk_bufg),
       .CLK_OUT2      (s_axi_aclk),
+      .CLK_OUT3      (mii_ref_clk),
       // Status and control signals
       .RESET         (mmcm_rst),
       .LOCKED        (dcm_locked_int)
