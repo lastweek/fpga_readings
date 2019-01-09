@@ -11,12 +11,38 @@
 			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
-`7 series products`
-	- UG471 SelectIO
-		- Everything we need to know about IO pins
-		- I/O tile, I/O block, pad, IDELAY, ODELAY
-		- IBUF, IBUFG, OBUF, OBUFG etc
-		- single-ended v.s. differential
+- 7 series FPGA
+	- `UG470 Configuration`
+		- About how download bitstream into FPGA and how to configure FPGA
+		- JTAG, Flash, Master, Slave
+		- Fun fact: bitstream length is fixed no matter how much resource is consumed by your code. ;-)
+	- `UG471 SelectIO`
+		- This UG first talks about the electrical behavior of `output drivers` and `input receivers`, and gives detailed examples of many standard interfaces. And then it explains all the `supporting logics` for IO, e.g. ILOGIC, IDELAY. This UG has everything you need to know about Xilinx IO pins, and how the IO pins is organized in the FPGA chip.
+		- Each I/O bank contains 50 SelectIO pins
+		- `I/O Standards`
+  			- Single-ended I/O standards (e.g., LVCMOS, LVTTL, HSTL, PCI, and SSTL)
+			- Differential I/O standards (e.g., LVDS, Mini_LVDS, RSDS, PPDS, BLVDS, and
+differential HSTL and SSTL)
+		- `SelectIO Primitives` (IBUF, IBUFG, IBUFDS, OBUF, OBUFT etc). (Signals used as inputs to 7 series devices must use an input buffer (IBUF, or other different flavors). Some buffers, e.g., IBUF, will be inserted by Vivado automatically during synthesis. Some buffers. e.g., IBUFDS, must be initialized manually via Verilog code (check UG768).)
+		- `SelectIO Attributes/Constraints` (You can see these on `I/O Ports` tab on Vivado. And you can modify these through xdc file.)
+			- Location Constraints
+			- IOSTANDARD Attribute
+			- IBUF_LOW_PWR Attribute
+ 			- Output Slew Rate Attributes (SLOW or FAST)
+			- Output Drive Strength Attributes
+			- PULLUP/PULLDOWN/KEEPER Attribute for IBUF, OBUFT, and IOBUF
+		- `Rules for Combining I/O Standards in the Same Bank`
+			- TODO: Looks like there many things to consider when we do I/O pin planning. For example, we need to consider voltage, noisy neighbours issues. Maybe Vivado will complain if we do something wrong?
+		- __FAT QUESTION__ Why primitives? Primitives (IBUF, OBUF etc) are used by Xilinx to support different I/O standards. What does this mean? 1) First understand what's the benefit of buffer. Buffer is used to isolate two worlds that may have different voltage, frequency etc. 2) Different I/O standard have very different physical behavior, e.g. they have different voltage. Those primitives, or those buffers, are used to connect different I/O standards to FPGA logic. Those primitives can be configured in so many different ways to accommodate different I/O standards (LVCMOS33, LVCMOS25 etc). And that's why IO has Attributes/Constraints. Those primitives are really the first thing to think about we are going to build IO. And you will see them very frequently.
+		- Chapter 2: `SelectIO Logic Resource`: the __logic__ directly behind the I/O drivers and receivers. Note that, now we are talking about logic. Previously we are focusing on `IO Buffer Primitives` that are used to support different IO standards. But now we shift our attention to logic, which can do many interesting things.
+			- ![7 Series I/O Tile](Figures/Xilinx/UG471_c1_01_012211.png)
+			- `I/O tile`: the whole IO thing is quite complex because the IO pin needs to support so many stuff. So the IO block is surrounded by many other logics, to support many IO standards and attributes. An I/O tile includes: PAD, IO block, IDELAY, ILOGIC, OLOGIC, ODELAY. It's a whole package.
+			- `ILOGIC`: The ILOGIC block is located next to the I/O block (IOB). The ILOGIC block contains the synchronous elements for capturing data as it comes into the FPGA through the IOB. ILOGIC is like predefined logic that will manipulate all incoming signals. As its name, ILOGIC is used to implement _some_ logic, it can be used to implement NO-OP (combinatorial) and DDR. Good to know.
+			- `IDELAY`: IDELAY allows incoming signals to be delayed on an individual input pin basis. It can be applied to the combinatorial input path, registered input path, or both. It can also be accessed directly from the FPGA logic. IDELAY is also a small block module. It's programmable, it has its own input/output signals.
+			- `OLOGIC: The OLOGIC block is located next to the I/O block (IOB). OLOGIC is a dedicated synchronous block sending data out of the FPGA through the IOB. OLOGIC consists of two major blocks, one to configure the output data path and the other to configure the 3-state control path.
+			- `ODELAY`: similar to IDELAY.
+			- `ISERDESE2` and `OSERDESE`: Something we need to learn in the future?
+			- `IO_FIFO`: how can we use this? and how this is different from LUT FIFO, user FIFO?
 	- UG472 Clocking
 		- Most of the thing we need to know about clock
 		- MMCM, PLL reference guide
