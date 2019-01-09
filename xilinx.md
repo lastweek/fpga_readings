@@ -43,7 +43,8 @@ differential HSTL and SSTL)
 			- `ODELAY`: similar to IDELAY.
 			- `ISERDESE2` and `OSERDESE`: Something we need to learn in the future?
 			- `IO_FIFO`: how can we use this? and how this is different from LUT FIFO, user FIFO?
-	- UG472 Clocking
+		- In Vivado, open `Implementation -> Device` and `Floorplanning`. Zoom in to the edges of the device. You should be able to see those IOB (PAD,IBUF, OBUF), and those ILOGIC, OLOGIC blocks. Some of them might be assigned to some top-level ports, as described by your xdc file. So, looks like most of those BUFs and LOGICs are inserted by Vivado!
+	- `UG472 Clocking`
 		- Most of the thing we need to know about clock
 		- MMCM, PLL reference guide
 	- UG473 Memory Resources
