@@ -11,7 +11,7 @@
 			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
-`7 series products`
+- `7 series products`
 	- UG471 SelectIO
 		- Everything we need to know about IO pins
 		- I/O tile, I/O block, pad, IDELAY, ODELAY
