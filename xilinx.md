@@ -11,10 +11,35 @@
 			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
+`7 series products`
+	- UG471 SelectIO
+		- Everything we need to know about IO pins
+		- I/O tile, I/O block, pad, IDELAY, ODELAY
+		- IBUF, IBUFG, OBUF, OBUFG etc
+		- single-ended v.s. differential
+	- UG472 Clocking
+		- Most of the thing we need to know about clock
+		- MMCM, PLL reference guide
+	- UG473 Memory Resources
+		- TODO
+	- UG474 Configurable Logic Block. About LUT and organization
+	- UG475 Packaging and Pinout
+		- Chapter 3 device diagram shows I/O planning symbols
+	- UG479 DSP48E1 Slice
+		- TODO
+	- UG483 PCB Design Guide
+		- For fun
+	- UG768 FPGA Libraries Guide for HDL Designs
+	- UG953 Vivado Design Suite 7 Series FPGA and Zynq-7000 SoC Libraries Guide
+		- TODO
+
 - BRAM
 	- TODO
 
 - Constraints: check xilinx_constraints.md
+
+- Configurable Logic Block (CLB)
+	- UG474: 7 Series FPGAs Configurable Logic Block: gives a very good introduction about how LUT is organized in Xilinx
 
 - Buffer (Q: why IOBUF? why clock buffer? why there is an awkward buffer in the middle?)
 	- [URL: Digital Buffer Tutorial](https://www.electronics-tutorials.ws/logic/logic_9.html)
@@ -61,6 +86,7 @@
 		- Clocking architecture about series 7. Must read.
 		- Ch.3: In 7 series FPGAs, the clock management tile (CMT) includes a mixed-mode clock manager (MMCM) and a phase-locked loop (PLL). The PLL contains a subset of the MMCM functions.
 	- `MMCME2_BASE`, `MMCME2_ADV`, `PLLE2_BASE`, `PLLE2_ADV`: Check UG472 ch.3 and UG768 for details. These are used to manipulate clocks, and I believe this is the building block of clock wizard. I encountered one MMCME2_ADV in tri-mode mac reference design.
+	- [`XAPPP888: MMCM and PLL Dynamic Reconfiguration`](https://www.xilinx.com/support/documentation/application_notes/xapp888_7Series_DynamicRecon.pdf)
 
 - HLS
 	- The arXiv book
