@@ -83,6 +83,7 @@ differential HSTL and SSTL)
 	- [StackExchange: What is the purpose of a buffer gate?](https://electronics.stackexchange.com/questions/236666/what-is-the-purpose-of-a-buffer-gate)
 
 - IO
+	- [UG899 Vivado I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug899-vivado-io-clock-planning.pdf)
 	- HP: high-performance IO banks
 	- HR: high-range IO banks
 		- The HP I/O banks are designed to meet the performance requirements of high-speed memory and other chip-to-chip interfaces with voltages up to 1.8V. The HR I/O banks are designed to support a wider range of I/O standards with voltages up to 3.3V.
@@ -93,6 +94,7 @@ differential HSTL and SSTL)
 	- Each top-level port is within the scope of SelectIO. We can use constraints to define what IO standard, what package pin, what drive length etc our top-level ports want. The whole thing is described as SelectIO by Xilinx. We should check each series's SelectIO guide to know what IO standards our FPGA support. SelectIO will also automatically add IO buffers into our design, such as IBUF, OBUF.
 
 - Clock
+	- [UG899 Vivado I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug899-vivado-io-clock-planning.pdf)
 	- [Slides: Clocks Basics in 10 Minutes or Less](http://www.ti.com/ww/mx/multimedia/webcasts/TI_webinar_25-06-2010.pdf)
 	- [Slides: Clock Tree 101](http://www.mouser.com/pdfdocs/clock-tree-101-timing-basics.pdf)
 	- [Slides: FPGA IO Resources](https://wiki.dcae.pub.ro/images/b/bd/FPGA_SERDES.pdf)
