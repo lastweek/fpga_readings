@@ -43,10 +43,17 @@ differential HSTL and SSTL)
 			- `ODELAY`: similar to IDELAY.
 			- `ISERDESE2` and `OSERDESE`: Something we need to learn in the future?
 			- `IO_FIFO`: how can we use this? and how this is different from LUT FIFO, user FIFO?
-		- In Vivado, open `Implementation -> Device` and `Floorplanning`. Zoom in to the edges of the device. You should be able to see those IOB (PAD,IBUF, OBUF), and those ILOGIC, OLOGIC blocks. Some of them might be assigned to some top-level ports, as described by your xdc file. So, looks like most of those BUFs and LOGICs are inserted by Vivado!
+		- In Vivado, open `Implementation -> Device` and `Floorplanning`. Zoom in to the edges of the device. You should be able to see those IOB (PAD, IBUF, OBUF), and those ILOGIC, OLOGIC blocks. Some of them might be assigned to some top-level ports, as described by your xdc file. So, looks like most of those BUFs and LOGICs are inserted by Vivado!
+		- Hmm, those IO blocks and logics, they are actually specialized "hard" logic in FPGA. They CAN be all implemented by using LUT. But to improve performance, just like DSP block did, we have those specialized IO blocks or IO tiles. Same for the following clock PLL and MMCM blocks.
 	- `UG472 Clocking`
-		- Most of the thing we need to know about clock
+		- Most of the thing we need to know about clock. This UG first talks about the available clocking resources, such as buffers, nets. And then it describes PLL and MMCM. After reading this, you will understand how clock is wired, distributed across whole FPGA. In `Device` view, those PLL and MMCM are sitting right next to SelectIO resources, near the edge.
 		- MMCM, PLL reference guide
+		- Selecting the proper clocking resources can improve routeability, performance, and general FPGA resource utilization.
+		- Clock-cable Inputs (MRCC, SRCC)
+		- Global Clocking Resource
+			- Clock Tree and Nets - GCLK
+			- Clock Regions
+			- Global Clock Buffers
 	- UG473 Memory Resources
 		- TODO
 	- UG474 Configurable Logic Block. About LUT and organization
