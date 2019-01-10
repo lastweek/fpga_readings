@@ -11,6 +11,20 @@
 			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
+- __HLS__
+	- The arXiv book
+	- [Vivado Design Hub - High-Level Synthesis (C based)](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0012-vivado-high-level-synthesis-hub.html)
+	- `UG998: Introduction to FPGA Design with Vivado High-Level Synthesis`
+	- `UG871: Tutorial High-Level Synthesis`
+		- Lab: great way to start coding HLS
+	- `UG902: User Guide High-Level Synthesis`
+		- [Properly Defining Interfaces in High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug902-vivado-high-level-synthesis.pdf#nameddest=InterfaceSynthesis)
+	- `UG1197: UltraFast High-Level Productivity Design Methodology Guide`
+  	- `XAPP1209: Designing Protocol Processing Systems with Vivado High-Level Synthesis`
+	- `XAPP1273: Reed-Solomon Erasure Codec Design Using Vivado High-Level Synthesis Application Note`
+  	- `Data I/O protocols`: those are directives that control how the input/output signals interact with outside users.
+	- `Block-level I/O protocols`: this allows the RTL design to be controlled by additional ports independently of the data I/O ports.
+
 - __7 series FPGA__
 	- `UG470 Configuration`
 		- About how download bitstream into FPGA and how to configure FPGA
@@ -67,22 +81,24 @@ differential HSTL and SSTL)
 	- UG953 Vivado Design Suite 7 Series FPGA and Zynq-7000 SoC Libraries Guide
 		- TODO
 
-- BRAM
+- __BRAM__
 	- TODO
 
-- Constraints: check xilinx_constraints.md
+- __Constraints__
+	- Check `xilinx_constraints.md`
 
-- Configurable Logic Block (CLB)
+- __Configurable Logic Block (CLB)__
 	- UG474: 7 Series FPGAs Configurable Logic Block: gives a very good introduction about how LUT is organized in Xilinx
 
-- Buffer (Q: why IOBUF? why clock buffer? why there is an awkward buffer in the middle?)
+- __Buffer__
+	- (Q: why IOBUF? why clock buffer? why there is an awkward buffer in the middle?)
 	- [URL: Digital Buffer Tutorial](https://www.electronics-tutorials.ws/logic/logic_9.html)
 	- [URL: Buffer Gate](https://en.wikichip.org/wiki/buffer_gate)
 	- [Wiki: Digital buffer](https://en.wikipedia.org/wiki/Digital_buffer)
 	- [Wiki: Buffer amplifier](https://en.wikipedia.org/wiki/Buffer_amplifier)
 	- [StackExchange: What is the purpose of a buffer gate?](https://electronics.stackexchange.com/questions/236666/what-is-the-purpose-of-a-buffer-gate)
 
-- IO
+- __IO__
 	- [Vivado Design Hub - I/O and Clock Planning](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0007-vivado-pin-planning-hub.html)
 	- [UG899 Vivado I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug899-vivado-io-clock-planning.pdf)
 	- HP: high-performance IO banks
@@ -94,7 +110,7 @@ differential HSTL and SSTL)
         	- `IBUFDS`: is NOT inserted (inferred) by the synthesis tool, you have to manually write code to instantiation. In IBUFDS, a design level interface signal is represented as two distinct ports (I and IB), one deemed the "master" and the other the "slave." The master and the slave are opposite phases of the same logical signal. (Leant this from tri-mode reference code)
 	- Each top-level port is within the scope of SelectIO. We can use constraints to define what IO standard, what package pin, what drive length etc our top-level ports want. The whole thing is described as SelectIO by Xilinx. We should check each series's SelectIO guide to know what IO standards our FPGA support. SelectIO will also automatically add IO buffers into our design, such as IBUF, OBUF.
 
-- Clock
+- __Clock__
 	- [Vivado Design Hub - I/O and Clock Planning](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0007-vivado-pin-planning-hub.html)
 	- [UG899 Vivado I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug899-vivado-io-clock-planning.pdf)
 	- [Slides: Clocks Basics in 10 Minutes or Less](http://www.ti.com/ww/mx/multimedia/webcasts/TI_webinar_25-06-2010.pdf)
@@ -125,27 +141,6 @@ differential HSTL and SSTL)
 		- Ch.3: In 7 series FPGAs, the clock management tile (CMT) includes a mixed-mode clock manager (MMCM) and a phase-locked loop (PLL). The PLL contains a subset of the MMCM functions.
 	- `MMCME2_BASE`, `MMCME2_ADV`, `PLLE2_BASE`, `PLLE2_ADV`: Check UG472 ch.3 and UG768 for details. These are used to manipulate clocks, and I believe this is the building block of clock wizard. I encountered one MMCME2_ADV in tri-mode mac reference design.
 	- [`XAPPP888: MMCM and PLL Dynamic Reconfiguration`](https://www.xilinx.com/support/documentation/application_notes/xapp888_7Series_DynamicRecon.pdf)
-
-- HLS
-	- The arXiv book
-	- [Vivado Design Hub - High-Level Synthesis (C based)](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0012-vivado-high-level-synthesis-hub.html)
-	- UG1197: UltraFast High-Level Productivity Design Methodology Guide
-	- UG871: Vivado Design Suite Tutorial High-Level Synthesis
-		- Lab: great way to start coding HLS
-	- UG902: Vivado Design Suite User Guide High-Level Synthesis
-		- [Properly Defining Interfaces in High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug902-vivado-high-level-synthesis.pdf#nameddest=InterfaceSynthesis)
-	- XAPP1209: Designing Protocol Processing Systems with Vivado High-Level Synthesis
-	- XAPP1273: Reed-Solomon Erasure Codec Design Using Vivado High-Level Synthesis Application Note
-  	- `Data I/O protocols`: those are directives that control how the input/output signals interact with outside users.
-    	- ap_hs
-    	- ap_vld
-		- ap_ack
-	- `Block-level I/O protocols`: this allows the RTL design to be controlled by additional ports independently of the data I/O ports.
-    	- ap_ctrl_hs
-    	- ap_ctrl_none
-    	- ap_ctrl_chained
-    	- s_axilite
-    	- which one should I use?
 
 - [What's `Implementation` in Xilinx?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm)
 	- Xilinx Implementation happens after Synthesis, so it must include several important steps
@@ -193,7 +188,7 @@ differential HSTL and SSTL)
 	- `PG035: AXI4-Stream Interconnect`.
 	- `PG085 AXI4-Stream Infrastructure IP Suite`.
 
-- IP
+- __IP__
 	- [Ethernet](https://www.xilinx.com/products/technology/ethernet.html)
 		- [Tri-Mode Ethernet MAC](https://www.xilinx.com/products/intellectual-property/temac.html)
 		- [AXI 1G/2.5G Ethernet](https://www.xilinx.com/products/intellectual-property/axi_ethernet.html#documentation)
