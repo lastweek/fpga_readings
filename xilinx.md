@@ -11,7 +11,7 @@
 			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
-- 7 series FPGA
+- __7 series FPGA__
 	- `UG470 Configuration`
 		- About how download bitstream into FPGA and how to configure FPGA
 		- JTAG, Flash, Master, Slave
@@ -170,7 +170,7 @@ differential HSTL and SSTL)
 
 - [External port](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/platform_studio/ps_p_hdw_making_external_port_connects.htm)
 
-- How to connect IPs?
+- AXI, AXI-Lite, and AXI-S. __How to connect IPs?__
 	- I came to this question when I tried to build blocks in HLS and Verilog, and was thinking about how should I connect those blocks? There are so many clk, reset, valid signal combinations, is there a standard for this communication protocol? Indeed, there are. This thread collects information about this topic.
 	- [Some basic knowledge](http://que.no/index.php/2016/03/13/principles-of-fpga-ip-interconnect/)
 	- [Introduction to AXI Protocol: Understanding the AXI interface](https://community.arm.com/soc/b/blog/posts/introduction-to-axi-protocol-understanding-the-axi-interface)
