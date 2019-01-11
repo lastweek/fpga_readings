@@ -37,3 +37,18 @@
 [submodule "submodules/timetoexplore"]
 	path = submodules/timetoexplore
 	url = https://github.com/WillGreen/timetoexplore
+[submodule "submodules/irn-vivado-hls"]
+	path = submodules/irn-vivado-hls
+	url = https://github.com/NetSys/irn-vivado-hls
+[submodule "submodules/P4HLS"]
+	path = submodules/P4HLS
+	url = https://github.com/engjefersonsantiago/P4HLS
+[submodule "submodules/pciebench-netfpga"]
+	path = submodules/pciebench-netfpga
+	url = https://github.com/pcie-bench/pciebench-netfpga
+[submodule "submodules/RFNoC-HLS-ATSC-RX"]
+	path = submodules/RFNoC-HLS-ATSC-RX
+	url = https://github.com/Xilinx/RFNoC-HLS-ATSC-RX
+[submodule "submodules/Vivado_HLS"]
+	path = submodules/Vivado_HLS
+	url = https://github.com/engjefersonsantiago/Vivado_HLS
