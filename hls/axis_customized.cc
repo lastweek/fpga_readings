@@ -44,7 +44,13 @@ void foo(volatile struct my_axis *output)
 
 	int i;
 
+	/*
+	 * Adding UNROLL is not necessary.
+	 * But I found with UNROLL, it perfectly emulate
+	 * the contiguous multiple output.
+	 */
 	for (i = 0; i < 3; i++) {
+	#pragma HLS UNROLL
 		output->data = i;
 		output->last = 0;
 	}
