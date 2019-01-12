@@ -3,22 +3,22 @@
  * FIFO block expose AXI-Stream interface.
  */
 
+#include "ap_axi_sdata.h"
 
-#include<stdio.h>
+void pkt_gen(ap_axis<32,2,5,6> A[50], ap_axis<32,2,5,6> B[50])
+{
+#pragma HLS INTERFACE axis port=A
+#pragma HLS INTERFACE axis port=B
 
-int pkt_gen(int num1, int num2, int A[50], int B[50]) {
-#pragma HLS INTERFACE axis register port=A
-#pragma HLS INTERFACE axis register port=B
+	int i;
 
-int num3;
-num3 = num1 + num2;
-
-
-int i;
-
-for(i = 0; i < 50; i++){
-B[i] = A[i] + 5;
-}
-
-return (num3);
+	for(i = 0; i < 50; i++){
+		B[i].data = A[i].data.to_int() + 5;
+		B[i].keep = A[i].keep;
+		B[i].strb = A[i].strb;
+		B[i].user = A[i].user;
+		B[i].last = A[i].last;
+		B[i].id = A[i].id;
+		B[i].dest = A[i].dest;
+	}
 }
