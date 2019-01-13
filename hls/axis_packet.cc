@@ -1,34 +1,15 @@
 /*
- * Okay, we need to generate packets and send them to FIFO block.
- * FIFO block expose AXI-Stream interface.
+ * A collection of good and bad examples of sending packets
+ * Also a story of my leanring experience :p
  */
 
-#include "ap_axi_sdata.h"
-#include "hls_stream.h"
-#include "string.h"
-
-/* including header */
-#define ETH_MIN_LEN	64
-#define ETH_MAX_LEN 1500
-
-struct header_eth {
-	char dst[6];
-	char src[6];
-	char len_type[2];
-};
-
-struct my_axis{
-    char             data;
-    ap_uint<1>       last;
-};
-
-#define HDR_SIZE	14
-#define PKT_SIZE	20
-
+/* Seems not a good solution */
 void pkt_gen(hls::stream<my_axis> *output)
 {
 #pragma HLS INTERFACE ap_ctrl_none port=return
 #pragma HLS INTERFACE axis port=output
+
+#define PKT_SIZE	20
 
 	int i
 	struct my_axis foo;
