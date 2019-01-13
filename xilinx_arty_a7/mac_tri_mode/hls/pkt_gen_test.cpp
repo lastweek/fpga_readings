@@ -18,9 +18,9 @@ int main(void)
 
 	pkt_gen(&output);
 
-	for (i = 0; i < 20; i++) {
+	for (i = 0; i < 640; i++) {
 		val = output.read();
-		printf("%x\n", val.data);
+		printf("%x  %d\n", val.data, val.data);
 	}
 
 	return 0;
