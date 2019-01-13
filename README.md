@@ -67,6 +67,7 @@ Courses
 
 Books
 - [Parallel Programming for FPGAs](https://arxiv.org/abs/1805.03648)
+- [The Zynq book](http://www.zynqbook.com/)
 
 ## Papers about FPGA Internals
 

@@ -13,6 +13,7 @@
 
 - __HLS__
 	- The arXiv book
+	- [The Zynq book](http://www.zynqbook.com/)
 	- [Vivado Design Hub - High-Level Synthesis (C based)](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0012-vivado-high-level-synthesis-hub.html)
 	- `UG998: Introduction to FPGA Design with Vivado High-Level Synthesis`
 	- `UG871: Tutorial High-Level Synthesis`
