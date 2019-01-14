@@ -13,13 +13,29 @@
 
 - __HLS__
 	- The arXiv book
-	- [The Zynq book](http://www.zynqbook.com/)
+	- [The Zynq book](http://www.zynqbook.com/) Chapter 15 is great, take a careful read.
 	- [Vivado Design Hub - High-Level Synthesis (C based)](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0012-vivado-high-level-synthesis-hub.html)
 	- `UG998: Introduction to FPGA Design with Vivado High-Level Synthesis`
 	- `UG871: Tutorial High-Level Synthesis`
 		- Lab: great way to start coding HLS
 	- `UG902: User Guide High-Level Synthesis`
 		- [Properly Defining Interfaces in High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug902-vivado-high-level-synthesis.pdf#nameddest=InterfaceSynthesis)
+		- __Chapter 3 HLS Libraries__
+			- There are many useful library functions and IPs, including MATH, SHA, FFT. Check this when we need something.
+			- HLS Stream
+			- HLS Arbitrary Precision
+		- __Chapter 4: Coding Styles__ _MUST READ_
+			- Explains how C, C++ are compliled into FPGA.
+			- Many C/C++ libraries are NOT supported
+			- Inline function works as usual
+			- Loops
+				- Variable loop bounds: trick is using maximum + conditional check within loop.
+				- Pipeline: innermost, or out loops.
+				- Parallelism: make two independent loops sub functions, or use `dataflow`
+				- Reduce loop dependencies
+        		- Array
+                		- Arrays implemented as memory or memory ports can often become bottlenecks to
+performance.
 	- `UG1197: UltraFast High-Level Productivity Design Methodology Guide`
   	- `XAPP1209: Designing Protocol Processing Systems with Vivado High-Level Synthesis`
 	- `XAPP1273: Reed-Solomon Erasure Codec Design Using Vivado High-Level Synthesis Application Note`

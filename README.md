@@ -48,6 +48,7 @@ Verilog
 - [The Digital World](http://web.mit.edu/6.111/volume2/www/f2018/handouts/TheDigitalWorld.pdf)
 - [Verilog Introduction](http://www.lsi.upc.edu/~jordicf/Teaching/secretsofhardware/VerilogIntroduction_Nyasulu.pdf)
 - [Verilog HDL Quick Reference Card](http://www.ece.uvic.ca/~fayez/courses/ceng465/vlogref.pdf)
+- [Xilinx UG901 Synthesis]
 
 HLS
 - [A Survey and Evaluation of FPGA High-Level Synthesis Tools](https://janders.eecg.utoronto.ca/pdfs/tcad_hls.pdf)
@@ -57,6 +58,8 @@ HLS
 
 Courses
 - [CMU ECE 18-643](http://users.ece.cmu.edu/~jhoe/doku/doku.php?id=18-643_course_schedule_fall_2017)
+    - I like its slides, very informative. Slides about PR, Verilog, HLS are good.
+    - Also read its references, all quite good papers.
 - [Cornell ECE5775 from Prof. Zhiru Zhang](http://www.csl.cornell.edu/courses/ece5775/)
 - [GMU ECE 699 Software/Hardware Co-design S16](https://ece.gmu.edu/coursewebpages/ECE/ECE699_SW_HW/S16/)
 - [GMU ECE 699 Software/Hardware Co-design S15](https://ece.gmu.edu/coursewebpages/ECE/ECE699_SW_HW/S15/)
@@ -68,6 +71,8 @@ Courses
 Books
 - [Parallel Programming for FPGAs](https://arxiv.org/abs/1805.03648)
 - [The Zynq book](http://www.zynqbook.com/)
+    - 15.5.3 Pipelining
+    - 15.5.4 Dataflow
 
 ## Papers about FPGA Internals
 
