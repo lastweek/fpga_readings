@@ -1,26 +1,24 @@
-
 #include "ap_axi_sdata.h"
-#include "hls_stream.h"
-
-struct my_axis{
-    char        data;
-    ap_uint<1>       last;
-};
-
-void pkt_gen(hls::stream<my_axis> *output);
+#include "pkt_gen.h"
 
 int main(void)
 {
 	hls::stream<my_axis> output;
 	struct my_axis val;
-	char c;
-	int i;
+	unsigned char c;
+	int i, j, len;
 
 	pkt_gen(&output);
 
-	for (i = 0; i < 640; i++) {
-		val = output.read();
-		printf("%x  %d\n", val.data, val.data);
+	for (i = 0; i < NR_LOOPS; i++) {
+		for (len = MIN_PKT_SIZE; len < MAX_PKT_SIZE; len += PKT_SIZE_STEP) {
+			for (j = 0; j < len ; j++) {
+				val = output.read();
+				printf("%s[Loop: %2d] [pkt_size=%3d] %#x %d\n",
+					(j == 12) ? " ** " : "    ",
+					i, len, val.data, val.data);
+			}
+		}
 	}
 
 	return 0;
