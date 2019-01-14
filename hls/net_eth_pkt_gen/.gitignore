@@ -1,0 +1,5 @@
+project_pkt_gen/
+.*
+*.log
+
+!.gitignore
