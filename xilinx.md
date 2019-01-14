@@ -123,11 +123,19 @@ Following are some generic links on this topic I found useful:
 - __`XAPP739`: AXI Multi-Ported Memory Controller__
 
 ### BRAM
-- TODO
+
+- __`PG048`: Block Memory Generator v8.4 LogiCORE__
+
+### Distributed Memory
+
+- __`PG063`: Distributed Memory Generator v8.0 LogiCORE__
 
 ### Registers
 
 - __`XAPP793`: Implementing Memory Structures for Video Processing in the Vivado HLS Tool__
+	- Shift registers
+	- Memory windows
+	- Line buffers
 
 ## Constraints
 
