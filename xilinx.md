@@ -99,7 +99,15 @@
 - UG953 Vivado Design Suite 7 Series FPGA and Zynq-7000 SoC Libraries Guide
 	- TODO
 
-## On-board DRAM
+## Memory
+
+This section includes resources related to `on-chip and on-board memory`, including but not limited to on-board DRAM, on-chip BRAM, registers, and so on. Usually, we first learn how to use BRAM and registers, and then learn how to use on-board DRAM. If you have background on how Memory Controller, good, you may catch up quickly. If you don't, don't worry, do a skim read on `UG586` and `PG150` to get a basic sense.
+
+Following are some generic links on this topic I found useful:
+
+- [This post](https://forums.xilinx.com/t5/Vivado-High-Level-Synthesis-HLS/Memory-Structures-in-Vivado-HLS-a-new-documentation/td-p/769986) talks about 6 different memories available at UltraScale.
+
+### On-board DRAM
 
 - [URL: Xilinx Memory Interface](https://www.xilinx.com/products/intellectual-property/mig.html)
 - __`DS176` and `UG586`: Zynq-7000 SoC and 7 Series Devices Memory Interface Solutions__
@@ -114,8 +122,12 @@
 	- `PHY`: __1)__ PHY is considered the low-level physical interface to an external DDR3 or DDR4 SDRAM device as well as all calibration logic for ensuring reliable operation of the physical interface itself. PHY generates the signal timing and sequencing required to interface to the memory device. PHY have interface singals that talks with DRAM dircetly. Those interfaces are defined by the JEDEC specification. __2)__ The PHY interface takes DRAM commands, like Activate, Precharge, Refresh, etc. at its input ports and issues them directly to the DRAM bus.
 - __`XAPP739`: AXI Multi-Ported Memory Controller__
 
-## BRAM
+### BRAM
 - TODO
+
+### Registers
+
+- __`XAPP793`: Implementing Memory Structures for Video Processing in the Vivado HLS Tool__
 
 ## Constraints
 
