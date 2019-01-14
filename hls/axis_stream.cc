@@ -71,3 +71,4 @@ void a_bad_foo(volatile struct my_axis *output)
 		output->data = i;
 		output->last = 0;
 	}
+}
