@@ -18,3 +18,6 @@ This sample code demonstrates
 		- The `LOOP_PACKET` loop has latency of 3 cycles in my platform
 	- How to use array
 		- Many C pointer arithmatic and casting simply DO NOT WORK.
+
+# Legal
+USE AT YOUR OWN RISK. Check repository LICENSE and DISCLAIMER for more information.
