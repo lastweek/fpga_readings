@@ -1,6 +1,6 @@
 # About Xilinx
 
-- [Design Hubs](https://www.xilinx.com/support/documentation-navigation/design-hubs.html)
+## [Design Hubs](https://www.xilinx.com/support/documentation-navigation/design-hubs.html)
 	- [__UG888__: Vivado Design Suite Tutorial: Design Flows Overview](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug888-vivado-design-flows-overview-tutorial.pdf)
 	- [__UG949__: UltraFast Design Methodology Guide for the Vivado Design Suite](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2018_3/ug949-vivado-design-methodology.pdf)
 		- A very good entry level introduction to overall design flow considerations.
@@ -11,7 +11,7 @@
 			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
-- __HLS__
+## __HLS__
 	- The arXiv book
 	- [The Zynq book](http://www.zynqbook.com/) Chapter 15 is great, take a careful read.
 	- [Vivado Design Hub - High-Level Synthesis (C based)](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0012-vivado-high-level-synthesis-hub.html)
@@ -42,7 +42,8 @@ performance.
   	- `Data I/O protocols`: those are directives that control how the input/output signals interact with outside users.
 	- `Block-level I/O protocols`: this allows the RTL design to be controlled by additional ports independently of the data I/O ports.
 
-- __7 series FPGA__
+## __7 series FPGA__
+
 	- `UG470 Configuration`
 		- About how download bitstream into FPGA and how to configure FPGA
 		- JTAG, Flash, Master, Slave
@@ -98,16 +99,30 @@ differential HSTL and SSTL)
 	- UG953 Vivado Design Suite 7 Series FPGA and Zynq-7000 SoC Libraries Guide
 		- TODO
 
-- __BRAM__
+## __On-board DRAM__
+	- [URL: Xilinx Memory Interface](https://www.xilinx.com/products/intellectual-property/mig.html)
+	- __`DS176` and `UG586`: Zynq-7000 SoC and 7 Series Devices Memory Interface Solutions__
+		- Memory Interface Solutions (MIS) core is a combined pre-engineered controller and physical layer (PHY) for interfacing 7 series FPGA user designs and AXI4 slave interfaces to DDR3 and DDR2 SDRAM devices.
+		- Checkout Chapter 1's Core Architecture. A very informative diagram (Figure 1-51).
+		- `Figure 1-53` Memory Controller
+		- `Figure 1-56` PHY Block Diagram
+		- `Figure 1-72` and `Figure 1-73` show how to control the mapping between address and Rank/Row/Bank/Column. I've been thinking doing this for a long time, but it's hard to do this on Intel's MC.
+	- __`PG150`: UltraScale FPGA Memory IP__
+		- Figure 3-1 shows the Memory Interface diagram, including 1) User FPGA logic, 2) Memory Controller, 3) Physical Layer, 4) DDR3/DDR4.
+		- It also talks about what optimizations are available within MC. Such as Read/Write Coalescing, Reordering.
+		- `PHY`: __1)__ PHY is considered the low-level physical interface to an external DDR3 or DDR4 SDRAM device as well as all calibration logic for ensuring reliable operation of the physical interface itself. PHY generates the signal timing and sequencing required to interface to the memory device. PHY have interface singals that talks with DRAM dircetly. Those interfaces are defined by the JEDEC specification. __2)__ The PHY interface takes DRAM commands, like Activate, Precharge, Refresh, etc. at its input ports and issues them directly to the DRAM bus.
+	- __`XAPP739`: AXI Multi-Ported Memory Controller__
+
+## __BRAM__
 	- TODO
 
-- __Constraints__
+## __Constraints__
 	- Check `xilinx_constraints.md`
 
-- __Configurable Logic Block (CLB)__
+## __Configurable Logic Block (CLB)__
 	- UG474: 7 Series FPGAs Configurable Logic Block: gives a very good introduction about how LUT is organized in Xilinx
 
-- __Buffer__
+## __Buffer__
 	- (Q: why IOBUF? why clock buffer? why there is an awkward buffer in the middle?)
 	- [URL: Digital Buffer Tutorial](https://www.electronics-tutorials.ws/logic/logic_9.html)
 	- [URL: Buffer Gate](https://en.wikichip.org/wiki/buffer_gate)
@@ -115,7 +130,7 @@ differential HSTL and SSTL)
 	- [Wiki: Buffer amplifier](https://en.wikipedia.org/wiki/Buffer_amplifier)
 	- [StackExchange: What is the purpose of a buffer gate?](https://electronics.stackexchange.com/questions/236666/what-is-the-purpose-of-a-buffer-gate)
 
-- __IO__
+## __IO__
 	- [Vivado Design Hub - I/O and Clock Planning](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0007-vivado-pin-planning-hub.html)
 	- [UG899 Vivado I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug899-vivado-io-clock-planning.pdf)
 	- HP: high-performance IO banks
@@ -127,7 +142,7 @@ differential HSTL and SSTL)
         	- `IBUFDS`: is NOT inserted (inferred) by the synthesis tool, you have to manually write code to instantiation. In IBUFDS, a design level interface signal is represented as two distinct ports (I and IB), one deemed the "master" and the other the "slave." The master and the slave are opposite phases of the same logical signal. (Leant this from tri-mode reference code)
 	- Each top-level port is within the scope of SelectIO. We can use constraints to define what IO standard, what package pin, what drive length etc our top-level ports want. The whole thing is described as SelectIO by Xilinx. We should check each series's SelectIO guide to know what IO standards our FPGA support. SelectIO will also automatically add IO buffers into our design, such as IBUF, OBUF.
 
-- __Clock__
+## __Clock__
 	- [Vivado Design Hub - I/O and Clock Planning](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0007-vivado-pin-planning-hub.html)
 	- [UG899 Vivado I/O and Clock Planning](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug899-vivado-io-clock-planning.pdf)
 	- [Slides: Clocks Basics in 10 Minutes or Less](http://www.ti.com/ww/mx/multimedia/webcasts/TI_webinar_25-06-2010.pdf)
@@ -159,14 +174,14 @@ differential HSTL and SSTL)
 	- `MMCME2_BASE`, `MMCME2_ADV`, `PLLE2_BASE`, `PLLE2_ADV`: Check UG472 ch.3 and UG768 for details. These are used to manipulate clocks, and I believe this is the building block of clock wizard. I encountered one MMCME2_ADV in tri-mode mac reference design.
 	- [`XAPPP888: MMCM and PLL Dynamic Reconfiguration`](https://www.xilinx.com/support/documentation/application_notes/xapp888_7Series_DynamicRecon.pdf)
 
-- [What's `Implementation` in Xilinx?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm)
+## [What's `Implementation` in Xilinx?](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm)
 	- Xilinx Implementation happens after Synthesis, so it must include several important steps
 		- Logic Optimization (which is `Translate` here). This step will take `constraints` into account.
 		- Technology Mapping (which is `Map` here). This step map to FPGA logic islands, IOB, BRAM, etc.
 		- Place and Route
     	- Overall, we don't need to fully understand what each step is doing, just need to get a basic sense.
 
-- What is `.xdc`?
+## What is `.xdc`?
 	- [Vivado Design Hub - Applying Design Constraints](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0004-vivado-applying-design-constraints-hub.html)
 	- [Using Constraints v2017](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_4/ug903-vivado-using-constraints.pdf)
 	- By default, all XDC files and Tcl scripts added to a constraint set are used for both synthesis and implementation. Set the `USED_IN_SYNTHESIS` and `USED_IN_IMPLEMENTATION` properties on the XDC file or the Tcl script to change this behavior.
@@ -174,7 +189,7 @@ differential HSTL and SSTL)
 	- Placement Constrains
 	- Synthesis Constrains
 
-- [Floorplanning](https://en.wikipedia.org/wiki/Floorplan_(microelectronics))
+## [Floorplanning](https://en.wikipedia.org/wiki/Floorplan_(microelectronics))
 	- allows to place blocks of logic in an FPGA device, to reduce route delays for certain logics.
 	- [Floorplanning Methodology Guide](https://www.xilinx.com/support/documentation/sw_manuals/xilinx14_5/Floorplanning_Methodology_Guide.pdf)
 	- [Design Rule Checking (DRC) Messages](https://www.xilinx.com/support/documentation/sw_manuals/xilinx10/isehelp/pfp_r_drc_messages.htm)
@@ -182,7 +197,7 @@ differential HSTL and SSTL)
 
 - [External port](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/platform_studio/ps_p_hdw_making_external_port_connects.htm)
 
-- AXI, AXI-Lite, and AXI-S. __How to connect IPs?__
+## AXI, AXI-Lite, and AXI-S. __How to connect IPs?__
 	- I came to this question when I tried to build blocks in HLS and Verilog, and was thinking about how should I connect those blocks? There are so many clk, reset, valid signal combinations, is there a standard for this communication protocol? Indeed, there are. This thread collects information about this topic.
 	- [Some basic knowledge](http://que.no/index.php/2016/03/13/principles-of-fpga-ip-interconnect/)
 	- [Introduction to AXI Protocol: Understanding the AXI interface](https://community.arm.com/soc/b/blog/posts/introduction-to-axi-protocol-understanding-the-axi-interface)
@@ -205,7 +220,7 @@ differential HSTL and SSTL)
 	- `PG035: AXI4-Stream Interconnect`.
 	- `PG085 AXI4-Stream Infrastructure IP Suite`.
 
-- __IP__
+## __IP__
 	- [Ethernet](https://www.xilinx.com/products/technology/ethernet.html)
 		- [Tri-Mode Ethernet MAC](https://www.xilinx.com/products/intellectual-property/temac.html)
 		- [AXI 1G/2.5G Ethernet](https://www.xilinx.com/products/intellectual-property/axi_ethernet.html#documentation)
