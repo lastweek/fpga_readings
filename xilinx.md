@@ -38,7 +38,7 @@
 		- Array
         		- Arrays implemented as memory or memory ports can often become bottlenecks to performance.
 - `UG1197: UltraFast High-Level Productivity Design Methodology Guide`
-- `XAPP1209: Designing Protocol Processing Systems with Vivado High-Level Synthesis`
+- ** `XAPP1209: Designing Protocol Processing Systems with Vivado High-Level Synthesis`
 - `XAPP1273: Reed-Solomon Erasure Codec Design Using Vivado High-Level Synthesis Application Note`
 - `Data I/O protocols`: those are directives that control how the input/output signals interact with outside users.
 - `Block-level I/O protocols`: this allows the RTL design to be controlled by additional ports independently of the data I/O ports.
@@ -165,6 +165,13 @@ the flip-flops available in a slice. Used in this way, each LUT can delay serial
 Use Distributed Memory in HLS
 
 - TODO
+
+### Memory Misc
+
+- UG057 FIFO Generator
+	- The FIFO Generator core implements FIFOs built from block RAM, distributed RAM, shift registers, or built-in FIFOs. The core combines memory primitives in an optimal configuration based on the selected width and depth of the FIFO.
+	- ...  The Built-In FIFO __solutions__ are implemented to take advantage of logic internal to the Built-in FIFO `macro`. Several features, for example, almost full, almost empty, and so forth were not implemented because they are not native to the macro and require additional logic in the logic to implement.
+	- AXI: Pay attention to the `Packet FIFO`
 
 ## Constraints
 
