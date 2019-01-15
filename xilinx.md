@@ -105,6 +105,7 @@ This section includes resources related to `on-chip and on-board memory`, includ
 
 Following are some generic links on this topic I found useful:
 
+- Xilinx's white paper [WP377: Xilinx 7 Series FPGAs Embedded Memory Advantages](https://www.xilinx.com/support/documentation/white_papers/wp377_7Series_Embed_Mem_Advantages.pdf) is nice introduction.
 - [This post](https://forums.xilinx.com/t5/Vivado-High-Level-Synthesis-HLS/Memory-Structures-in-Vivado-HLS-a-new-documentation/td-p/769986) talks about 6 different memories available at UltraScale.
 
 ### On-board DRAM
@@ -122,20 +123,48 @@ Following are some generic links on this topic I found useful:
 	- `PHY`: __1)__ PHY is considered the low-level physical interface to an external DDR3 or DDR4 SDRAM device as well as all calibration logic for ensuring reliable operation of the physical interface itself. PHY generates the signal timing and sequencing required to interface to the memory device. PHY have interface singals that talks with DRAM dircetly. Those interfaces are defined by the JEDEC specification. __2)__ The PHY interface takes DRAM commands, like Activate, Precharge, Refresh, etc. at its input ports and issues them directly to the DRAM bus.
 - __`XAPP739`: AXI Multi-Ported Memory Controller__
 
-### BRAM
+### Block RAM (BRAM)
+
+General documents about BRAM
 
 - __`PG048`: Block Memory Generator v8.4 LogiCORE__
+	- I don't think we need to configure this IP during at normal cases. Vivado and HLS will help us integrate necessary BRAM blocks.
+- __`UG473`: 7 Series FPGAs Memory Resources__
+	- This document describes the block RAM resource.
+	- BRAM has two ports, A and B. They can be accessed at the same time. Synchronization has to be carried out by user if the same location is accessed by two ports at the same time.
+	- Primitives: `RAMB18E1` and `RAMB36E1`. Just like those MMCM and PLL primitives. Check 7 series libraries guide.
+	- __Chapter 2: Built-in FIFO Support__. Definitely check out this.
+		- Many FPGA designs use BRAM to implement FIFO. So Xilinx decides to add dedicated logic in the block RAM enables you to implement synchronous or dual-clock (asynchronous) FIFO. This eliminates the need for additional CLB logic for counter, comparator, or status flag generation, and uses just one block RAM resource per FIFO. Both standard and first-word fall-through (FWFT) modes are supported.
+		- This built-in FIFO is another _hard_ resource in FPGA, like DSP.
+		- This built-in FIFO _may_ be used by [PG057 FIFO Generator](https://www.xilinx.com/products/intellectual-property/fifo_generator.html) to create FIFO. PG057 noted: the Native interface FIFO can be customized to utilize `block RAM`, `distributed RAM` or __`built-in FIFO`__ resources available in some FPGA families to create high-performance, area-optimized FPGA designs.
+
+Use BRAM in HLS
+
+- TODO
 
 ### Distributed Memory
 
+- `UG474: 7 series CLB`: The LUTs in SLICEMs can be implemented as a synchronous RAM resource called a distributed RAM element. Compared to BRAM, Distributed Memory is very fine grained in terms of size.
 - __`PG063`: Distributed Memory Generator v8.0 LogiCORE__
 
-### Registers
+Use Distributed Memory in HLS
 
+- TODO
+
+### Shift Registers
+
+- `UG474: 7 series CLB`: A SLICEM function generator can also be configured as a 32-bit shift register without using
+the flip-flops available in a slice. Used in this way, each LUT can delay serial data from 1 to
+32 clock cycles.
+- Shift registers are very similar to Distributed Memory, in the sense that they both utilize unused LUTs.
 - __`XAPP793`: Implementing Memory Structures for Video Processing in the Vivado HLS Tool__
 	- Shift registers
 	- Memory windows
 	- Line buffers
+
+Use Distributed Memory in HLS
+
+- TODO
 
 ## Constraints
 
