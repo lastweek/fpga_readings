@@ -1,0 +1,5 @@
+project_net_streaming/
+.*
+*.log
+
+!.gitignore
