@@ -14,6 +14,8 @@
 
 ## HLS
 
+- [#pragma HLS
+references](https://www.xilinx.com/html_docs/xilinx2018_3/sdaccel_doc/hls-pragmas-okr1504034364623.html#okr1504034364623)
 - The arXiv book
 - [The Zynq book](http://www.zynqbook.com/) Chapter 15 is great, take a careful read.
 - [Vivado Design Hub - High-Level Synthesis (C based)](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0012-vivado-high-level-synthesis-hub.html)
