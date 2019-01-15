@@ -3,7 +3,7 @@
 System community has never been so excited about FPGA. And you can tell FPGA is
 the next big thing. I was not a fan of HDL (Hard and Difficult Language), mainly
 because there wasn't project interesting enough. But things have changed.
-I have envisioned a large FPGA infrastructure platform for datacenter. And I alway
+I have envisioned a large FPGA infrastructure platform for datacenter. And I always
 like hardcore coding. So it's time to get started.
 This repo is really just a collection of stuff along my way learning FPGA.
 Contributions in whatever form are welcomed.
@@ -85,6 +85,7 @@ General
 - [FPGA and CPLD architectures: a tutorial, 1996](http://www.eecg.toronto.edu/~jayar/pubs/brown/DTSurvey.pdf)
 - [Reconfigurable computing: a survey of systems and software, 2002](https://people.ece.uw.edu/hauck/publications/ConfigCompute.pdf)
 - [FPGA Architecture: Survey and Challenges, 2007](http://www.eecg.toronto.edu/~jayar/pubs/kuon/foundtrend08.pdf)
+	- Read the first two paragraphs of each section and then come back to read all of that if needed.
 - [RAMP: Research Accelerator For Multiple Processors, 2007](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.437.4076&rep=rep1&type=pdf)
 
 Logical Optimization and Technology Mapping
