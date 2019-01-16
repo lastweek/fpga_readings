@@ -88,7 +88,9 @@ module tri_mode_ethernet_mac_0_basic_pat_gen #(
     input                                rx_axis_tlast,
     input                                rx_axis_tuser,
     output                               rx_axis_tready,
+   
     // data TO the TX data path
+    // AXI-Stream interface
     output      [7:0]                    tx_axis_tdata,
     output                               tx_axis_tvalid,
     output                               tx_axis_tlast,
@@ -134,6 +136,8 @@ wire                 tx_axis_as_tready;
 // based on the min/max size parameters - these can be set
 // to the same value to obtain a specific packet size or will
 // increment from the lower packet size to the upper
+
+/*
 tri_mode_ethernet_mac_0_axi_pat_gen #(
    .DEST_ADDR                 (DEST_ADDR),
    .SRC_ADDR                  (SRC_ADDR),
@@ -156,6 +160,19 @@ tri_mode_ethernet_mac_0_axi_pat_gen #(
    
    .activity_flash_gen        (activity_flash_gen),
    .pkt_gen_enabled           (pkt_gen_enabled)
+);
+*/
+
+/*
+ * This is my simple HLS-based packet generator.
+ */
+pkt_gen_0 my_pkt_gen(
+    .ap_clk               (axi_tclk),
+    .ap_rst_n               (axi_tresetn),
+    .output_r_TVALID        (pat_gen_tvalid),
+    .output_r_TREADY        (pat_gen_tready),
+    .output_r_TDATA           (pat_gen_tdata),
+    .output_r_TLAST         (pat_gen_tlast)
 );
 
 tri_mode_ethernet_mac_0_axi_pat_check #(

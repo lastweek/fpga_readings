@@ -7,8 +7,9 @@ int main(void)
 	struct my_axis val;
 	unsigned char c;
 	int i, j, len;
+	int x, y;
 
-	pkt_gen(&output);
+	pkt_gen(&output, &x, &y);
 
 	for (i = 0; i < NR_LOOPS; i++) {
 		for (len = MIN_PKT_SIZE; len < MAX_PKT_SIZE; len += PKT_SIZE_STEP) {
