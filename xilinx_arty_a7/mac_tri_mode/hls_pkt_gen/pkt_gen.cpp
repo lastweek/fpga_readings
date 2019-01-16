@@ -8,8 +8,10 @@
 #include "string.h"
 #include "pkt_gen.h"
 
-void pkt_gen(hls::stream<my_axis> *output)
+void pkt_gen(hls::stream<my_axis> *output, int *xx, int *yy)
 {
+#pragma HLS INTERFACE ap_fifo port=xx
+#pragma HLS INTERFACE ap_fifo port=yy
 #pragma HLS INTERFACE ap_ctrl_none port=return
 #pragma HLS INTERFACE axis port=output
 
@@ -22,14 +24,23 @@ void pkt_gen(hls::stream<my_axis> *output)
 		p[i] = i % 256;
 	}
 
+	j = *yy;
+	j = *(yy + 1);
+	j = *(yy - 1);
+	*xx = 1;
+	*(xx + 1) = 2;
+	*(xx - 1) = 2;
+
 	for (i = 0; i < NR_LOOPS; i++) {
-		for (len = MIN_PKT_SIZE; len < MAX_PKT_SIZE; len += PKT_SIZE_STEP) {
+		for (len = MIN_PKT_SIZE; len < MAX_PKT_SIZE; len +=
+		PKT_SIZE_STEP)
+		{
 			/* Update the length field*/
-			p[12] = (unsigned char)(len >> 8);
-			p[13] = (unsigned char)len;
+			p[12] = (unsigned char) (len >> 8);
+			p[13] = (unsigned char) len;
 
 			/* This loop sends out one packet */
-			LOOP_PACKET: for (j = 0; j < len ; j++) {
+			LOOP_PACKET: for (j = 0; j < len; j++) {
 			#pragma HLS PIPELINE
 				foo.data = p[j];
 

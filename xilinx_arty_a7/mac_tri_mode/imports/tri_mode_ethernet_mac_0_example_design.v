@@ -684,6 +684,7 @@ module tri_mode_ethernet_mac_0_example_design
   //  Instantiate the address swapping module and simple pattern generator
   //----------------------------------------------------------------------------
 
+/*
    tri_mode_ethernet_mac_0_basic_pat_gen basic_pat_gen_inst (
       .axi_tclk                     (tx_fifo_clock),
       .axi_tresetn                  (tx_fifo_resetn),
@@ -710,9 +711,32 @@ module tri_mode_ethernet_mac_0_example_design
       .activity_flash_gen              (int_activity_flash_gen),
       .pkt_gen_enabled              (pkt_gen_enabled)
    );
-   
+*/
 
-
+/*
+ * This is our own HLS-based loopback
+ * Checkout hls_loopback
+ */
+top_func_0 loopback (
+        /*
+         * Input from FIFO
+         */
+      .input_r_TVALID(rx_axis_fifo_tvalid),    // input wire input_r_TVALID
+      .input_r_TREADY(rx_axis_fifo_tready),    // output wire input_r_TREADY
+      .input_r_TDATA(rx_axis_fifo_tdata),      // input wire [31 : 0] input_r_TDATA
+      .input_r_TLAST(rx_axis_fifo_tlast),      // input wire [0 : 0] input_r_TLAST
+      
+      /*
+       * Output to FIFO
+       */
+      .output_r_TVALID(tx_axis_fifo_tvalid),  // output wire output_r_TVALID
+      .output_r_TREADY(tx_axis_fifo_tready),  // input wire output_r_TREADY
+      .output_r_TDATA(tx_axis_fifo_tdata),    // output wire [31 : 0] output_r_TDATA
+      .output_r_TLAST(tx_axis_fifo_tlast),    // output wire [0 : 0] output_r_TLAST
+      
+      .ap_clk(tx_fifo_clock),                    // input wire ap_clk
+      .ap_rst_n(tx_fifo_resetn)                // input wire ap_rst_n
+);
 
 endmodule
 
