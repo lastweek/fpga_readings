@@ -4,8 +4,9 @@
 #include "ap_axi_sdata.h"
 #include "ap_int.h"
 #include "hls_stream.h"
+#include "general.hpp"
 
-#define FIFO_WIDTH	32
+#define FIFO_WIDTH	8
 
 template <int N >
 struct my_axis {
