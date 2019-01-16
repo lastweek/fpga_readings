@@ -22,7 +22,9 @@ create_clock -period 10
 set_clock_uncertainty 1.25
 
 # Simulate the C code 
-#csim_design
+csim_design
+
+#csynth_design
 
 # Export IP block
 #export_design
