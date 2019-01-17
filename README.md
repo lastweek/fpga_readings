@@ -6,29 +6,29 @@ Traditional HDL (Hard and Difficult Language) is not the main focus,
 we mainly focus on using C++ to cook FPGA. We got better tools these days.
 
 Main resources:
-- `README.md`
+- __`README.md`__
 	- Basics about digital design
 	- Basic about FPGA
 	- Relevant Courses and Books
 	- Papers about FPGA internal
-- `xilinx.md` and `xilinx_constraints.md`
+- __`xilinx.md`__ and __`xilinx_constraints.md`__
 	- Xilinx terms explained
 	- Xilinx documents summary
 	- Useful constraints
-- `submodules/`: Github repositories about FPGA
-- `hls/`: Samle Xilinx HLS C++ code
+- __`submodules/`__: Github repositories about FPGA
+- __`hls/`__: Sample Xilinx HLS C++ code
 	- AXI Stream
 	- Network protocol processing
-- `xilinx_arty_a7`: Sample Xilinx projects for Arty A7 100 board
+- __`xilinx_arty_a7`__: Sample Xilinx projects for Arty A7 100 board
 	- Tri-mode MAC reference design
 	- Simple LED
 	- Clocked LED
-- `FAQ.md`
+- __`FAQ.md`__
 	- Some implementation questions about FPGA
 
 This repository was started by a newbie to record his learning of FPGA,
 and made public in the hope that it could help researchers to start
-their journey along FPGA, with less pain and whiskey.
+their journey along with FPGA, with less pain and whiskey.
 
 This repository is still raw and under active development.
 Better organization is required. Any form of contribution is welcomed.
