@@ -1,34 +1,39 @@
-# FPGA Random Notes
+# Cook FPGA
 
-System community has never been so excited about FPGA. And you can tell FPGA is
-the next big thing. I was not a fan of HDL (Hard and Difficult Language), mainly
-because there wasn't project interesting enough. But things have changed.
-I have envisioned a large FPGA infrastructure platform for datacenter. And I always
-like hardcore coding. So it's time to get started.
-This repo is really just a collection of stuff along my way learning FPGA.
-Contributions in whatever form are welcomed.
+This repository is intended for folks who are new to FPGA.
+This repository is a collection of useful resources rather than a FPGA tutorial.
+Traditional HDL (Hard and Difficult Language) is not the main focus,
+we mainly focus on using C++ to cook FPGA. We got better tools these days.
 
+Main resources:
+- `README.md`
+	- Basics about digital design
+	- Basic about FPGA
+	- Relevant Courses and Books
+	- Papers about FPGA internal
+- `xilinx.md` and `xilinx_constraints.md`
+	- Xilinx terms explained
+	- Xilinx documents summary
+	- Useful constraints
+- `submodules/`: Github repositories about FPGA
+- `hls/`: Samle Xilinx HLS C++ code
+	- AXI Stream
+	- Network protocol processing
+- `xilinx_arty_a7`: Sample Xilinx projects for Arty A7 100 board
+	- Tri-mode MAC reference design
+	- Simple LED
+	- Clocked LED
+- `FAQ.md`
+	- Some implementation questions about FPGA
+
+This repository was started by a newbie to record his learning of FPGA,
+and made public in the hope that it could help researchers to start
+their journey along FPGA, with less pain and whiskey.
+
+This repository is still raw and under active development.
+Better organization is required. Any form of contribution is welcomed.
 
 ## Get Started
-
-Basic
-- [Configure FPGA](https://www.fpga4fun.com/FPGAinfo7.html)
-    - After FPGA boot, we need to transfer the bitstream into FPGA, which is a process called "configure FPGA". There are several ways to do so. 1) JTAG, 2) microcontroller + NVRAM. The JTAG way is useful for debugging. The second way is good for production usage, because the FPGA can be configured automatically after boot.
-- Physical design flow (Synthesis to PAR)
-    - Based on the `netlist`, the physical design process begins. In the first phase the gates of the
-netlist are placed on the available two-dimensional space. Initially, structures that should be placed
-close together are identified—a process known as `floorplanning`. Then, based on the `floorplan`,
-the `placer tool` assigns a physical location to each gate of the netlist. After initial placement, the
-clock tree is inserted and placement decisions are re-evaluated. Multiple iterations are typically
-necessary to find a satisfying placement for all gates.
-    - From the placed-gates netlist and the geometric information about the cells provided by
-the technology library, the `router tool` derives the physical paths of the nets that connect gates,
-as well as the power supply lines. Again, multiple iterations are typically necessary, and gates
-might be relocated in the routing phase. The fully routed physical netlist is the final result of
-the entire design flow. It consists of the gates of a circuit, their exact placement, and “drawn”
-interconnecting wires. In essence, the circuit design is now ready for fabrication. What follows
-is typically a number of physical design verification steps carried out in software before a first
-prototype of the circuit is produced by an IC vendor.
 
 FPGA Intro
 - [Slides: Intro FPGA CSE467 UW](https://courses.cs.washington.edu/courses/cse467/03wi/FPGA.pdf)
