@@ -30,8 +30,9 @@ This repository was started by a newbie to record his learning of FPGA,
 and made public in the hope that it could help researchers to start
 their journey along with FPGA, with less pain and whiskey.
 
+Resources collected, or the way contents are organized, are not in their perfect shape.
 This repository is still raw and under active development.
-Better organization is required. Any form of contribution is welcomed.
+Any form of contribution is welcomed.
 
 ## Get Started
 
