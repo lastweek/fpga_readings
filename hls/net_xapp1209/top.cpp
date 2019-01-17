@@ -111,7 +111,7 @@ static void parser(stream<struct my_axis<FIFO_WIDTH> > *input,
 		 * one MAC_TYPE array. If we have two, then we can keep the II always flow.
 		 *
 		 * A very interesting aspect. This is ultimately caused by buffering.
-		 * But can be optimized.
+		 * But can be optimized by using appropriate data bus width.
 		 */
 		static int nr_bytes_remaining = 13;
 
@@ -137,7 +137,9 @@ static void parser(stream<struct my_axis<FIFO_WIDTH> > *input,
 static void arp(stream<struct my_axis<FIFO_WIDTH> > *input,
 		stream<struct my_axis<FIFO_WIDTH> > *output)
 {
-	struct my_axis<FIFO_WIDTH> current;
+#pragma HLS PIPELINE II=1 enable_flush
+
+	struct my_axis<FIFO_WIDTH> current = {0, 0};
 
 	if (input->empty())
 		return;
@@ -146,11 +148,158 @@ static void arp(stream<struct my_axis<FIFO_WIDTH> > *input,
 	output->write(current);
 }
 
+/*
+ * This is a middle layer module that swaps the DST and SRC mac addresses.
+ * Both input and output stream are 8-bits width, which make the whole thing
+ * a little comlicated.
+ *
+ * We have two arrays to cache first 12 bytes for MAC, and another
+ * array to cache 12 bytes of data.
+ *
+ * Currently this function is not optimized, performs super bad. :-(
+ */
+static void swap_mac_addr(stream<struct my_axis<FIFO_WIDTH> > *input,
+			  stream<struct my_axis<FIFO_WIDTH> > *output)
+{
+#pragma HLS PIPELINE II=1 enable_flush
+
+	struct my_axis<8> current = {0, 0};
+	static enum swap_mac_state {
+		SWAP_SM_IDLE = 0,
+		SWAP_SM_HEADER_SAVE,
+		SWAP_SM_HEADER_SEND,
+		SWAP_SM_STREAM,
+		SWAP_SM_RESIDUE
+	} state;
+	static char nr_mac = 0, nr_flip = 0, flip_in;
+	static struct my_axis<8> MAC[12];
+	static struct my_axis<8> FLIP[12];
+#pragma HLS ARRAY_PARTITION variable=MAC complete dim=1
+#pragma HLS ARRAY_PARTITION variable=FLIP complete dim=1
+
+	switch (state) {
+	case SWAP_SM_IDLE:
+		if (input->empty())
+			break;
+
+		state = SWAP_SM_HEADER_SAVE;
+		break;;
+	case SWAP_SM_HEADER_SAVE:
+		if (input->empty())
+			break;
+
+		/* Save the DST and SRC mac  */
+		current = input->read();
+		MAC[nr_mac] = current;
+		nr_mac++;
+
+		if (nr_mac == 12) {
+			/*
+			 * Transit to next state
+			 * Make nr_mac point to start of SRC
+			 */
+			nr_mac = 6;
+			state = SWAP_SM_HEADER_SEND;
+		}
+		break;
+	case SWAP_SM_HEADER_SEND:
+		if (input->empty())
+			break;
+		current = input->read();
+		FLIP[nr_flip] = current;
+		nr_flip++;
+
+		/* When first here, nr_mac = 6 */
+		switch (nr_mac) {
+			/*
+			 * Original SRC
+			 * Now DST
+			 */
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+			output->write(MAC[nr_mac]);
+			nr_mac++;
+			if (nr_mac == 12)
+				nr_mac = 0;
+			break;
+
+			/*
+			 * Original DST
+			 * Now SRC
+			 */
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+			output->write(MAC[nr_mac]);
+			nr_mac++;
+
+			/*
+			 * Transit to next state
+			 * Note the flip array is full
+			 * means nr_flip = 12 now
+			 */
+			if (nr_mac == 6)
+				state = SWAP_SM_STREAM;
+			break;
+
+		}
+		break;
+	case SWAP_SM_STREAM:
+		if (input->empty())
+			break;
+		current = input->read();
+
+		flip_in = nr_flip % 12;
+
+		/*
+		 * TODO
+		 * Write-after-read Dependency
+		 * How to optimize?
+		 */
+		output->write(FLIP[flip_in]);
+		FLIP[flip_in] = current;
+		nr_flip++;
+
+		if (current.last == 1)
+			state = SWAP_SM_RESIDUE;
+		break;
+	case SWAP_SM_RESIDUE:
+		static int nr_flip_remaining = 12;
+
+		/* We could read, but.. */
+
+		flip_in = nr_flip % 12;
+		output->write(FLIP[flip_in]);
+		nr_flip++;
+
+		nr_flip_remaining--;
+		if (nr_flip_remaining == 0) {
+			nr_flip = 0;
+			nr_mac = 0;
+			nr_flip_remaining = 12;
+			state = SWAP_SM_IDLE;
+		}
+		break;
+	}
+}
+
+/*
+ * This is a middle layer module that just sends back the
+ * packet as-is. The simplest one.
+ */
 static void loopback(stream<struct my_axis<FIFO_WIDTH> > *input,
 		     stream<struct my_axis<FIFO_WIDTH> > *output)
 {
 #pragma HLS PIPELINE II=1 enable_flush
-	struct my_axis<FIFO_WIDTH> current;
+
+	struct my_axis<FIFO_WIDTH> current = {0, 0};
 
 	if (input->empty())
 		return;
@@ -204,7 +353,8 @@ void top_func(hls::stream<struct my_axis<FIFO_WIDTH> > *input,
 
 	/* Fan out to middle layer modules */
 	//arp(&parser_to_arp, output);
-	loopback(&parser_to_loopback, output);
+	swap_mac_addr(&parser_to_loopback, output);
+	//loopback(&parser_to_loopback, output);
 
 	/* Merge output streams */
 	//merger(output, &parser_to_arp, &parser_to_loopback);
