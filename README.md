@@ -38,7 +38,7 @@ Main contents:
 FPGA Intro
 - [URL: RapidWright FPGA Architecture Basics](http://www.rapidwright.io/docs/FPGA_Architecture.html)
 - [URL: RapidWright Xilinx Architecture Terminology](http://www.rapidwright.io/docs/Xilinx_Architecture.html)
-- [Parallel Programming for FPGAs](https://arxiv.org/abs/1805.03648)
+- [Book: Parallel Programming for FPGAs](https://arxiv.org/abs/1805.03648)
 	- Basic about FPGA and HLS
 - [URL: All about FPGAs, EE Times](https://www.eetimes.com/document.asp?doc_id=1274496)
 - [Slides: Intro FPGA CSE467 UW](https://courses.cs.washington.edu/courses/cse467/03wi/FPGA.pdf)
@@ -89,7 +89,55 @@ Books
 
 ## Papers
 
+### Virtualization
+
+How to apply Operating System concept to FPGA? How to virtualize on-board memory and on-chip logic?
+And, how is FPGA ultimately different from CPU in items of resource sharing?
+Papers in this section could give you some hint.
+
+General
+- [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
+- [The LEAP Operating System for FPGAs](https://github.com/LEAP-FPGA/leap-documentation/wiki)
+
+Memory
+- [Virtual Memory Window for Application-Specific Reconfigurable Coprocessors, VLSI'06](https://ieeexplore.ieee.org/document/1664911)
+	- Early work that adds a new MMU to FPGA to let FPGA logic access `on-chip DRAM`. Note, it's not the system main memory. Thus the translation pgtable is different.
+	- Has some insights on prefetching and MMU CAM design.
+- [A Reconfigurable Hardware Interface for a Modern Computing System, FCCM'07](https://ieeexplore.ieee.org/document/4297245)
+	- TODO
+- [Low-Latency High-Bandwidth HW/SW Communication in a Virtual Memory Environment, FPL'08](https://ieeexplore.ieee.org/abstract/document/4629945)
+	- TODO
+- [Memory Virtualization for Multithreaded Reconfigurable Hardware, FPL'11](https://ieeexplore.ieee.org/document/6044806)
+	- Part of the ReconOS project
+	- They implemented a simple MMU inside MMU that includes a TLB. On protection violation or page invalid access cases, their MMU just hand over to CPU pgfault routines. The whole thing, is quite simple. But I guess this is the first one that actually reflects the idea of a true MMU for FPGA?
+	- Ideas about VM are just being reflected repeatedly on GPU, NIC.
+- [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
+	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
+- CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computin [[1]](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf), [[2]](https://users.ece.cmu.edu/~echung/coram-distrib.pdf)
+	- TODO
+
+CPU/FPGA Integration
+- [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
+- [Operating systems for reconfigurable embedded platforms: online scheduling of real-time tasks, IEEE'04](https://ieeexplore.ieee.org/document/1336761)
+- [Reconfigurable computing: architectures and design methods, IEE'05](http://www.doc.ic.ac.uk/~wl/papers/05/iee05tjt.pdf)
+- [BORPH: An Operating System for FPGA-Based Reconfigurable Computers. PhD Thesis.](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.472.6667&rep=rep1&type=pdf)
+- [FUSE: Front-end user framework for O/S abstraction of hardware accelerators, FCCM'11](https://ieeexplore.ieee.org/document/5771269)
+- [ReconOS – an Operating System Approach for Reconfigurable Computing, IEEE Micro'14](http://www.reconos.de/publications/)
+	- Invoke kernel from FPGA. They built a shell in FPGA and delegation threads in CPU to achieve this.
+	- They implemented their own MMU (using pre-established pgtables) to let FPGA logic to access system memory. [Ref]((https://ieeexplore.ieee.org/document/6044806)).
+	- Read the "Operating Systems for Reconfigurable Computing" sidebar, nice summary.
+
 ### Applications
+
+What are the typical applications that can be offloaded into FPGA?
+What has already been done before? This section lists many interesting
+applications and systems deployed on FPGA.
+
+Infrastructure and Cloud
+- TODO
+
+Network Stack
+- TODO
 
 Machine Learning
 - TODO
@@ -106,17 +154,18 @@ Biology
 Video Processing
 - TODO
 
+Blockchain
+- TODO
+
 Micro-services
 - TODO
 
-### Virtualization
-
-- TODO
-
 ### FPGA Internal
+
 General
 - [FPGA and CPLD architectures: a tutorial, 1996](http://www.eecg.toronto.edu/~jayar/pubs/brown/DTSurvey.pdf)
 - [Reconfigurable computing: a survey of systems and software, 2002](https://people.ece.uw.edu/hauck/publications/ConfigCompute.pdf)
+- [Reconfigurable computing: architectures and design methods](http://www.doc.ic.ac.uk/~wl/papers/05/iee05tjt.pdf)
 - [FPGA Architecture: Survey and Challenges, 2007](http://www.eecg.toronto.edu/~jayar/pubs/kuon/foundtrend08.pdf)
 	- Read the first two paragraphs of each section and then come back to read all of that if needed.
 - [RAMP: Research Accelerator For Multiple Processors, 2007](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.437.4076&rep=rep1&type=pdf)
