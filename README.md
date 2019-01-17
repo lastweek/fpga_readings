@@ -1,14 +1,21 @@
 # Cook FPGA
 
-This repository is intended for folks who are new to FPGA.
-This repository is a collection of useful resources rather than a FPGA tutorial.
+This repository is intended for folks who are new and want to learn something about FPGA.
+This repository is a collection of useful resources and links rather than a thorough FPGA tutorial.
 Traditional HDL (Hard and Difficult Language) is not the main focus,
-we mainly focus on using C++ to cook FPGA. We got better tools these days.
+instead, we focus on using high-level languages (e.g., C++) to cook FPGA.
 
-Main resources:
+Originally, this repository was started by a newbie to record his learning of FPGA,
+and late made public in the hope that it could help researchers to start
+their journey along with FPGA, with less pain and whiskey.
+
+Resources collected here, or the way contents are organized, are not in their perfect shape.
+This repository is still raw and need major improvements. Any form of contribution is welcomed and appreciated.
+
+Main contents:
 - __`README.md`__
-	- Basics about digital design
-	- Basic about FPGA
+	- Basics about Digital Design
+	- Basics about FPGA
 	- Relevant Courses and Books
 	- Papers about FPGA internal
 - __`xilinx.md`__ and __`xilinx_constraints.md`__
@@ -26,37 +33,30 @@ Main resources:
 - __`FAQ.md`__
 	- Some implementation questions about FPGA
 
-This repository was started by a newbie to record his learning of FPGA,
-and made public in the hope that it could help researchers to start
-their journey along with FPGA, with less pain and whiskey.
-
-Resources collected, or the way contents are organized, are not in their perfect shape.
-This repository is still raw and under active development.
-Any form of contribution is welcomed.
-
 ## Get Started
 
 FPGA Intro
-- [Slides: Intro FPGA CSE467 UW](https://courses.cs.washington.edu/courses/cse467/03wi/FPGA.pdf)
-- [URL: All about FPGAs, EE Times](https://www.eetimes.com/document.asp?doc_id=1274496)
-- [URL: I/O Pads](http://www2.eng.cam.ac.uk/~dmh/4b7/resource/section14.htm)
-  	- BGA Wiki: In a BGA the pins are replaced by __pads__ on the bottom of the package. If you check PGA package, you will know the difference between pin and pad, and immediately get why it is called pad. And you will also know what's the pad in the IO Block diagram.
 - [URL: RapidWright FPGA Architecture Basics](http://www.rapidwright.io/docs/FPGA_Architecture.html)
 - [URL: RapidWright Xilinx Architecture Terminology](http://www.rapidwright.io/docs/Xilinx_Architecture.html)
+- [Parallel Programming for FPGAs](https://arxiv.org/abs/1805.03648)
+	- Basic about FPGA and HLS
+- [URL: All about FPGAs, EE Times](https://www.eetimes.com/document.asp?doc_id=1274496)
+- [Slides: Intro FPGA CSE467 UW](https://courses.cs.washington.edu/courses/cse467/03wi/FPGA.pdf)
+- [URL: I/O Pads](http://www2.eng.cam.ac.uk/~dmh/4b7/resource/section14.htm)
+  	- BGA Wiki: In a BGA the pins are replaced by __pads__ on the bottom of the package. If you check PGA package, you will know the difference between pin and pad, and immediately get why it is called pad. And you will also know what's the pad in the IO Block diagram.
 
 Digital Basics
+- [PDF: The Digital World](http://web.mit.edu/6.111/volume2/www/f2018/handouts/TheDigitalWorld.pdf)
 - [Wiki: Differential signaling](https://en.wikipedia.org/wiki/Differential_signaling) and [Wiki: Single-ended signaling](https://en.wikipedia.org/wiki/Single-ended_signaling)
     - [Paper: Differential Signals The Differential Difference! Douglas Brooks](https://www.ultracad.com/articles/differentialsignals.pdf)
-- Logic gate: buffer
-
+- [Book: Digital design and computer architecture](https://www.amazon.com/Digital-Design-Computer-Architecture-Harris/dp/0123944244/ref=asc_df_0123944244/?tag=hyprod-20&linkCode=df0&hvadid=312060980065&hvpos=1o4&hvnetw=g&hvrand=12891765886685173497&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9016722&hvtargid=aud-467599743108:pla-459777269741&psc=1)
 
 Verilog
-- [The Digital World](http://web.mit.edu/6.111/volume2/www/f2018/handouts/TheDigitalWorld.pdf)
 - [Verilog Introduction](http://www.lsi.upc.edu/~jordicf/Teaching/secretsofhardware/VerilogIntroduction_Nyasulu.pdf)
 - [Verilog HDL Quick Reference Card](http://www.ece.uvic.ca/~fayez/courses/ceng465/vlogref.pdf)
-- [Xilinx UG901 Synthesis]
+- [Xilinx UG901 Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_1/ug901-vivado-synthesis.pdf)
 
-HLS
+High-Level Synthesis (HLS)
 - [A Survey and Evaluation of FPGA High-Level Synthesis Tools](https://janders.eecg.utoronto.ca/pdfs/tcad_hls.pdf)
 - [Xilinx Introduction to FPGA Design with Vivado High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/ug998-vivado-intro-fpga-design-hls.pdf)
 - [Xilinx Vivado Design Suite User Guide High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_2/ug902-vivado-high-level-synthesis.pdf)
@@ -84,9 +84,36 @@ Books
 - [The Zynq book](http://www.zynqbook.com/)
     - 15.5.3 Pipelining
     - 15.5.4 Dataflow
+- [FPGAs for Software Programmers](https://www.springer.com/us/book/9783319264066)
+- [Data Processing on FPGAs, Synthesis Lectures on Data Management](https://www.morganclaypool.com/doi/abs/10.2200/S00514ED1V01Y201306DTM035)
 
-## Papers about FPGA Internals
+## Papers
 
+### Applications
+
+Machine Learning
+- TODO
+
+Graph
+- TODO
+
+KVS
+- TODO
+
+Biology
+- TODO
+
+Video Processing
+- TODO
+
+Micro-services
+- TODO
+
+### Virtualization
+
+- TODO
+
+### FPGA Internal
 General
 - [FPGA and CPLD architectures: a tutorial, 1996](http://www.eecg.toronto.edu/~jayar/pubs/brown/DTSurvey.pdf)
 - [Reconfigurable computing: a survey of systems and software, 2002](https://people.ece.uw.edu/hauck/publications/ConfigCompute.pdf)
