@@ -24,7 +24,7 @@ set_clock_uncertainty 1.25
 # Simulate the C code 
 csim_design
 
-#csynth_design
+csynth_design
 
 # Export IP block
 #export_design
