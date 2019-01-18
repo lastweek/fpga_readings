@@ -137,7 +137,7 @@ Infrastructure and Cloud
 - TODO
 
 Network Stack
-- TODO
+- [https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
 
 Machine Learning
 - TODO
