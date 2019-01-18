@@ -99,12 +99,13 @@ General
 - [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
 - [The LEAP Operating System for FPGAs](https://github.com/LEAP-FPGA/leap-documentation/wiki)
 
-Memory
+Work with Virtual Memory System
+- (Papers deal with OS Virtual Memory System)
 - [Virtual Memory Window for Application-Specific Reconfigurable Coprocessors, DAC'04](https://ieeexplore.ieee.org/document/1664911)
 	- Early work that adds a new MMU to FPGA to let FPGA logic access `on-chip DRAM`. Note, it's not the system main memory. Thus the translation pgtable is different.
 	- Has some insights on prefetching and MMU CAM design.
 - [Seamless HardwareSoftware Integration in Reconfigurable Computing Systems, 2005](https://ieeexplore.ieee.org/document/1413143)
-	- Follow up summary on previous DAC'14 Virtual Memory Window.
+	- Follow up summary on previous DAC'04 Virtual Memory Window.
 - [A Reconfigurable Hardware Interface for a Modern Computing System, FCCM'07](https://ieeexplore.ieee.org/document/4297245)
 	- This work adds a new MMU which includes a 16-entry TLB to FPGA. FPGA and CPU shares the same user virtual address space, use the same physical memory. FPGA and CPU share memory at __cacheline granularity__, FPGA is just another core in this sense. Upon a TLB miss at FPGA MMU, the FPGA sends interrupt to CPU, to let _software to handle the TLB miss_. Using software-managed TLB miss is not efficient. But they made cache coherence between FPGA and CPU easy.
 - [Low-Latency High-Bandwidth HW/SW Communication in a Virtual Memory Environment, FPL'08](https://ieeexplore.ieee.org/abstract/document/4629945)
@@ -112,14 +113,20 @@ Memory
 	- But I think they missed one important aspect: cache coherence between CPU and FPGA. There is not too much information about this in the paper, it seems they do not have cache at FPGA. Anyhow, this is why recently CCIX and OpenCAPI are proposed.
 - [Memory Virtualization for Multithreaded Reconfigurable Hardware, FPL'11](https://ieeexplore.ieee.org/document/6044806)
 	- Part of the ReconOS project
-	- They implemented a simple MMU inside MMU that includes a TLB. On protection violation or page invalid access cases, their MMU just hand over to CPU pgfault routines. How is this different from the FPL'08 one? Actually, IMO, they are the same.
-- CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computin [[1]](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf), [[2]](https://users.ece.cmu.edu/~echung/coram-distrib.pdf)
+	- They implemented a simple MMU inside FPGA that includes a TLB. On protection violation or page invalid access cases, their MMU just hand over to CPU pgfault routines. How is this different from the FPL'08 one? Actually, IMO, they are the same.
+
+Memory Hierarchy
+- (Papers deal with BRAM, registers, on-board DRAM, and system DRAM)
+- [LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11](https://people.csail.mit.edu/emer/papers/2011.02.isfpga.leap_scratchpads.pdf)
+	- Main design hierarchy: Use BRAM as L1 cache, use on-board DRAM as L2 cache, and host memory as the backing store. Everthing is abstracted away through their interface (similar to load/store). Programming is pretty much the same as if you are writing for CPU.
+	- Accoding to sec 2.2.2, its scratchpad controller, is using simple segment-based mapping scheme. Like AmorphOS's one.
+- [CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computing](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf)
 	- CoRAM provides an interface for managing the on- and off-chip memory resource of an FPGA.
 	- Cache, TLB, NoC, it has almost everything. The thesis is very comprehensive and informative.
 - [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
 	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
 
-CPU/FPGA Integration
+OS/CPU/FPGA Integration
 - [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
 - [Operating systems for reconfigurable embedded platforms: online scheduling of real-time tasks, IEEE'04](https://ieeexplore.ieee.org/document/1336761)
 - [hthreads: a hardware/software co-designed multithreaded RTOS kernel, 2005](https://ieeexplore.ieee.org/document/1612697)
@@ -128,7 +135,7 @@ CPU/FPGA Integration
 - [FUSE: Front-end user framework for O/S abstraction of hardware accelerators, FCCM'11](https://ieeexplore.ieee.org/document/5771269)
 - [ReconOS – an Operating System Approach for Reconfigurable Computing, IEEE Micro'14](http://www.reconos.de/publications/)
 	- Invoke kernel from FPGA. They built a shell in FPGA and delegation threads in CPU to achieve this.
-	- They implemented their own MMU (using pre-established pgtables) to let FPGA logic to access system memory. [Ref]((https://ieeexplore.ieee.org/document/6044806)).
+	- They implemented their own MMU (using pre-established pgtables) to let FPGA logic to access system memory. [Ref](https://ieeexplore.ieee.org/document/6044806).
 	- Read the "Operating Systems for Reconfigurable Computing" sidebar, nice summary.
 
 ### Applications
