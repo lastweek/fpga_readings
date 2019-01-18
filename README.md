@@ -120,6 +120,9 @@ Memory Hierarchy
 - [LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11](https://people.csail.mit.edu/emer/papers/2011.02.isfpga.leap_scratchpads.pdf)
 	- Main design hierarchy: Use BRAM as L1 cache, use on-board DRAM as L2 cache, and host memory as the backing store. Everthing is abstracted away through their interface (similar to load/store). Programming is pretty much the same as if you are writing for CPU.
 	- Accoding to sec 2.2.2, its scratchpad controller, is using simple segment-based mapping scheme. Like AmorphOS's one.
+- [LEAP Shared Memories: Automating the Construction of FPGA Coherent Memories, FCCM'14](http://people.csail.mit.edu/hjyang/papers/yang-fccm2014.pdf)
+	- Follow up work on LEAP Scratchpads, extends the work to have cache coherence between multiple FPGAs.
+	- Coherent Scatchpads with MOSI protocol.
 - [CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computing](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf)
 	- CoRAM provides an interface for managing the on- and off-chip memory resource of an FPGA.
 	- Cache, TLB, NoC, it has almost everything. The thesis is very comprehensive and informative.
