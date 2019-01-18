@@ -113,10 +113,11 @@ Memory
 - [Memory Virtualization for Multithreaded Reconfigurable Hardware, FPL'11](https://ieeexplore.ieee.org/document/6044806)
 	- Part of the ReconOS project
 	- They implemented a simple MMU inside MMU that includes a TLB. On protection violation or page invalid access cases, their MMU just hand over to CPU pgfault routines. How is this different from the FPL'08 one? Actually, IMO, they are the same.
+- CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computin [[1]](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf), [[2]](https://users.ece.cmu.edu/~echung/coram-distrib.pdf)
+	- CoRAM provides an interface for managing the on- and off-chip memory resource of an FPGA.
+	- Cache, TLB, NoC, it has almost everything. The thesis is very comprehensive and informative.
 - [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
 	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
-- CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computin [[1]](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf), [[2]](https://users.ece.cmu.edu/~echung/coram-distrib.pdf)
-	- TODO
 
 CPU/FPGA Integration
 - [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
