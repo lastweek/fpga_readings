@@ -146,7 +146,8 @@ Graph
 - TODO
 
 KVS
-- TODO
+- [KV-Direct: High-Performance In-Memory Key-Value Store with Programmable NIC](https://dl.acm.org/citation.cfm?id=3132756)
+	- This link is also useful for better understading [Morning Paper](https://blog.acolyer.org/2017/11/23/kv-direct-high-performance-in-memory-key-value-store-with-programmable-nic/)
 
 Biology
 - TODO
