@@ -95,11 +95,11 @@ How to apply Operating System concept to FPGA? How to virtualize on-board memory
 And, how is FPGA ultimately different from CPU in items of resource sharing?
 Papers in this section could give you some hint.
 
-General
+__General__
 - [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
 - [The LEAP Operating System for FPGAs](https://github.com/LEAP-FPGA/leap-documentation/wiki)
 
-Work with Virtual Memory System
+__Work with Virtual Memory System__
 - (Papers deal with OS Virtual Memory System)
 - [Virtual Memory Window for Application-Specific Reconfigurable Coprocessors, DAC'04](https://ieeexplore.ieee.org/document/1664911)
 	- Early work that adds a new MMU to FPGA to let FPGA logic access `on-chip DRAM`. Note, it's not the system main memory. Thus the translation pgtable is different.
@@ -115,7 +115,7 @@ Work with Virtual Memory System
 	- Part of the ReconOS project
 	- They implemented a simple MMU inside FPGA that includes a TLB. On protection violation or page invalid access cases, their MMU just hand over to CPU pgfault routines. How is this different from the FPL'08 one? Actually, IMO, they are the same.
 
-Memory Hierarchy
+__Memory Hierarchy__
 - (Papers deal with BRAM, registers, on-board DRAM, and system DRAM)
 - [LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11](https://people.csail.mit.edu/emer/papers/2011.02.isfpga.leap_scratchpads.pdf)
 	- Main design hierarchy: Use BRAM as L1 cache, use on-board DRAM as L2 cache, and host memory as the backing store. Everthing is abstracted away through their interface (similar to load/store). Programming is pretty much the same as if you are writing for CPU.
@@ -129,7 +129,7 @@ Memory Hierarchy
 - [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
 	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
 
-OS/CPU/FPGA Integration
+__OS/CPU/FPGA Integration__
 - [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
 - [Operating systems for reconfigurable embedded platforms: online scheduling of real-time tasks, IEEE'04](https://ieeexplore.ieee.org/document/1336761)
 - [hthreads: a hardware/software co-designed multithreaded RTOS kernel, 2005](https://ieeexplore.ieee.org/document/1612697)
@@ -147,22 +147,28 @@ What are the typical applications that can be offloaded into FPGA?
 What has already been done before? This section lists many interesting
 applications and systems deployed on FPGA.
 
-Infrastructure and Cloud
+__Infrastructure and Cloud__
 - [Enabling FPGAs in the Cloud, CF'14](https://dl.acm.org/citation.cfm?id=2597929)
 	- Papers raised four important aspects to enable FPGA in cloud: Abstraction, Sharing, Compatibility, and Security. FPGA itself requires a shell (paper calls it service logic) and being partitioned into multiple slots. Things discussed in the paper are straightforward, but worth reading. They did not solve the FPGA sharing issue, which, is solved by AmorphOS.
 - [Accelerator-Rich Architectures: Opportunities and Progresses, DAC'14](https://dl.acm.org/citation.cfm?id=2596667)
+	- Reminds me of [OmniX](https://dl.acm.org/citation.cfm?id=3102992). Disaggregation at a different scale.
+- [Programming and Runtime Support to Blaze FPGA Accelerator Deployment at Datacenter Scale, SoCC'16](https://dl.acm.org/citation.cfm?id=2987569)
 - [Heterogeneous Datacenters: Options and Opportunities, DAC'16](https://ieeexplore.ieee.org/document/7544260)
+	- Blaze, a system that hooks FPGA with big data processing framework, e.g., Spark.
 - [Customizable Computing: From Single Chip to Datacenters, IEEE'18](https://vast.cs.ucla.edu/sites/default/files/publications/08566145.pdf)
-	- Effort from Jason Cong.
+- [Huawei: FPGA as a Service in the Cloud](https://indico.cern.ch/event/669648/contributions/2838181/attachments/1581893/2500031/Huawei_Cloud_FPGA_as_a_Service_CERN_openlab.pdf)
 - [MS: A Reconfigurable Fabric for Accelerating Large-Scale Datacenter Services, ISCA'14](https://www.microsoft.com/en-us/research/publication/a-reconfigurable-fabric-for-accelerating-large-scale-datacenter-services/)
 - [MS: A Cloud-Scale Acceleration Architecture, Micro'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/10/Cloud-Scale-Acceleration-Architecture.pdf)
 - [MS: A Configurable Cloud-Scale DNN Processor for Real-Time AI, Micro'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/06/ISCA18-Brainwave-CameraReady.pdf)
+- [MS: Azure Accelerated Networking: SmartNICs in the Public Cloud, NSDI'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
 - [MS: Direct Universal Access : Making Data Center Resources Available to FPGA, NSDI'19](https://www.microsoft.com/en-us/research/uploads/prod/2018/10/nsdi19spring-final64.pdf)
 	- Catapult is just sweet, isn't it?
 - [ASIC Clouds: Specializing the Datacenter, ISCA'16](https://cseweb.ucsd.edu/~mbtaylor/papers/ASIC_Cloud_ISCA_2016_Proceedings.pdf)
 
-Network Stack
-- [Azure Accelerated Networking: SmartNICs in the Public Cloud](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
+__Programmable Network__
+- [MS: ClickNP: Highly Flexible and High Performance Network Processing with Reconfigurable Hardware, SIGCOMM'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/main-4.pdf)
+- [MS: Multi-Path Transport for RDMA in Datacenters, NSDI'18](https://www.usenix.org/conference/nsdi18/presentation/lu)
+- [MS: Azure Accelerated Networking: SmartNICs in the Public Cloud, NSDI'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
 
 Machine Learning
 - TODO
@@ -175,7 +181,7 @@ KVS
 	- This link is also useful for better understading [Morning Paper](https://blog.acolyer.org/2017/11/23/kv-direct-high-performance-in-memory-key-value-store-with-programmable-nic/)
 
 Biology
-- TODO
+- hpca19
 
 Video Processing
 - TODO
@@ -185,6 +191,10 @@ Blockchain
 
 Micro-services
 - TODO
+
+Languages
+- UCB GC
+- UCLA Java
 
 ### FPGA Internal
 
