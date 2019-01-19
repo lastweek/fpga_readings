@@ -119,7 +119,7 @@ Memory Hierarchy
 - (Papers deal with BRAM, registers, on-board DRAM, and system DRAM)
 - [LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11](https://people.csail.mit.edu/emer/papers/2011.02.isfpga.leap_scratchpads.pdf)
 	- Main design hierarchy: Use BRAM as L1 cache, use on-board DRAM as L2 cache, and host memory as the backing store. Everthing is abstracted away through their interface (similar to load/store). Programming is pretty much the same as if you are writing for CPU.
-	- Accoding to sec 2.2.2, its scratchpad controller, is using simple segment-based mapping scheme. Like AmorphOS's one.
+	- According to sec 2.2.2, its scratchpad controller, is using simple segment-based mapping scheme. Like AmorphOS's one.
 - [LEAP Shared Memories: Automating the Construction of FPGA Coherent Memories, FCCM'14](http://people.csail.mit.edu/hjyang/papers/yang-fccm2014.pdf)
 	- Follow up work on LEAP Scratchpads, extends the work to have cache coherence between multiple FPGAs.
 	- Coherent Scatchpads with MOSI protocol.
@@ -148,7 +148,18 @@ What has already been done before? This section lists many interesting
 applications and systems deployed on FPGA.
 
 Infrastructure and Cloud
-- TODO
+- [Enabling FPGAs in the Cloud, CF'14](https://dl.acm.org/citation.cfm?id=2597929)
+	- Papers raised four important aspects to enable FPGA in cloud: Abstraction, Sharing, Compatibility, and Security. FPGA itself requires a shell (paper calls it service logic) and being partitioned into multiple slots. Things discussed in the paper are straightforward, but worth reading. They did not solve the FPGA sharing issue, which, is solved by AmorphOS.
+- [Accelerator-Rich Architectures: Opportunities and Progresses, DAC'14](https://dl.acm.org/citation.cfm?id=2596667)
+- [Heterogeneous Datacenters: Options and Opportunities, DAC'16](https://ieeexplore.ieee.org/document/7544260)
+- [Customizable Computing: From Single Chip to Datacenters, IEEE'18](https://vast.cs.ucla.edu/sites/default/files/publications/08566145.pdf)
+	- Effort from Jason Cong.
+- [MS: A Reconfigurable Fabric for Accelerating Large-Scale Datacenter Services, ISCA'14](https://www.microsoft.com/en-us/research/publication/a-reconfigurable-fabric-for-accelerating-large-scale-datacenter-services/)
+- [MS: A Cloud-Scale Acceleration Architecture, Micro'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/10/Cloud-Scale-Acceleration-Architecture.pdf)
+- [MS: A Configurable Cloud-Scale DNN Processor for Real-Time AI, Micro'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/06/ISCA18-Brainwave-CameraReady.pdf)
+- [MS: Direct Universal Access : Making Data Center Resources Available to FPGA, NSDI'19](https://www.microsoft.com/en-us/research/uploads/prod/2018/10/nsdi19spring-final64.pdf)
+	- Catapult is just sweet, isn't it?
+- [ASIC Clouds: Specializing the Datacenter, ISCA'16](https://cseweb.ucsd.edu/~mbtaylor/papers/ASIC_Cloud_ISCA_2016_Proceedings.pdf)
 
 Network Stack
 - [Azure Accelerated Networking: SmartNICs in the Public Cloud](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
