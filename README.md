@@ -167,9 +167,6 @@ __Integrate with Frameworks__
 	- There is a line of work that hook FPGA with big data processing framework (Spark), so the implementation of FPGA and the scale-out software can be separated. The Spark can schedule FPGA jobs to different machines, and take care of scale-out, failure handling etc. But, I personally think this line of work is really just an extension to ReconOS/FUSE/BORPH line of work. The main reason is: both these two lines of work try to integrate jobs run on CPU and jobs run on FPGA, so CPU and FPGA have an easier way to talk, or put in another way, CPU and FPGA have a better division of labor. Whether it's single-machine (like ReconOS, Melia), or distributed (like Blaze, Axel), they are essentially the same.
 - [UCLA: Heterogeneous Datacenters: Options and Opportunities, DAC'16](https://ieeexplore.ieee.org/document/7544260)
 	- Follow up work of Blaze. Nice comparison of big and wimpy cores.
-- [FPGAs in the Cloud: Booting Virtualized Hardware Accelerators with OpenStack, FCCM'14](https://ieeexplore.ieee.org/document/6861604)
-	- The on-chip FPGA shell architecture is extremely similar to Catapult. And they are published at the same year.
-	- The building base is NetFPGA.
 
 __Cloud Infrastructure__
 - [Enabling FPGAs in the Cloud, CF'14](https://dl.acm.org/citation.cfm?id=2597929)
@@ -179,6 +176,8 @@ __Cloud Infrastructure__
 	- This paper actually targets single-machine case. But it can reflect a distributed setting.
 - [Customizable Computing: From Single Chip to Datacenters, IEEE'18](https://vast.cs.ucla.edu/sites/default/files/publications/08566145.pdf)
 - [Huawei: FPGA as a Service in the Cloud](https://indico.cern.ch/event/669648/contributions/2838181/attachments/1581893/2500031/Huawei_Cloud_FPGA_as_a_Service_CERN_openlab.pdf)
+- [FPGAs in the Cloud: Booting Virtualized Hardware Accelerators with OpenStack, FCCM'14](https://ieeexplore.ieee.org/document/6861604)
+	- The on-chip FPGA shell architecture is very similar to Catapult.
 - [MS: A Reconfigurable Fabric for Accelerating Large-Scale Datacenter Services, ISCA'14](https://www.microsoft.com/en-us/research/publication/a-reconfigurable-fabric-for-accelerating-large-scale-datacenter-services/)
 - [MS: A Cloud-Scale Acceleration Architecture, Micro'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/10/Cloud-Scale-Acceleration-Architecture.pdf)
 - [MS: A Configurable Cloud-Scale DNN Processor for Real-Time AI, Micro'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/06/ISCA18-Brainwave-CameraReady.pdf)
