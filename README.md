@@ -169,15 +169,16 @@ __Integrate with Frameworks__
 	- Follow up work of Blaze. Nice comparison of big and wimpy cores.
 
 __Cloud Infrastructure__
-- [Enabling FPGAs in the Cloud, CF'14](https://dl.acm.org/citation.cfm?id=2597929)
-	- Papers raised four important aspects to enable FPGA in cloud: Abstraction, Sharing, Compatibility, and Security. FPGA itself requires a shell (paper calls it service logic) and being partitioned into multiple slots. Things discussed in the paper are straightforward, but worth reading. They did not solve the FPGA sharing issue, which, is solved by AmorphOS.
-- [Accelerator-Rich Architectures: Opportunities and Progresses, DAC'14](https://dl.acm.org/citation.cfm?id=2596667)
+- [Huawei: FPGA as a Service in the Cloud](https://indico.cern.ch/event/669648/contributions/2838181/attachments/1581893/2500031/Huawei_Cloud_FPGA_as_a_Service_CERN_openlab.pdf)
+- [UCLA: Customizable Computing: From Single Chip to Datacenters, IEEE'18](https://vast.cs.ucla.edu/sites/default/files/publications/08566145.pdf)
+- [UCLA: Accelerator-Rich Architectures: Opportunities and Progresses, DAC'14](https://dl.acm.org/citation.cfm?id=2596667)
 	- Reminds me of [OmniX](https://dl.acm.org/citation.cfm?id=3102992). Disaggregation at a different scale.
 	- This paper actually targets single-machine case. But it can reflect a distributed setting.
-- [Customizable Computing: From Single Chip to Datacenters, IEEE'18](https://vast.cs.ucla.edu/sites/default/files/publications/08566145.pdf)
-- [Huawei: FPGA as a Service in the Cloud](https://indico.cern.ch/event/669648/contributions/2838181/attachments/1581893/2500031/Huawei_Cloud_FPGA_as_a_Service_CERN_openlab.pdf)
+- [Enabling FPGAs in the Cloud, CF'14](https://dl.acm.org/citation.cfm?id=2597929)
+	- Paper raised four important aspects to enable FPGA in cloud: Abstraction, Sharing, Compatibility, and Security. FPGA itself requires a shell (paper calls it service logic) and being partitioned into multiple slots. Things discussed in the paper are straightforward, but worth reading. They did not solve the FPGA sharing issue, which, is solved by AmorphOS.
 - [FPGAs in the Cloud: Booting Virtualized Hardware Accelerators with OpenStack, FCCM'14](https://ieeexplore.ieee.org/document/6861604)
-	- The on-chip FPGA shell architecture is very similar to Catapult.
+	- The above CF and FCCM papers are similar in the sense that they are both building SW framework and HW shell to provide a unified cloud management system. They differ in their shell design: CF one take inputs from DMA engine, which is local system DRAM, FCCM one take inputs from Ethernet. The things after DMA or MAC, are essentially similar. In terms of FPGA shell design, FCCM one is very similar to Catapult.
+	- It seems all of them are using simple segment-based memory partition for user FPGA logic. What's the pros and cons of using page-based?
 - [MS: A Reconfigurable Fabric for Accelerating Large-Scale Datacenter Services, ISCA'14](https://www.microsoft.com/en-us/research/publication/a-reconfigurable-fabric-for-accelerating-large-scale-datacenter-services/)
 - [MS: A Cloud-Scale Acceleration Architecture, Micro'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/10/Cloud-Scale-Acceleration-Architecture.pdf)
 - [MS: A Configurable Cloud-Scale DNN Processor for Real-Time AI, Micro'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/06/ISCA18-Brainwave-CameraReady.pdf)
