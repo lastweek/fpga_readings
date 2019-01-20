@@ -149,16 +149,27 @@ applications and systems deployed on FPGA.
 
 __Integrate with Frameworks__
 - [Map-reduce as a Programming Model for Custom Computing Machines, FCCM'08](https://ieeexplore.ieee.org/document/4724898)
-- [FPMR: MapReduce Framework on FPGA, FPGA'10](https://dl.acm.org/citation.cfm?doid=1723112.1723129)
-- [Melia: A MapReduce Framework on OpenCL-Based FPGAs, 2016](https://ieeexplore.ieee.org/document/7425227/)
+	- This paper proposes a model to translate MapReduce code written in C to code that could run on FPGA and GPU. Many details are omitted, and they don't really have the compiler.
+	- Single-host framework, everything is in FPGA and GPU.
 - [Axel: A Heterogeneous Cluster with FPGAs and GPUs, FPGA'10](http://www.doc.ic.ac.uk/~wl/papers/10/fpga10bt.pdf)
-- [FPGAs in the Cloud: Booting Virtualized Hardware Accelerators with OpenStack, FCCM'14](https://ieeexplore.ieee.org/document/6861604)
-- [Programming and Runtime Support to Blaze FPGA Accelerator Deployment at Datacenter Scale, SoCC'16](https://dl.acm.org/citation.cfm?id=2987569)
+	- A distributed MapReduce Framework, targets clusters with CPU, GPU, and FPGA. Mainly the idea of scheduling FPGA/GPU jobs.
+	- Distributed Framework.
+- [FPMR: MapReduce Framework on FPGA, FPGA'10](https://dl.acm.org/citation.cfm?doid=1723112.1723129)
+	- A MapReduce framework on a single host's FPGA. You need to write Verilog/HLS for processing logic to hook with their framework. The framework mainly includes a data transfer controller, a simple schedule that enable certain blocks at certain time.
+	- Single-host framework, everything is in FPGA.
+- [Melia: A MapReduce Framework on OpenCL-Based FPGAs, IEEE'16](https://ieeexplore.ieee.org/document/7425227/)
+	- Another framework, written in OpenCL, and users can use OpenCL to program as well. Similar to previous work, it's more about the framework design, not specific algorithms on FPGA.
+	- Single-host framework, everything is in FPGA. But they have a discussion on running on multiple FPGAs.
+	- Four MapReduce FPGA papers here, I believe there are more. The marriage between MapReduce and FPGA is not something hard to understand. FPGA can be viewed as another core with different capabilities. The thing is, given FPGA's reprogram-time and limited on-board memory, how to design a good scheduling algorithm and data moving/caching mechanisms. Those papers give some hints on this.
+- [UCLA: When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
+- [UCLA: Programming and Runtime Support to Blaze FPGA Accelerator Deployment at Datacenter Scale, SoCC'16](https://dl.acm.org/citation.cfm?id=2987569)
 	- A system that hooks FPGA with Spark.
-	- There is a line of work that hook FPGA with big data processing framework (Spark, MapReduce). So the Spark can schedule FPGA jobs to different machines, and take care of failure handling stuff. But, I really think this is just an extension to ReconOS/FUSE/BORPH line of work. The main reason is: both these two lines of work integrate jobs run on CPU and jobs run on FPGA, so CPU and FPGA have an easier way to talk. Whether it's single-machine (like ReconOS), or distributed (like Blaze), they are essentially the same. Blaze is just leveraging Spark to do the scheduling and distributing work part.
-- [Heterogeneous Datacenters: Options and Opportunities, DAC'16](https://ieeexplore.ieee.org/document/7544260)
+	- There is a line of work that hook FPGA with big data processing framework (Spark), so the implementation of FPGA and the scale-out software can be separated. The Spark can schedule FPGA jobs to different machines, and take care of scale-out, failure handling etc. But, I personally think this line of work is really just an extension to ReconOS/FUSE/BORPH line of work. The main reason is: both these two lines of work try to integrate jobs run on CPU and jobs run on FPGA, so CPU and FPGA have an easier way to talk, or put in another way, CPU and FPGA have a better division of labor. Whether it's single-machine (like ReconOS, Melia), or distributed (like Blaze, Axel), they are essentially the same.
+- [UCLA: Heterogeneous Datacenters: Options and Opportunities, DAC'16](https://ieeexplore.ieee.org/document/7544260)
 	- Follow up work of Blaze. Nice comparison of big and wimpy cores.
-- [When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
+- [FPGAs in the Cloud: Booting Virtualized Hardware Accelerators with OpenStack, FCCM'14](https://ieeexplore.ieee.org/document/6861604)
+	- The on-chip FPGA shell architecture is extremely similar to Catapult. And they are published at the same year.
+	- The building base is NetFPGA.
 
 __Cloud Infrastructure__
 - [Enabling FPGAs in the Cloud, CF'14](https://dl.acm.org/citation.cfm?id=2597929)
@@ -181,6 +192,9 @@ __Programmable Network__
 - [MS: Multi-Path Transport for RDMA in Datacenters, NSDI'18](https://www.usenix.org/conference/nsdi18/presentation/lu)
 - [MS: Azure Accelerated Networking: SmartNICs in the Public Cloud, NSDI'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
 
+__Database__
+- [Accelerating database systems using FPGAs: A survey, FPL'18](https://pdfs.semanticscholar.org/dee1/59031eb2de0a9324829f9027b14403164489.pdf)
+
 Machine Learning
 - TODO
 
@@ -191,7 +205,8 @@ KVS
 - [KV-Direct: High-Performance In-Memory Key-Value Store with Programmable NIC](https://dl.acm.org/citation.cfm?id=3132756)
 	- This link is also useful for better understading [Morning Paper](https://blog.acolyer.org/2017/11/23/kv-direct-high-performance-in-memory-key-value-store-with-programmable-nic/)
 
-Biology
+Genome
+- [When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
 - hpca19
 
 Video Processing
