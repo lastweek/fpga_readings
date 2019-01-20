@@ -99,7 +99,21 @@ __General__
 - [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
 - [The LEAP Operating System for FPGAs](https://github.com/LEAP-FPGA/leap-documentation/wiki)
 
-__Work with Virtual Memory System__
+__Memory Hierarchy__
+- (Papers deal with BRAM, registers, on-board DRAM, and system DRAM)
+- [LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11](https://people.csail.mit.edu/emer/papers/2011.02.isfpga.leap_scratchpads.pdf)
+	- Main design hierarchy: Use BRAM as L1 cache, use on-board DRAM as L2 cache, and host memory as the backing store. Everthing is abstracted away through their interface (similar to load/store). Programming is pretty much the same as if you are writing for CPU.
+	- According to sec 2.2.2, its scratchpad controller, is using simple segment-based mapping scheme. Like AmorphOS's one.
+- [LEAP Shared Memories: Automating the Construction of FPGA Coherent Memories, FCCM'14](http://people.csail.mit.edu/hjyang/papers/yang-fccm2014.pdf)
+	- Follow up work on LEAP Scratchpads, extends the work to have cache coherence between multiple FPGAs.
+	- Coherent Scatchpads with MOSI protocol.
+- [CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computing](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf)
+	- CoRAM provides an interface for managing the on- and off-chip memory resource of an FPGA.
+	- Cache, TLB, NoC, it has almost everything. The thesis is very comprehensive and informative.
+- [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
+	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
+
+__Integrate with Virtual Memory__
 - (Papers deal with OS Virtual Memory System)
 - [Virtual Memory Window for Application-Specific Reconfigurable Coprocessors, DAC'04](https://ieeexplore.ieee.org/document/1664911)
 	- Early work that adds a new MMU to FPGA to let FPGA logic access `on-chip DRAM`. Note, it's not the system main memory. Thus the translation pgtable is different.
@@ -115,21 +129,7 @@ __Work with Virtual Memory System__
 	- Part of the ReconOS project
 	- They implemented a simple MMU inside FPGA that includes a TLB. On protection violation or page invalid access cases, their MMU just hand over to CPU pgfault routines. How is this different from the FPL'08 one? Actually, IMO, they are the same.
 
-__Memory Hierarchy__
-- (Papers deal with BRAM, registers, on-board DRAM, and system DRAM)
-- [LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11](https://people.csail.mit.edu/emer/papers/2011.02.isfpga.leap_scratchpads.pdf)
-	- Main design hierarchy: Use BRAM as L1 cache, use on-board DRAM as L2 cache, and host memory as the backing store. Everthing is abstracted away through their interface (similar to load/store). Programming is pretty much the same as if you are writing for CPU.
-	- According to sec 2.2.2, its scratchpad controller, is using simple segment-based mapping scheme. Like AmorphOS's one.
-- [LEAP Shared Memories: Automating the Construction of FPGA Coherent Memories, FCCM'14](http://people.csail.mit.edu/hjyang/papers/yang-fccm2014.pdf)
-	- Follow up work on LEAP Scratchpads, extends the work to have cache coherence between multiple FPGAs.
-	- Coherent Scatchpads with MOSI protocol.
-- [CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computing](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf)
-	- CoRAM provides an interface for managing the on- and off-chip memory resource of an FPGA.
-	- Cache, TLB, NoC, it has almost everything. The thesis is very comprehensive and informative.
-- [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
-	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
-
-__OS/CPU/FPGA Integration__
+__Integrate OS/CPU/FPGA__
 - [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
 - [Operating systems for reconfigurable embedded platforms: online scheduling of real-time tasks, IEEE'04](https://ieeexplore.ieee.org/document/1336761)
 - [hthreads: a hardware/software co-designed multithreaded RTOS kernel, 2005](https://ieeexplore.ieee.org/document/1612697)
@@ -147,14 +147,25 @@ What are the typical applications that can be offloaded into FPGA?
 What has already been done before? This section lists many interesting
 applications and systems deployed on FPGA.
 
-__Infrastructure and Cloud__
+__Integrate with Frameworks__
+- [Map-reduce as a Programming Model for Custom Computing Machines, FCCM'08](https://ieeexplore.ieee.org/document/4724898)
+- [FPMR: MapReduce Framework on FPGA, FPGA'10](https://dl.acm.org/citation.cfm?doid=1723112.1723129)
+- [Melia: A MapReduce Framework on OpenCL-Based FPGAs, 2016](https://ieeexplore.ieee.org/document/7425227/)
+- [Axel: A Heterogeneous Cluster with FPGAs and GPUs, FPGA'10](http://www.doc.ic.ac.uk/~wl/papers/10/fpga10bt.pdf)
+- [FPGAs in the Cloud: Booting Virtualized Hardware Accelerators with OpenStack, FCCM'14](https://ieeexplore.ieee.org/document/6861604)
+- [Programming and Runtime Support to Blaze FPGA Accelerator Deployment at Datacenter Scale, SoCC'16](https://dl.acm.org/citation.cfm?id=2987569)
+	- A system that hooks FPGA with Spark.
+	- There is a line of work that hook FPGA with big data processing framework (Spark, MapReduce). So the Spark can schedule FPGA jobs to different machines, and take care of failure handling stuff. But, I really think this is just an extension to ReconOS/FUSE/BORPH line of work. The main reason is: both these two lines of work integrate jobs run on CPU and jobs run on FPGA, so CPU and FPGA have an easier way to talk. Whether it's single-machine (like ReconOS), or distributed (like Blaze), they are essentially the same. Blaze is just leveraging Spark to do the scheduling and distributing work part.
+- [Heterogeneous Datacenters: Options and Opportunities, DAC'16](https://ieeexplore.ieee.org/document/7544260)
+	- Follow up work of Blaze. Nice comparison of big and wimpy cores.
+- [When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
+
+__Cloud Infrastructure__
 - [Enabling FPGAs in the Cloud, CF'14](https://dl.acm.org/citation.cfm?id=2597929)
 	- Papers raised four important aspects to enable FPGA in cloud: Abstraction, Sharing, Compatibility, and Security. FPGA itself requires a shell (paper calls it service logic) and being partitioned into multiple slots. Things discussed in the paper are straightforward, but worth reading. They did not solve the FPGA sharing issue, which, is solved by AmorphOS.
 - [Accelerator-Rich Architectures: Opportunities and Progresses, DAC'14](https://dl.acm.org/citation.cfm?id=2596667)
 	- Reminds me of [OmniX](https://dl.acm.org/citation.cfm?id=3102992). Disaggregation at a different scale.
-- [Programming and Runtime Support to Blaze FPGA Accelerator Deployment at Datacenter Scale, SoCC'16](https://dl.acm.org/citation.cfm?id=2987569)
-- [Heterogeneous Datacenters: Options and Opportunities, DAC'16](https://ieeexplore.ieee.org/document/7544260)
-	- Blaze, a system that hooks FPGA with big data processing framework, e.g., Spark.
+	- This paper actually targets single-machine case. But it can reflect a distributed setting.
 - [Customizable Computing: From Single Chip to Datacenters, IEEE'18](https://vast.cs.ucla.edu/sites/default/files/publications/08566145.pdf)
 - [Huawei: FPGA as a Service in the Cloud](https://indico.cern.ch/event/669648/contributions/2838181/attachments/1581893/2500031/Huawei_Cloud_FPGA_as_a_Service_CERN_openlab.pdf)
 - [MS: A Reconfigurable Fabric for Accelerating Large-Scale Datacenter Services, ISCA'14](https://www.microsoft.com/en-us/research/publication/a-reconfigurable-fabric-for-accelerating-large-scale-datacenter-services/)
