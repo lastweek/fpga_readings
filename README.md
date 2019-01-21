@@ -180,6 +180,8 @@ __Cloud Infrastructure__
 	- Use OpenStack to manage FPGA resource. The FPGA is partitioned into multiple regions, each region can use PR. The FPGA shell includes: 1) basic MAC, and packet dispatcher, 2) memory controller, and segment-based partition scheme, 3) a soft processor used for runtime PR control. One very important aspect of this project is: they envision input to FPGA comes from Ethernet, which is very true nowadays. And this also makes their project quite similar to Catapult. It's a very solid paper, though the evaluation is a little bit weak. What could be added: migration, different-sized region.
 	- The above CF and FCCM papers are similar in the sense that they are both building SW framework and HW shell to provide a unified cloud management system. They differ in their shell design: CF one take inputs from DMA engine, which is local system DRAM, FCCM one take inputs from Ethernet. The things after DMA or MAC, are essentially similar.
 	- It seems all of them are using simple segment-based memory partition for user FPGA logic. What's the pros and cons of using paging here?
+- [Virtualized FPGA Accelerators for Efficient Cloud Computing, CloudCom'15](https://ieeexplore.ieee.org/abstract/document/7396187)
+- [Designing a Virtual Runtime for FPGA Accelerators in the Cloud, FPL'16](https://warwick.ac.uk/fac/sci/eng/staff/saf/publications/fpl2016-asiatici-phdforum.pdf)
 - [MS: A Reconfigurable Fabric for Accelerating Large-Scale Datacenter Services, ISCA'14](https://www.microsoft.com/en-us/research/publication/a-reconfigurable-fabric-for-accelerating-large-scale-datacenter-services/)
 - [MS: A Cloud-Scale Acceleration Architecture, Micro'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/10/Cloud-Scale-Acceleration-Architecture.pdf)
 	- Catapult is unique in its shell, which includes the Lightweight Transport Layer (LTL), and Elastic Router(ER). The cloud management part, which the paper just briefly mentioned, actually should include everything the above CF'14 and FCCM'14 have. The LTL has congestion control, packet loss detection/resend, ACK/NACK. The ER is a crossbar switch used by FPGA internal modules, which is essential to connect shell and roles.
@@ -235,6 +237,10 @@ General
 	- Read the first two paragraphs of each section and then come back to read all of that if needed.
 - [RAMP: Research Accelerator For Multiple Processors, 2007](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.437.4076&rep=rep1&type=pdf)
 - [Three Ages of FPGAs: A Retrospective on the First Thirty Years of FPGA Technology, IEEE'15](https://ieeexplore.ieee.org/document/7086413)
+
+Partial Reconfiguration
+- [DyRACT: A partial reconfiguration enabled accelerator and test platform, FPL'14](https://ieeexplore.ieee.org/document/6927507)
+- [FPGA Dynamic and Partial Reconfiguration: A Survey of Architectures, Methods, and Applications, CSUR'18](https://dl.acm.org/citation.cfm?id=3193827)
 
 Logical Optimization and Technology Mapping
 - [FlowMap: An Optimal Technology Mapping Algorithm for Delay Optimization in Lookup-Table Based FPGA Designs, 1994](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.22.9473&rep=rep1&type=pdf)
