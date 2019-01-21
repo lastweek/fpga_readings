@@ -112,13 +112,14 @@ __Memory Hierarchy__
 	- Cache, TLB, NoC, it has almost everything. The thesis is very comprehensive and informative.
 - [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
 	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
+- [Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
 
 __Integrate with Virtual Memory__
-- (Papers deal with OS Virtual Memory System)
+- (Papers deal with OS Virtual Memory System. Note that, all these papers, they introduce some form of MMU into FPGA to let FPGA work with host virtual memory systems. This added MMU is similar to CPU's MMU in the sense that they both do address translation. But, do note that the virtual memory system still runs in Linux, these include page fault handling, swapping, TLB shootdown stuff. What could really stands out, is to implement virtual memory system in FPGA. :-/ )
 - [Virtual Memory Window for Application-Specific Reconfigurable Coprocessors, DAC'04](https://ieeexplore.ieee.org/document/1664911)
 	- Early work that adds a new MMU to FPGA to let FPGA logic access `on-chip DRAM`. Note, it's not the system main memory. Thus the translation pgtable is different.
 	- Has some insights on prefetching and MMU CAM design.
-- [Seamless HardwareSoftware Integration in Reconfigurable Computing Systems, 2005](https://ieeexplore.ieee.org/document/1413143)
+- [Seamless Hardware Software Integration in Reconfigurable Computing Systems, 2005](https://ieeexplore.ieee.org/document/1413143)
 	- Follow up summary on previous DAC'04 Virtual Memory Window.
 - [A Reconfigurable Hardware Interface for a Modern Computing System, FCCM'07](https://ieeexplore.ieee.org/document/4297245)
 	- This work adds a new MMU which includes a 16-entry TLB to FPGA. FPGA and CPU shares the same user virtual address space, use the same physical memory. FPGA and CPU share memory at __cacheline granularity__, FPGA is just another core in this sense. Upon a TLB miss at FPGA MMU, the FPGA sends interrupt to CPU, to let _software to handle the TLB miss_. Using software-managed TLB miss is not efficient. But they made cache coherence between FPGA and CPU easy.
@@ -128,6 +129,9 @@ __Integrate with Virtual Memory__
 - [Memory Virtualization for Multithreaded Reconfigurable Hardware, FPL'11](https://ieeexplore.ieee.org/document/6044806)
 	- Part of the ReconOS project
 	- They implemented a simple MMU inside FPGA that includes a TLB. On protection violation or page invalid access cases, their MMU just hand over to CPU pgfault routines. How is this different from the FPL'08 one? Actually, IMO, they are the same.
+- [S4 Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
+	- This paper also implemented a hardware MMU, but the virtual memory system still run on Linux.
+	- Also listed in `Cloud Infrastructure` part.
 
 __Integrate OS/CPU/FPGA__
 - [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
@@ -184,7 +188,7 @@ __Cloud Infrastructure__
 - [S2 Virtualized FPGA Accelerators for Efficient Cloud Computing, CloudCom'15](https://ieeexplore.ieee.org/abstract/document/7396187)
 - [S3 Designing a Virtual Runtime for FPGA Accelerators in the Cloud, FPL'16](https://warwick.ac.uk/fac/sci/eng/staff/saf/publications/fpl2016-asiatici-phdforum.pdf)
 - [S4 Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
-	- The above four papers came from the same group of folks.
+	- The above four papers came from the same group of folks. S1 developed a framework to use PCIe to do PR, okay. S2 is a follow-up on S1, read S2's chapter IV hardware architecture, many implementation details like internal FPGA switch, AXI stream interface. But no memory virtualization discussion. S3 is a two page short paper. S4 is the realization of S3. I was particularly interested if S4 has implemented their own virtual memory management. The answer is NO. S4 leveraged on-chip Linux, they just build a customized MMU (in the form of using BRAM to store page tables. This approach is similar to the papers listed in `Integrate with Virtual Memory`). Many things discussed in S4 have been proposed multiple times in previous cloud FPGA papers since 2014.
 - [MS: A Reconfigurable Fabric for Accelerating Large-Scale Datacenter Services, ISCA'14](https://www.microsoft.com/en-us/research/publication/a-reconfigurable-fabric-for-accelerating-large-scale-datacenter-services/)
 - [MS: A Cloud-Scale Acceleration Architecture, Micro'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/10/Cloud-Scale-Acceleration-Architecture.pdf)
 	- Catapult is unique in its shell, which includes the Lightweight Transport Layer (LTL), and Elastic Router(ER). The cloud management part, which the paper just briefly mentioned, actually should include everything the above CF'14 and FCCM'14 have. The LTL has congestion control, packet loss detection/resend, ACK/NACK. The ER is a crossbar switch used by FPGA internal modules, which is essential to connect shell and roles.
