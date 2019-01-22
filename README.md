@@ -1,3 +1,11 @@
+```
+ _____ ____   ____    _    
+|  ___|  _ \ / ___|  / \   
+| |_  | |_) | |  _  / _ \  
+|  _| |  __/| |_| |/ ___ \ 
+|_|   |_|    \____/_/   \_\
+```
+
 # Cook FPGA
 
 This repository is intended for folks who are new and want to learn something about FPGA.
