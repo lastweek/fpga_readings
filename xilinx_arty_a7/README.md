@@ -12,6 +12,9 @@
 		- we have a 10/100 PHY, clearly, we can only use AXI Ethernet Lite.
 		- I certainly need to figure out a way to PRINT, which is essential for human life, I'd say. JTAG serial?
 	- 12/06/18: I'm trying to add a MAC and connect it with TI PHY. After that, I will write some logic to loopback any packets it get. Hopefully I could write that in HLS.
+- [On-board DRAM: 256MB DDR3L SDRAM (MT41K128M16JT-125)](https://www.micron.com/products/dram/ddr3-sdram/part-catalog/mt41k128m16jt-125)
+	- First time reading a DRAM chip datasheet
+	- To use it, we need to have a Memory Controller at FPGA chip (Use Xilinx MIG to generate one)
 
 ## MAC Reference Design
 

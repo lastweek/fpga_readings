@@ -1,0 +1,5 @@
+generated_hls_proj/
+.*
+*.log
+
+!.gitignore
