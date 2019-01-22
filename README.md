@@ -95,16 +95,37 @@ How to apply Operating System concept to FPGA? How to virtualize on-board memory
 And, how is FPGA ultimately different from CPU in items of resource sharing?
 Papers in this section could give you some hint.
 
-General
+__General__
 - [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
 - [The LEAP Operating System for FPGAs](https://github.com/LEAP-FPGA/leap-documentation/wiki)
 
-Work with Virtual Memory System
-- (Papers deal with OS Virtual Memory System)
+__Memory Hierarchy__
+- (Papers deal with BRAM, registers, on-board DRAM, and system DRAM)
+- [LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11](https://people.csail.mit.edu/emer/papers/2011.02.isfpga.leap_scratchpads.pdf)
+	- Main design hierarchy: Use BRAM as L1 cache, use on-board DRAM as L2 cache, and host memory as the backing store. Everthing is abstracted away through their interface (similar to load/store). Programming is pretty much the same as if you are writing for CPU.
+	- According to sec 2.2.2, its scratchpad controller, is using simple segment-based mapping scheme. Like AmorphOS's one.
+- [LEAP Shared Memories: Automating the Construction of FPGA Coherent Memories, FCCM'14](http://people.csail.mit.edu/hjyang/papers/yang-fccm2014.pdf)
+	- Follow up work on LEAP Scratchpads, extends the work to have cache coherence between multiple FPGAs.
+	- Coherent Scatchpads with MOSI protocol.
+- [CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computing](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf)
+	- CoRAM provides an interface for managing the on- and off-chip memory resource of an FPGA.
+	- Cache, TLB, NoC, it has almost everything. The thesis is very comprehensive and informative.
+- [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
+	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
+- [Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
+
+__Dynamic Memory Allocation__
+- [A High-Performance Memory Allocator for Object-Oriented Systems, IEEE'96](https://ieeexplore.ieee.org/document/485574/)
+- [SysAlloc: A Hardware Manager for Dynamic Memory Allocation in Heterogeneous Systems, FPL'15](https://ieeexplore.ieee.org/document/7293959)
+	- `malloc()` and `free()` for FPGA on-board DRAM.
+- [Hi-DMM: High-Performance Dynamic Memory Management in High-Level Synthesis, IEEE'18](https://github.com/zslwyuan/Hi-DMM)
+
+__Integrate with Virtual Memory__
+- (Papers deal with OS Virtual Memory System. Note that, all these papers, they introduce some form of MMU into FPGA to let FPGA work with host virtual memory systems. This added MMU is similar to CPU's MMU in the sense that they both do address translation. But, do note that the virtual memory system still runs in Linux, these include page fault handling, swapping, TLB shootdown stuff. What could really stands out, is to implement virtual memory system in FPGA. :-/ )
 - [Virtual Memory Window for Application-Specific Reconfigurable Coprocessors, DAC'04](https://ieeexplore.ieee.org/document/1664911)
 	- Early work that adds a new MMU to FPGA to let FPGA logic access `on-chip DRAM`. Note, it's not the system main memory. Thus the translation pgtable is different.
 	- Has some insights on prefetching and MMU CAM design.
-- [Seamless HardwareSoftware Integration in Reconfigurable Computing Systems, 2005](https://ieeexplore.ieee.org/document/1413143)
+- [Seamless Hardware Software Integration in Reconfigurable Computing Systems, 2005](https://ieeexplore.ieee.org/document/1413143)
 	- Follow up summary on previous DAC'04 Virtual Memory Window.
 - [A Reconfigurable Hardware Interface for a Modern Computing System, FCCM'07](https://ieeexplore.ieee.org/document/4297245)
 	- This work adds a new MMU which includes a 16-entry TLB to FPGA. FPGA and CPU shares the same user virtual address space, use the same physical memory. FPGA and CPU share memory at __cacheline granularity__, FPGA is just another core in this sense. Upon a TLB miss at FPGA MMU, the FPGA sends interrupt to CPU, to let _software to handle the TLB miss_. Using software-managed TLB miss is not efficient. But they made cache coherence between FPGA and CPU easy.
@@ -114,22 +135,11 @@ Work with Virtual Memory System
 - [Memory Virtualization for Multithreaded Reconfigurable Hardware, FPL'11](https://ieeexplore.ieee.org/document/6044806)
 	- Part of the ReconOS project
 	- They implemented a simple MMU inside FPGA that includes a TLB. On protection violation or page invalid access cases, their MMU just hand over to CPU pgfault routines. How is this different from the FPL'08 one? Actually, IMO, they are the same.
+- [S4 Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
+	- This paper also implemented a hardware MMU, but the virtual memory system still run on Linux.
+	- Also listed in `Cloud Infrastructure` part.
 
-Memory Hierarchy
-- (Papers deal with BRAM, registers, on-board DRAM, and system DRAM)
-- [LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11](https://people.csail.mit.edu/emer/papers/2011.02.isfpga.leap_scratchpads.pdf)
-	- Main design hierarchy: Use BRAM as L1 cache, use on-board DRAM as L2 cache, and host memory as the backing store. Everthing is abstracted away through their interface (similar to load/store). Programming is pretty much the same as if you are writing for CPU.
-	- Accoding to sec 2.2.2, its scratchpad controller, is using simple segment-based mapping scheme. Like AmorphOS's one.
-- [LEAP Shared Memories: Automating the Construction of FPGA Coherent Memories, FCCM'14](http://people.csail.mit.edu/hjyang/papers/yang-fccm2014.pdf)
-	- Follow up work on LEAP Scratchpads, extends the work to have cache coherence between multiple FPGAs.
-	- Coherent Scatchpads with MOSI protocol.
-- [CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computing](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf)
-	- CoRAM provides an interface for managing the on- and off-chip memory resource of an FPGA.
-	- Cache, TLB, NoC, it has almost everything. The thesis is very comprehensive and informative.
-- [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
-	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
-
-OS/CPU/FPGA Integration
+__Integrate OS/CPU/FPGA__
 - [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
 - [Operating systems for reconfigurable embedded platforms: online scheduling of real-time tasks, IEEE'04](https://ieeexplore.ieee.org/document/1336761)
 - [hthreads: a hardware/software co-designed multithreaded RTOS kernel, 2005](https://ieeexplore.ieee.org/document/1612697)
@@ -147,11 +157,61 @@ What are the typical applications that can be offloaded into FPGA?
 What has already been done before? This section lists many interesting
 applications and systems deployed on FPGA.
 
-Infrastructure and Cloud
-- TODO
+__Integrate with Frameworks__
+- [Map-reduce as a Programming Model for Custom Computing Machines, FCCM'08](https://ieeexplore.ieee.org/document/4724898)
+	- This paper proposes a model to translate MapReduce code written in C to code that could run on FPGA and GPU. Many details are omitted, and they don't really have the compiler.
+	- Single-host framework, everything is in FPGA and GPU.
+- [Axel: A Heterogeneous Cluster with FPGAs and GPUs, FPGA'10](http://www.doc.ic.ac.uk/~wl/papers/10/fpga10bt.pdf)
+	- A distributed MapReduce Framework, targets clusters with CPU, GPU, and FPGA. Mainly the idea of scheduling FPGA/GPU jobs.
+	- Distributed Framework.
+- [FPMR: MapReduce Framework on FPGA, FPGA'10](https://dl.acm.org/citation.cfm?doid=1723112.1723129)
+	- A MapReduce framework on a single host's FPGA. You need to write Verilog/HLS for processing logic to hook with their framework. The framework mainly includes a data transfer controller, a simple schedule that enable certain blocks at certain time.
+	- Single-host framework, everything is in FPGA.
+- [Melia: A MapReduce Framework on OpenCL-Based FPGAs, IEEE'16](https://ieeexplore.ieee.org/document/7425227/)
+	- Another framework, written in OpenCL, and users can use OpenCL to program as well. Similar to previous work, it's more about the framework design, not specific algorithms on FPGA.
+	- Single-host framework, everything is in FPGA. But they have a discussion on running on multiple FPGAs.
+	- Four MapReduce FPGA papers here, I believe there are more. The marriage between MapReduce and FPGA is not something hard to understand. FPGA can be viewed as another core with different capabilities. The thing is, given FPGA's reprogram-time and limited on-board memory, how to design a good scheduling algorithm and data moving/caching mechanisms. Those papers give some hints on this.
+- [UCLA: When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
+- [UCLA: Programming and Runtime Support to Blaze FPGA Accelerator Deployment at Datacenter Scale, SoCC'16](https://dl.acm.org/citation.cfm?id=2987569)
+	- A system that hooks FPGA with Spark.
+	- There is a line of work that hook FPGA with big data processing framework (Spark), so the implementation of FPGA and the scale-out software can be separated. The Spark can schedule FPGA jobs to different machines, and take care of scale-out, failure handling etc. But, I personally think this line of work is really just an extension to ReconOS/FUSE/BORPH line of work. The main reason is: both these two lines of work try to integrate jobs run on CPU and jobs run on FPGA, so CPU and FPGA have an easier way to talk, or put in another way, CPU and FPGA have a better division of labor. Whether it's single-machine (like ReconOS, Melia), or distributed (like Blaze, Axel), they are essentially the same.
+- [UCLA: Heterogeneous Datacenters: Options and Opportunities, DAC'16](https://ieeexplore.ieee.org/document/7544260)
+	- Follow up work of Blaze. Nice comparison of big and wimpy cores.
 
-Network Stack
-- [Azure Accelerated Networking: SmartNICs in the Public Cloud](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
+__Cloud Infrastructure__
+- [Huawei: FPGA as a Service in the Cloud](https://indico.cern.ch/event/669648/contributions/2838181/attachments/1581893/2500031/Huawei_Cloud_FPGA_as_a_Service_CERN_openlab.pdf)
+- [UCLA: Customizable Computing: From Single Chip to Datacenters, IEEE'18](https://vast.cs.ucla.edu/sites/default/files/publications/08566145.pdf)
+- [UCLA: Accelerator-Rich Architectures: Opportunities and Progresses, DAC'14](https://dl.acm.org/citation.cfm?id=2596667)
+	- Reminds me of [OmniX](https://dl.acm.org/citation.cfm?id=3102992). Disaggregation at a different scale.
+	- This paper actually targets single-machine case. But it can reflect a distributed setting.
+- [Enabling FPGAs in the Cloud, CF'14](https://dl.acm.org/citation.cfm?id=2597929)
+	- Paper raised four important aspects to enable FPGA in cloud: Abstraction, Sharing, Compatibility, and Security. FPGA itself requires a shell (paper calls it service logic) and being partitioned into multiple slots. Things discussed in the paper are straightforward, but worth reading. They did not solve the FPGA sharing issue, which, is solved by AmorphOS.
+- [FPGAs in the Cloud: Booting Virtualized Hardware Accelerators with OpenStack, FCCM'14](https://ieeexplore.ieee.org/document/6861604)
+	- Use OpenStack to manage FPGA resource. The FPGA is partitioned into multiple regions, each region can use PR. The FPGA shell includes: 1) basic MAC, and packet dispatcher, 2) memory controller, and segment-based partition scheme, 3) a soft processor used for runtime PR control. One very important aspect of this project is: they envision input to FPGA comes from Ethernet, which is very true nowadays. And this also makes their project quite similar to Catapult. It's a very solid paper, though the evaluation is a little bit weak. What could be added: migration, different-sized region.
+	- The above CF and FCCM papers are similar in the sense that they are both building SW framework and HW shell to provide a unified cloud management system. They differ in their shell design: CF one take inputs from DMA engine, which is local system DRAM, FCCM one take inputs from Ethernet. The things after DMA or MAC, are essentially similar.
+	- It seems all of them are using simple segment-based memory partition for user FPGA logic. What's the pros and cons of using paging here?
+- [S1 DyRACT: A partial reconfiguration enabled accelerator and test platform, FPL'14](https://ieeexplore.ieee.org/document/6927507)
+- [S2 Virtualized FPGA Accelerators for Efficient Cloud Computing, CloudCom'15](https://ieeexplore.ieee.org/abstract/document/7396187)
+- [S3 Designing a Virtual Runtime for FPGA Accelerators in the Cloud, FPL'16](https://warwick.ac.uk/fac/sci/eng/staff/saf/publications/fpl2016-asiatici-phdforum.pdf)
+- [S4 Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
+	- The above four papers came from the same group of folks. S1 developed a framework to use PCIe to do PR, okay. S2 is a follow-up on S1, read S2's chapter IV hardware architecture, many implementation details like internal FPGA switch, AXI stream interface. But no memory virtualization discussion. S3 is a two page short paper. S4 is the realization of S3. I was particularly interested if S4 has implemented their own virtual memory management. The answer is NO. S4 leveraged on-chip Linux, they just build a customized MMU (in the form of using BRAM to store page tables. This approach is similar to the papers listed in `Integrate with Virtual Memory`). Many things discussed in S4 have been proposed multiple times in previous cloud FPGA papers since 2014.
+- [MS: A Reconfigurable Fabric for Accelerating Large-Scale Datacenter Services, ISCA'14](https://www.microsoft.com/en-us/research/publication/a-reconfigurable-fabric-for-accelerating-large-scale-datacenter-services/)
+- [MS: A Cloud-Scale Acceleration Architecture, Micro'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/10/Cloud-Scale-Acceleration-Architecture.pdf)
+	- Catapult is unique in its shell, which includes the Lightweight Transport Layer (LTL), and Elastic Router(ER). The cloud management part, which the paper just briefly mentioned, actually should include everything the above CF'14 and FCCM'14 have. The LTL has congestion control, packet loss detection/resend, ACK/NACK. The ER is a crossbar switch used by FPGA internal modules, which is essential to connect shell and roles.
+	- These two Catapult papers are simply a must read.
+- [MS: A Configurable Cloud-Scale DNN Processor for Real-Time AI, Micro'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/06/ISCA18-Brainwave-CameraReady.pdf)
+- [MS: Azure Accelerated Networking: SmartNICs in the Public Cloud, NSDI'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
+- [MS: Direct Universal Access : Making Data Center Resources Available to FPGA, NSDI'19](https://www.microsoft.com/en-us/research/uploads/prod/2018/10/nsdi19spring-final64.pdf)
+	- Catapult is just sweet, isn't it?
+- [ASIC Clouds: Specializing the Datacenter, ISCA'16](https://cseweb.ucsd.edu/~mbtaylor/papers/ASIC_Cloud_ISCA_2016_Proceedings.pdf)
+
+__Programmable Network__
+- [MS: ClickNP: Highly Flexible and High Performance Network Processing with Reconfigurable Hardware, SIGCOMM'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/main-4.pdf)
+- [MS: Multi-Path Transport for RDMA in Datacenters, NSDI'18](https://www.usenix.org/conference/nsdi18/presentation/lu)
+- [MS: Azure Accelerated Networking: SmartNICs in the Public Cloud, NSDI'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
+
+__Database__
+- [Accelerating database systems using FPGAs: A survey, FPL'18](https://pdfs.semanticscholar.org/dee1/59031eb2de0a9324829f9027b14403164489.pdf)
 
 Machine Learning
 - TODO
@@ -163,8 +223,9 @@ KVS
 - [KV-Direct: High-Performance In-Memory Key-Value Store with Programmable NIC](https://dl.acm.org/citation.cfm?id=3132756)
 	- This link is also useful for better understading [Morning Paper](https://blog.acolyer.org/2017/11/23/kv-direct-high-performance-in-memory-key-value-store-with-programmable-nic/)
 
-Biology
-- TODO
+Genome
+- [When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
+- hpca19
 
 Video Processing
 - TODO
@@ -175,6 +236,10 @@ Blockchain
 Micro-services
 - TODO
 
+Languages
+- UCB GC
+- UCLA Java
+
 ### FPGA Internal
 
 General
@@ -184,6 +249,11 @@ General
 - [FPGA Architecture: Survey and Challenges, 2007](http://www.eecg.toronto.edu/~jayar/pubs/kuon/foundtrend08.pdf)
 	- Read the first two paragraphs of each section and then come back to read all of that if needed.
 - [RAMP: Research Accelerator For Multiple Processors, 2007](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.437.4076&rep=rep1&type=pdf)
+- [Three Ages of FPGAs: A Retrospective on the First Thirty Years of FPGA Technology, IEEE'15](https://ieeexplore.ieee.org/document/7086413)
+
+Partial Reconfiguration
+- [DyRACT: A partial reconfiguration enabled accelerator and test platform, FPL'14](https://ieeexplore.ieee.org/document/6927507)
+- [FPGA Dynamic and Partial Reconfiguration: A Survey of Architectures, Methods, and Applications, CSUR'18](https://dl.acm.org/citation.cfm?id=3193827)
 
 Logical Optimization and Technology Mapping
 - [FlowMap: An Optimal Technology Mapping Algorithm for Delay Optimization in Lookup-Table Based FPGA Designs, 1994](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.22.9473&rep=rep1&type=pdf)
