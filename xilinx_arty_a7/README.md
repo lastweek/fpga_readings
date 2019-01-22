@@ -44,3 +44,5 @@ Anyhow, the common practice should be
 - [Arty FPGA 02: Clocks, Counting, & Colour](https://timetoexplore.net/blog/arty-fpga-verilog-02)
 	- I like this blog, simple yet explained a lot things.
 	- This one uses clock input. We should add a clock wizard to try more.
+- [MICROZED CHRONICLES – VIVADO HLS & DDR ACCESS](http://adiuvoengineering.com/microzed-chronicles-vivado-hls-ddr-access/)
+	-  A great one on DRAM access
