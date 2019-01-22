@@ -114,6 +114,12 @@ __Memory Hierarchy__
 	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
 - [Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
 
+__Dynamic Memory Allocation__
+- [A High-Performance Memory Allocator for Object-Oriented Systems, IEEE'96](https://ieeexplore.ieee.org/document/485574/)
+- [SysAlloc: A Hardware Manager for Dynamic Memory Allocation in Heterogeneous Systems, FPL'15](https://ieeexplore.ieee.org/document/7293959)
+	- `malloc()` and `free()` for FPGA on-board DRAM.
+- [Hi-DMM: High-Performance Dynamic Memory Management in High-Level Synthesis, IEEE'18](https://github.com/zslwyuan/Hi-DMM)
+
 __Integrate with Virtual Memory__
 - (Papers deal with OS Virtual Memory System. Note that, all these papers, they introduce some form of MMU into FPGA to let FPGA work with host virtual memory systems. This added MMU is similar to CPU's MMU in the sense that they both do address translation. But, do note that the virtual memory system still runs in Linux, these include page fault handling, swapping, TLB shootdown stuff. What could really stands out, is to implement virtual memory system in FPGA. :-/ )
 - [Virtual Memory Window for Application-Specific Reconfigurable Coprocessors, DAC'04](https://ieeexplore.ieee.org/document/1664911)
