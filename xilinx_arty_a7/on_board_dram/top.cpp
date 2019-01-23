@@ -8,7 +8,8 @@ using namespace hls;
 
 void top_func(int *pa)
 {
-#pragma HLS INTERFACE m_axi depth=128 port=pa offset=off
+#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE m_axi depth=10 port=pa offset=direct
 
 	int i;
 	int data[10];
@@ -17,5 +18,16 @@ void top_func(int *pa)
 		data[i] = i;
 	}
 
-	memcpy(pa, data, 10 * sizeof(int));
+	pa[0] = data[0];
+	pa[2] = data[2];
+	pa[4] = data[4];
+	pa[6] = data[6];
+	pa[8] = data[8];
+
+
+	pa[1] = data[1];
+	pa[3] = data[3];
+	pa[5] = data[5];
+	pa[7] = data[7];
+	pa[9] = data[9];
 }

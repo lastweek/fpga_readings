@@ -12,6 +12,14 @@
 			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
 			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
+## Debug
+
+- [Adam Taylor’s MicroZed Chronicles, Part 226: Debugging FPGA hardware with the JTAG-to-AXI Bridge](https://forums.xilinx.com/t5/Xcell-Daily-Blog-Archived/Adam-Taylor-s-MicroZed-Chronicles-Part-226-Debugging-FPGA/ba-p/811281)
+- [UG908 Vivado Design Suite User Guide Programming and Debugging](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_1/ug908-vivado-programming-debugging.pdf)
+- [Integrated Logic Analyzer (ILA)](https://www.xilinx.com/support/documentation/ip_documentation/ila/v6_2/pg172-ila.pdf)
+- [Virtual Input Output (VIO)](https://www.xilinx.com/support/documentation/ip_documentation/vio/v3_0/pg159-vio.pdf)
+- [JTAG-to-AXI](https://www.xilinx.com/support/documentation/ip_documentation/jtag_axi/v1_2/pg174-jtag-axi.pdf)
+
 ## HLS
 
 - [#pragma HLS
