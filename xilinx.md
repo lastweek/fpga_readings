@@ -14,11 +14,16 @@
 
 ## Debug
 
+Before you are ready for some big move, take some time going through these debug tutorials, especially UG908 and UG936. Being able to debug is a big deal.
+
 - [Adam Taylor’s MicroZed Chronicles, Part 226: Debugging FPGA hardware with the JTAG-to-AXI Bridge](https://forums.xilinx.com/t5/Xcell-Daily-Blog-Archived/Adam-Taylor-s-MicroZed-Chronicles-Part-226-Debugging-FPGA/ba-p/811281)
-- [UG908 Vivado Design Suite User Guide Programming and Debugging](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_1/ug908-vivado-programming-debugging.pdf)
+- [Vivado Design Hub: Programming and Debug](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0011-vivado-programming-and-debug-hub.html)
 - [Integrated Logic Analyzer (ILA)](https://www.xilinx.com/support/documentation/ip_documentation/ila/v6_2/pg172-ila.pdf)
 - [Virtual Input Output (VIO)](https://www.xilinx.com/support/documentation/ip_documentation/vio/v3_0/pg159-vio.pdf)
 - [JTAG-to-AXI](https://www.xilinx.com/support/documentation/ip_documentation/jtag_axi/v1_2/pg174-jtag-axi.pdf)
+	- This IP is used to generated AXI transactions in Vivado TCL console. That means, you can use this IP to inspect on-board DRAM content.
+- [UG908 Vivado Design Suite User Guide Programming and Debugging](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_1/ug908-vivado-programming-debugging.pdf)
+- [UG936 Vivado Design Suite Tutorial Programming and Debugging](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2016_3/ug936-vivado-tutorial-programming-debugging.pdf)
 
 ## HLS
 
