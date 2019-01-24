@@ -23,3 +23,14 @@ run_hw_axi rd_txn
 ```
 
 More exambles on PG174 Chapter 5.
+
+
+## Multiple JTAG
+
+If you are planning to use multiple JTAG-to-AXI IP and they are connected to an AXI interconnect,
+you should also edit the Address Editor to let both JTAG IP able to access whole memory address space.
+
+Honestly, now I don't quite know how this address editor is enfored into hardware, should be compiled
+into the AXI interconnet, right?
+
+Anyhow, remember to do so, otherwise you won't be able to read/write stuff from/to DRAM.
