@@ -36,7 +36,7 @@ Check out diagram in `2_ports_1_axi.pdf`.
 In this case, there are two pointers we want to use. By default, Vivado only creates one AXI bundle
 for us, thus one channel. Read/write from two ports will serialize.
 
-```
+```c
 void top_func(int *ptr_a, int *ptr_b, int *flag)
 {
 #pragma HLS PIPELINE
@@ -63,7 +63,7 @@ Check out diagram in `2_ports_2_axi.pdf`
 
 Compared with previous code, here we added `bundle` parameter to pragma.
 
-```
+```c
 void top_func(int *ptr_a, int *ptr_b, int *flag)
 {
 #pragma HLS PIPELINE
