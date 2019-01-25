@@ -29,6 +29,8 @@ About MIG
 
 ## Examples
 
+`bd.tcl` is used to created the sample block digram.
+
 ### Two ports, one AXI channel
 
 Check out diagram in `2_ports_1_axi.pdf`.
