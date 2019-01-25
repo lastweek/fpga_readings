@@ -1,4 +1,5 @@
 generated/
+ipshared/
 *.log
 *.jou
 
