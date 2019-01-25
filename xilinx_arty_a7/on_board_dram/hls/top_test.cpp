@@ -5,17 +5,15 @@
 
 using namespace hls;
 
-void top_func(int *pa, char *output);
+void top_func(int *ptr_a, int *ptr_b, int *flag);
 
 int main(void)
 {
-	int data[10];
+	int data_a[10], data_b[10];
 	int i;
-	char output;
+	int flag;
 
-	top_func(data, &output);
+	top_func(data_a, data_b, &flag);
 
-	for (i = 0; i < 10; i++) {
-		printf("[%d] %d\n", i, data[i]);
-	}
+	printf("%d %d %d\n", data_a[0], data_b[0], flag);
 }

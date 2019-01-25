@@ -6,15 +6,21 @@
 
 using namespace hls;
 
-void top_func(int *pa, volatile char *output)
+void top_func(int *ptr_a, int *ptr_b, int *flag)
 {
 #pragma HLS PIPELINE
 #pragma HLS INTERFACE port=return
 
-#pragma HLS INTERFACE ap_none port=output
-#pragma HLS INTERFACE m_axi depth=1 port=pa offset=direct
+#pragma HLS INTERFACE m_axi depth=1 port=ptr_a offset=direct bundle="axi_a"
+#pragma HLS INTERFACE m_axi depth=1 port=ptr_b offset=direct bundle="axi_b"
+#pragma HLS INTERFACE ap_none port=flag
 
-	*pa = 8;
+	static int nr = 0;
+	if (nr == 0) {
+		*ptr_a = 0x88;
+		*ptr_b = 0x99;
 
-	*output = 2;
+		*flag = 1;
+		nr++;
+	}
 }

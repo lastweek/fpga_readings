@@ -34,3 +34,10 @@ Honestly, now I don't quite know how this address editor is enfored into hardwar
 into the AXI interconnet, right?
 
 Anyhow, remember to do so, otherwise you won't be able to read/write stuff from/to DRAM.
+
+
+## Next
+
+Once we know how to use JTAG, also checkout VIO and ILA. They are easy to understand and use.
+After know how to use all of them, maybe checkout the `../on_board_dram` part, which uses
+all of them to debug.

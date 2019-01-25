@@ -23,6 +23,7 @@ Before you are ready for some big move, take some time going through these debug
 - [JTAG-to-AXI](https://www.xilinx.com/support/documentation/ip_documentation/jtag_axi/v1_2/pg174-jtag-axi.pdf)
 	- This IP is used to generated AXI transactions in Vivado TCL console. That means, you can use this IP to inspect on-board DRAM content.
 - [UG908 Vivado Design Suite User Guide Programming and Debugging](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_1/ug908-vivado-programming-debugging.pdf)
+	- Chapter 11 explains how to use the ILA and VIO dashboard at Hardware Manager.
 - [UG936 Vivado Design Suite Tutorial Programming and Debugging](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2016_3/ug936-vivado-tutorial-programming-debugging.pdf)
 
 ## HLS
