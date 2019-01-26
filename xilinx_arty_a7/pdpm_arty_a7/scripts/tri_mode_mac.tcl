@@ -41,15 +41,12 @@
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_ten_100_1g_eth_fifo.v"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_tx_client_fifo.v"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_example_design.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/bd/pdpm_system/pdpm_system.bd"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/bd/pdpm_system/hdl/pdpm_system_wrapper.v"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_address_swap.v"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_mux.v"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_pat_check.v"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_pat_gen.v"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_pipe.v"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_basic_pat_gen.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/bd/pdpm_system/ip/pdpm_system_mig_7series_0_0/board.prj"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_example_design.xdc"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_user_phytiming.xdc"
 #    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/tb/pdpm_mem_tb.v"
@@ -203,15 +200,13 @@ set files [list \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_ten_100_1g_eth_fifo.v"] \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_tx_client_fifo.v"] \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_example_design.v"] \
- [file normalize "${origin_dir}/../bd/pdpm_system/pdpm_system.bd"] \
- [file normalize "${origin_dir}/../bd/pdpm_system/hdl/pdpm_system_wrapper.v"] \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_address_swap.v"] \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_mux.v"] \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_pat_check.v"] \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_pat_gen.v"] \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_pipe.v"] \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_basic_pat_gen.v"] \
- [file normalize "${origin_dir}/../bd/pdpm_system/ip/pdpm_system_mig_7series_0_0/board.prj"] \
+ [file normalize "${origin_dir}/../rtl/top.v"] \
 ]
 add_files -norecurse -fileset $obj $files
 
@@ -225,23 +220,12 @@ if { ![get_property "is_locked" $file_obj] } {
 }
 set_property -name "registered_with_manager" -value "1" -objects $file_obj
 
-set file "$origin_dir/../bd/pdpm_system/pdpm_system.bd"
-set file [file normalize $file]
-set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property -name "registered_with_manager" -value "1" -objects $file_obj
-
-set file "$origin_dir/../bd/pdpm_system/ip/pdpm_system_mig_7series_0_0/board.prj"
-set file [file normalize $file]
-set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property -name "scoped_to_cells" -value "pdpm_system_mig_7series_0_0" -objects $file_obj
-
-
 # Set 'sources_1' fileset file properties for local files
 # None
 
 # Set 'sources_1' fileset properties
 set obj [get_filesets sources_1]
-set_property -name "top" -value "tri_mode_ethernet_mac_0_example_design" -objects $obj
+set_property -name "top" -value "pDPM_top" -objects $obj
 set_property -name "top_auto_set" -value "0" -objects $obj
 
 # Create 'constrs_1' fileset (if not found)
@@ -536,6 +520,9 @@ set obj [get_runs impl_1]
 set_property -name "strategy" -value "Vivado Implementation Defaults" -objects $obj
 set_property -name "steps.write_bitstream.args.readback_file" -value "0" -objects $obj
 set_property -name "steps.write_bitstream.args.verbose" -value "0" -objects $obj
+
+# Create the bd design
+source create_bd.tcl
 
 # set the current impl run
 current_run -implementation [get_runs impl_1]

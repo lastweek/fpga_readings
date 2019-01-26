@@ -155,7 +155,7 @@ module pDPM_top(
 		.tx_axis_fifo_tlast	(tx_axis_fifo_tlast)
 	);
 
-	pdpm_system_wrapper	pdpm_memory (
+	pdpm_system_2_wrapper	pdpm_memory (
 		.sys_clock		(sys_clk_100M),
 		.reset			(glbl_rst),
 

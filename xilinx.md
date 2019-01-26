@@ -7,13 +7,15 @@
 	- This document is about the various reports in Vivado, such as Timing, Ultilization, Cell etc.
 - [__UG895__ System-Level Design Entry](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug895-vivado-system-level-design-entry.pdf)
 	- Checkout Chapter 4 Elaborating the RTL Design.
+- [__UG896__ Designing with IP](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug896-vivado-ip.pdf)
+	- Learn how IP works within Vivado. Must read.
 - [__UG949__: UltraFast Design Methodology Guide for the Vivado Design Suite](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2018_3/ug949-vivado-design-methodology.pdf)
 	- A very good entry level introduction to overall design flow considerations.
 - [__UG1197__: UltraFast High-Level Productivity Design Methodology Guide]()
-		- Concepts about FPGA shell, HLS, and IP integration. Very useful.
-		- The two key principles to keep in mind when reviewing the code for implementation in an FPGA are:
-			- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
-			- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
+	- Concepts about FPGA shell, HLS, and IP integration. Very useful.
+	- The two key principles to keep in mind when reviewing the code for implementation in an FPGA are:
+	- An FPGA is a fixed size resource. The functionality must be fixed at compile time. Objects in hardware cannot be dynamically created and destroyed.
+	- All communication with the FPGA must be performed through the input and output ports. There is no underlying Operating System (OS) or OS resources in an FPGA.
 
 ## Debug
 
