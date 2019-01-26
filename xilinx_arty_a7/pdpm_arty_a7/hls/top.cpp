@@ -31,6 +31,7 @@ static void write_to_dram(stream<struct my_axis<8> > *in, char *output, unsigned
 
 void read_from_dram(char *mem_in, stream<struct my_axis<8> > *net_out, unsigned int addr)
 {
+#pragma HLS PIPELINE II=1 enable_flush
 #pragma HLS INTERFACE axis both port=net_out
 #pragma HLS INTERFACE m_axi depth=64 port=mem_in offset=direct
 
@@ -46,6 +47,7 @@ void network_parse(stream<struct my_axis<8> > *in, stream<struct my_axis<8> > *o
 {
 #pragma HLS PIPELINE II=1 enable_flush
 
+
 	static struct my_axis<8> current = {0, 0};
 
 	if (in->empty())
@@ -58,7 +60,9 @@ void network_parse(stream<struct my_axis<8> > *in, stream<struct my_axis<8> > *o
 void top_func(stream<struct my_axis<8> > *net_rx,
 	      stream<struct my_axis<8> > *net_tx, char *dram)
 {
-#pragma HLS DATAFLOW
+//#pragma HLS INTERFACE ap_ctrl_none port=return
+//#pragma HLS DATAFLOW
+#pragma HLS PIPELINE II=1 enable_flush
 
 /* Port-level interfaces */
 #pragma HLS INTERFACE axis both port=net_rx
@@ -72,5 +76,5 @@ void top_func(stream<struct my_axis<8> > *net_rx,
 
 	network_parse(net_rx, &net_to_mem);
 	write_to_dram(&net_to_mem, dram, addr);
-	//read_from_dram(dram, net_tx, addr);
+	read_from_dram(dram, net_tx, addr);
 }
