@@ -1,11 +1,14 @@
 # About Xilinx
 
-## Design Hubs
-
+## Understand Vivado IDE
 - [__UG888__: Vivado Design Suite Tutorial: Design Flows Overview](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug888-vivado-design-flows-overview-tutorial.pdf)
+	- This is a Lab tutorial. You can take some time following this.
+- [__UG906__ Design Analysis and Closure Techniques](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug906-vivado-design-analysis.pdf)
+	- This document is about the various reports in Vivado, such as Timing, Ultilization, Cell etc.
+- [__UG895__ System-Level Design Entry](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug895-vivado-system-level-design-entry.pdf)
+	- Checkout Chapter 4 Elaborating the RTL Design.
 - [__UG949__: UltraFast Design Methodology Guide for the Vivado Design Suite](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2018_3/ug949-vivado-design-methodology.pdf)
 	- A very good entry level introduction to overall design flow considerations.
-- [__UG1231__: UltraFast Design Methodology Quick Reference Guide](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_3/ug1231-ultrafast-design-methodology-quick-reference.pdf)
 - [__UG1197__: UltraFast High-Level Productivity Design Methodology Guide]()
 		- Concepts about FPGA shell, HLS, and IP integration. Very useful.
 		- The two key principles to keep in mind when reviewing the code for implementation in an FPGA are:
