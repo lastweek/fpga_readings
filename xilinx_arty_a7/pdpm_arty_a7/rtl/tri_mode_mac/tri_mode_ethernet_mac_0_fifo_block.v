@@ -346,7 +346,6 @@ module tri_mode_ethernet_mac_0_fifo_block (
       .tx_axis_fifo_tlast     (tx_axis_fifo_tlast),
       .tx_axis_fifo_tready    (tx_axis_fifo_tready),
       
-
       .tx_mac_aclk            (tx_mac_aclk_int),
       .tx_mac_resetn          (tx_mac_resetn),
       .tx_axis_mac_tdata      (tx_axis_mac_tdata),
@@ -379,6 +378,4 @@ module tri_mode_ethernet_mac_0_fifo_block (
       .user_LED               (user_LED)
   );
 
-
 endmodule
-

@@ -1,5 +1,4 @@
 //------------------------------------------------------------------------------
-// asd
 // File       : tri_mode_ethernet_mac_0_example_design.v
 // Author     : Xilinx Inc.
 // -----------------------------------------------------------------------------
@@ -136,12 +135,6 @@ module tri_mode_ethernet_mac_0_example_design
       // asynchronous reset
       input         glbl_rst,
 
-/*
-      // 200MHz clock input from board
-      input         clk_in_p,
-      input         clk_in_n,
-*/
-
       // 100MHz clock input from board
       input clk_in,
     
@@ -164,7 +157,6 @@ module tri_mode_ethernet_mac_0_example_design
       output        mii_ref_clk_out,
 
       output        phy_resetn,
-
 
       // MII Interface
       //---------------
@@ -215,19 +207,41 @@ module tri_mode_ethernet_mac_0_example_design
        */
       output        activity_flash_gen,
 
-
       /*
        * I added this. This indicates if packet generation is enabled.
        * It directly reflects gen_tx_data switch.
        * It is now connected to LD3 blue light
        */
-      output        pkt_gen_enabled
+      output        pkt_gen_enabled,
 
+      /* AXI-S: network to memory, output */
+      output [7:0]  rx_axis_fifo_tdata,
+      output        rx_axis_fifo_tvalid,
+      input         rx_axis_fifo_tready,
+      output        rx_axis_fifo_tlast,
+
+      output        rx_fifo_clock_ref,
+      output        rx_fifo_resetn_ref,
+
+      /* AXI-S: memory to network, input */
+      input  [7:0]  tx_axis_fifo_tdata,
+      input         tx_axis_fifo_tvalid,
+      output        tx_axis_fifo_tready,
+      input         tx_axis_fifo_tlast,
+
+      output	    tx_fifo_clock_ref,
+      output        tx_fifo_resetn_ref
     );
 
    //----------------------------------------------------------------------------
    // internal signals used in this top level wrapper.
    //----------------------------------------------------------------------------
+
+   wire			rx_fifo_clock;
+   wire			tx_fifo_clock;
+
+   wire			rx_fifo_resetn;
+   wire			tx_fifo_resetn;
 
    // example design clocks
    wire                 gtx_clk_bufg;
@@ -247,27 +261,6 @@ module tri_mode_ethernet_mac_0_example_design
 
    wire                 dcm_locked;
    wire                 glbl_rst_intn;
-
-
-   // USER side RX AXI-S interface
-   wire                 rx_fifo_clock;
-   wire                 rx_fifo_resetn;
-   
-   wire  [7:0]          rx_axis_fifo_tdata;
-   
-   wire                 rx_axis_fifo_tvalid;
-   wire                 rx_axis_fifo_tlast;
-   wire                 rx_axis_fifo_tready;
-
-   // USER side TX AXI-S interface
-   wire                 tx_fifo_clock;
-   wire                 tx_fifo_resetn;
-   
-   wire  [7:0]          tx_axis_fifo_tdata;
-   
-   wire                 tx_axis_fifo_tvalid;
-   wire                 tx_axis_fifo_tlast;
-   wire                 tx_axis_fifo_tready;
 
    // RX Statistics serialisation signals
    wire                 rx_statistics_valid;
@@ -579,13 +572,14 @@ module tri_mode_ethernet_mac_0_example_design
       .s_axi_rready                 (s_axi_rready)
    );
 
-  //----------------------------------------------------------------------------
-  // Instantiate the TRIMAC core fifo block wrapper
-  //----------------------------------------------------------------------------
+  /*
+   * The FIFO and MAC block
+   * Interaction with MAC is taken care of, we want to hack
+   * the communication with our own logic.
+   */
   tri_mode_ethernet_mac_0_fifo_block trimac_fifo_block (
       .gtx_clk                      (gtx_clk_bufg),
-      
-       
+ 
       // asynchronous reset
       .glbl_rstn                    (glbl_rst_intn),
       .rx_axi_rstn                  (1'b1),
@@ -625,7 +619,6 @@ module tri_mode_ethernet_mac_0_example_design
       .tx_axis_fifo_tlast           (tx_axis_fifo_tlast),
        
 
-
       // MAC Control Interface
       //------------------------
       .pause_req                    (pause_req),
@@ -642,7 +635,6 @@ module tri_mode_ethernet_mac_0_example_design
       .mii_rx_clk                   (mii_rx_clk),
       .mii_tx_clk                   (mii_tx_clk),
 
-      
       // MDIO Interface
       //---------------
       .mdc                          (mdc),
@@ -677,63 +669,6 @@ module tri_mode_ethernet_mac_0_example_design
       .s_axi_rready                 (s_axi_rready),
 
       .user_LED                     (user_LED)
-
    );
-
-
-  //----------------------------------------------------------------------------
-  //  Instantiate the address swapping module and simple pattern generator
-  //----------------------------------------------------------------------------
-
-/*
-   tri_mode_ethernet_mac_0_basic_pat_gen basic_pat_gen_inst (
-      .axi_tclk                     (tx_fifo_clock),
-      .axi_tresetn                  (tx_fifo_resetn),
-      .check_resetn                 (chk_resetn),
-
-      .enable_pat_gen               (gen_tx_data),
-      .enable_pat_chk               (chk_tx_data),
-      .enable_address_swap          (enable_address_swap),
-      .speed                        (mac_speed),
-
-      .rx_axis_tdata                (rx_axis_fifo_tdata),
-      .rx_axis_tvalid               (rx_axis_fifo_tvalid),
-      .rx_axis_tlast                (rx_axis_fifo_tlast),
-      .rx_axis_tuser                (1'b0), // the FIFO drops all bad frames
-      .rx_axis_tready               (rx_axis_fifo_tready),
-
-      .tx_axis_tdata                (tx_axis_fifo_tdata),
-      .tx_axis_tvalid               (tx_axis_fifo_tvalid),
-      .tx_axis_tlast                (tx_axis_fifo_tlast),
-      .tx_axis_tready               (tx_axis_fifo_tready),
-
-      .frame_error                  (int_frame_error),
-      .activity_flash               (int_activity_flash),
-      .activity_flash_gen              (int_activity_flash_gen),
-      .pkt_gen_enabled              (pkt_gen_enabled)
-   );
-*/
-
-top_func_0 loopback (
-        /*
-         * Input from FIFO
-         */
-      .input_r_TVALID(rx_axis_fifo_tvalid),    // input wire input_r_TVALID
-      .input_r_TREADY(rx_axis_fifo_tready),    // output wire input_r_TREADY
-      .input_r_TDATA(rx_axis_fifo_tdata),      // input wire [31 : 0] input_r_TDATA
-      .input_r_TLAST(rx_axis_fifo_tlast),      // input wire [0 : 0] input_r_TLAST
-      
-      /*
-       * Output to FIFO
-       */
-      .output_r_TVALID(tx_axis_fifo_tvalid),  // output wire output_r_TVALID
-      .output_r_TREADY(tx_axis_fifo_tready),  // input wire output_r_TREADY
-      .output_r_TDATA(tx_axis_fifo_tdata),    // output wire [31 : 0] output_r_TDATA
-      .output_r_TLAST(tx_axis_fifo_tlast),    // output wire [0 : 0] output_r_TLAST
-      
-      .ap_clk(tx_fifo_clock),                    // input wire ap_clk
-      .ap_rst_n(tx_fifo_resetn)                // input wire ap_rst_n
-);
 
 endmodule
-
