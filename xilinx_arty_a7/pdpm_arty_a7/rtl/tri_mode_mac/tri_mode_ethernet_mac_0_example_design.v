@@ -136,7 +136,9 @@ module tri_mode_ethernet_mac_0_example_design
       input         glbl_rst,
 
       // 100MHz clock input from board
-      input clk_in,
+      input clk_100MHZ,
+      input clk_125MHZ,
+      input clk_locked,
     
       /*
        * 125 MHz
@@ -147,14 +149,6 @@ module tri_mode_ethernet_mac_0_example_design
        */
       //output        gtx_clk_bufg_out,
       //output        s_axi_aclk_out,
-
-      /*
-       * 25 MHZ clock for PHY x1
-       * specific for arty a7 100 board
-       * Somehow the PHY does not have any clock input
-       * and we need to feed it.
-       */
-      output        mii_ref_clk_out,
 
       output        phy_resetn,
 
@@ -246,7 +240,6 @@ module tri_mode_ethernet_mac_0_example_design
    // example design clocks
    wire                 gtx_clk_bufg;
    wire                 s_axi_aclk;
-   wire                 mii_ref_clk;
    
    wire                 rx_mac_aclk;
    wire                 tx_mac_aclk;
@@ -331,6 +324,16 @@ module tri_mode_ethernet_mac_0_example_design
   // Begin the logic description
   //----------------------------------------------------------------------------
 
+	/* Input clocks */
+	assign gtx_clk_bufg	= clk_125MHZ;
+	assign s_axi_aclk	= clk_100MHZ;
+	assign dcm_locked	= clk_locked;
+
+	/* user side clocks for the axi fifos */
+	assign tx_fifo_clock = gtx_clk_bufg;
+	assign rx_fifo_clock = gtx_clk_bufg;
+   
+
   // want to infer an IOBUF on the mdio port
   assign mdio = mdio_t ? 1'bz : mdio_o;
 
@@ -355,44 +358,6 @@ module tri_mode_ethernet_mac_0_example_design
         enable_phy_loopback   <= chk_tx_data;
      end
   end
-
-  //----------------------------------------------------------------------------
-  // Clock logic to generate required clocks from the 200MHz on board
-  // if 125MHz is available directly this can be removed
-  //----------------------------------------------------------------------------
-  tri_mode_ethernet_mac_0_example_design_clocks example_clocks
-   (
-      // differential clock inputs
-      //.clk_in_p         (clk_in_p),
-      //.clk_in_n         (clk_in_n),
-      .clk_in             (clk_in),
-
-      // asynchronous control/resets
-      .glbl_rst         (glbl_rst),
-      .dcm_locked       (dcm_locked),
-
-      // clock outputs
-      .gtx_clk_bufg     (gtx_clk_bufg),
-      .s_axi_aclk       (s_axi_aclk),
-   
-      .mii_ref_clk      (mii_ref_clk)
-   );
-
-    /*
-     * Pass the GTX clock to the Test Bench
-     * Not needed for real hardware
-     */
-    //assign gtx_clk_bufg_out = gtx_clk_bufg;
-    //assign s_axi_aclk_out = s_axi_aclk;
-    assign mii_ref_clk_out = mii_ref_clk;
-
-  //----------------------------------------------------------------------------
-  // Generate the user side clocks for the axi fifos
-  //----------------------------------------------------------------------------
-   
-  assign tx_fifo_clock = gtx_clk_bufg;
-  assign rx_fifo_clock = gtx_clk_bufg;
-   
 
   //----------------------------------------------------------------------------
   // Generate resets required for the fifo side signals etc

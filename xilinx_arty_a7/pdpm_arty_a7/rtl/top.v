@@ -102,11 +102,37 @@ module pDPM_top(
 	wire		tx_axis_fifo_tlast;
 	wire		tx_axis_fifo_tready;
 
+	wire		mig_166MHZ;
+	wire		mig_ref_200MHZ;
+	wire		mig_sys_rst_n;
+
+	wire		net_125MHZ;
+	wire		net_25MHZ;
+
+	/* Do note that glbl_rst is not synced to clk */
+	design_1	clock_generator
+	(
+		.sys_clock		(sys_clk_100M),
+		.reset			(glbl_rst),
+		.locked_0		(clock_locked),
+		.clk_out1_0		(net_125MHZ),
+		.clk_out2_0		(net_25MHZ),
+		.clk_out3_0		(mig_166MHZ),
+		.clk_out4_0		(mig_ref_200MHZ)
+	);
+
+	assign		mig_sys_rst_n = clock_locked;
+
+	/* Output clock to PHY */
+	assign		mii_ref_clk_out = net_25MHZ;
+
 	tri_mode_ethernet_mac_0_example_design pdpm_network
 	(
 		.glbl_rst		(glbl_rst),
-		.clk_in			(sys_clk_100M),
-		.mii_ref_clk_out	(mii_ref_clk_out),
+		.clk_100MHZ		(sys_clk_100M),
+		.clk_125MHZ		(net_125MHZ),
+		.clk_locked		(clock_locked),
+
 		.phy_resetn		(phy_resetn),
 
 		/* MII and MDIO */
@@ -155,9 +181,10 @@ module pDPM_top(
 		.tx_axis_fifo_tlast	(tx_axis_fifo_tlast)
 	);
 
-	pdpm_system_2_wrapper	pdpm_memory (
-		.sys_clock		(sys_clk_100M),
-		.reset			(glbl_rst),
+	pdpm_system_2	pdpm_memory (
+		.mig_166MHZ		(mig_166MHZ),
+		.mig_ref_200MHZ		(mig_ref_200MHZ),
+		.mig_sys_rst_n		(mig_sys_rst_n),
 
 		/* AXI-S to Network */
 		.m_axis_aclk_0		(tx_fifo_clock),

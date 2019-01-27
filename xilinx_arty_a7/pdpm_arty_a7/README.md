@@ -34,11 +34,14 @@ TCL file will use those `*.bd` files directly. The thing is, to use block diagra
 need its own script, we don't want those `*bd` to be included.
 
 The `create_bd.tcl` was created by `write_bd_tcl`, and it will be sourced within `tri_mode_mac.tcl`.
-Whenever you run `tri_mode_mac.tcl`, the BD will be automatically created.
+Whenever you run `tri_mode_mac.tcl`, the BD will be automatically created. Other `create_bd_*.tcl`
+were created in the same way.
 
 Now the `tri_mode_mac.tcl` is already being hacked, you CAN NOT just replace it with a newly generated
 one. If you want to make changes, do as follows:
 
 - `Add new files or misc`: manually add the line inside `tri_mode_mac.tcl`. (Maybe you can run `write_protect_tcl`
 here to see how new commands look like.)
-- `Save modified Block Diagram`: run this command `write_bd_tcl -bd_folder ../generated/pdpm/bd ../scripts/create_bd.tcl`
+- `Save modified Block Diagram`: run commands accordingly
+	- `write_bd_tcl -bd_folder ../generated/pdpm/bd ../scripts/create_bd.tcl`
+	- `write_bd_tcl -bd_folder ../generated/pdpm/bd ../scripts/create_bd_clock.tcl`

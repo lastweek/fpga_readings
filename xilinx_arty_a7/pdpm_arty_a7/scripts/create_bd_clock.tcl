@@ -1,6 +1,6 @@
 
 ################################################################
-# This is a generated script based on design: pdpm_system_2
+# This is a generated script based on design: design_1
 #
 # Though there are limitations about the generated script,
 # the main purpose of this utility is to make learning
@@ -35,7 +35,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 ################################################################
 
 # To test this script, run the following commands from Vivado Tcl console:
-# source pdpm_system_2_script.tcl
+# source design_1_script.tcl
 
 # If there is no project opened, this script will create a
 # project, but make sure you do not have an existing project
@@ -50,7 +50,7 @@ if { $list_projs eq "" } {
 
 # CHANGE DESIGN NAME HERE
 variable design_name
-set design_name pdpm_system_2
+set design_name design_1
 
 # This script was generated for a remote BD. To create a non-remote design,
 # change the variable <run_remote_bd_flow> to <0>.
@@ -122,12 +122,7 @@ set bCheckIPsPassed 1
 set bCheckIPs 1
 if { $bCheckIPs == 1 } {
    set list_check_ips "\ 
-xilinx.com:ip:axis_data_fifo:1.1\
-xilinx.com:ip:ila:6.2\
-xilinx.com:ip:mig_7series:4.1\
-xilinx.com:hls:top_func:1.0\
-xilinx.com:ip:vio:3.0\
-xilinx.com:ip:xlconstant:1.1\
+xilinx.com:ip:clk_wiz:6.0\
 "
 
    set list_ips_missing ""
@@ -191,122 +186,75 @@ proc create_root_design { parentCell } {
 
 
   # Create interface ports
-  set M_AXIS_0 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:axis_rtl:1.0 M_AXIS_0 ]
-  set S_AXIS_0 [ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:axis_rtl:1.0 S_AXIS_0 ]
-  set_property -dict [ list \
-   CONFIG.HAS_TKEEP {0} \
-   CONFIG.HAS_TLAST {1} \
-   CONFIG.HAS_TREADY {1} \
-   CONFIG.HAS_TSTRB {0} \
-   CONFIG.LAYERED_METADATA {undef} \
-   CONFIG.TDATA_NUM_BYTES {1} \
-   CONFIG.TDEST_WIDTH {0} \
-   CONFIG.TID_WIDTH {0} \
-   CONFIG.TUSER_WIDTH {0} \
-   ] $S_AXIS_0
-  set ddr3_sdram [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:ddrx_rtl:1.0 ddr3_sdram ]
 
   # Create ports
-  set m_axis_aclk_0 [ create_bd_port -dir I -type clk m_axis_aclk_0 ]
-  set m_axis_aresetn_0 [ create_bd_port -dir I -type rst m_axis_aresetn_0 ]
-  set mig_166MHZ [ create_bd_port -dir I -type clk mig_166MHZ ]
+  set clk_out1_0 [ create_bd_port -dir O -type clk clk_out1_0 ]
   set_property -dict [ list \
-   CONFIG.FREQ_HZ {166667000} \
- ] $mig_166MHZ
-  set mig_ref_200MHZ [ create_bd_port -dir I -type clk mig_ref_200MHZ ]
+   CONFIG.FREQ_HZ {125000000} \
+ ] $clk_out1_0
+  set clk_out2_0 [ create_bd_port -dir O -type clk clk_out2_0 ]
+  set_property -dict [ list \
+   CONFIG.FREQ_HZ {25000000} \
+ ] $clk_out2_0
+  set clk_out3_0 [ create_bd_port -dir O -type clk clk_out3_0 ]
+  set_property -dict [ list \
+   CONFIG.FREQ_HZ {166666666} \
+ ] $clk_out3_0
+  set clk_out4_0 [ create_bd_port -dir O -type clk clk_out4_0 ]
   set_property -dict [ list \
    CONFIG.FREQ_HZ {200000000} \
- ] $mig_ref_200MHZ
-  set mig_sys_rst_n [ create_bd_port -dir I -type rst mig_sys_rst_n ]
-  set s_axis_aclk_0 [ create_bd_port -dir I -type clk s_axis_aclk_0 ]
-  set s_axis_aresetn_0 [ create_bd_port -dir I -type rst s_axis_aresetn_0 ]
-
-  # Create instance: axi_interconnect_0, and set properties
-  set axi_interconnect_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_0 ]
+ ] $clk_out4_0
+  set locked_0 [ create_bd_port -dir O locked_0 ]
+  set reset [ create_bd_port -dir I -type rst reset ]
   set_property -dict [ list \
-   CONFIG.NUM_MI {1} \
-   CONFIG.NUM_SI {1} \
- ] $axi_interconnect_0
-
-  # Create instance: axis_data_fifo_0, and set properties
-  set axis_data_fifo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axis_data_fifo:1.1 axis_data_fifo_0 ]
+   CONFIG.POLARITY {ACTIVE_LOW} \
+ ] $reset
+  set sys_clock [ create_bd_port -dir I -type clk sys_clock ]
   set_property -dict [ list \
-   CONFIG.IS_ACLK_ASYNC {1} \
- ] $axis_data_fifo_0
+   CONFIG.FREQ_HZ {100000000} \
+   CONFIG.PHASE {0.000} \
+ ] $sys_clock
 
-  # Create instance: axis_data_fifo_1, and set properties
-  set axis_data_fifo_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axis_data_fifo:1.1 axis_data_fifo_1 ]
+  # Create instance: clk_wiz_0, and set properties
+  set clk_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_0 ]
   set_property -dict [ list \
-   CONFIG.IS_ACLK_ASYNC {1} \
- ] $axis_data_fifo_1
-
-  # Create instance: ila_0, and set properties
-  set ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:ila:6.2 ila_0 ]
-  set_property -dict [ list \
-   CONFIG.C_ENABLE_ILA_AXI_MON {false} \
-   CONFIG.C_MONITOR_TYPE {Native} \
-   CONFIG.C_NUM_OF_PROBES {6} \
-   CONFIG.C_PROBE0_WIDTH {32} \
-   CONFIG.C_PROBE1_WIDTH {32} \
-   CONFIG.C_PROBE2_WIDTH {32} \
-   CONFIG.C_PROBE3_WIDTH {32} \
-   CONFIG.C_PROBE4_WIDTH {32} \
-   CONFIG.C_PROBE5_WIDTH {32} \
- ] $ila_0
-
-  # Create instance: mig_7series_0, and set properties
-  set mig_7series_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:mig_7series:4.1 mig_7series_0 ]
-  set_property -dict [ list \
-   CONFIG.BOARD_MIG_PARAM {ddr3_sdram} \
- ] $mig_7series_0
-
-  # Create instance: top_func_0, and set properties
-  set top_func_0 [ create_bd_cell -type ip -vlnv xilinx.com:hls:top_func:1.0 top_func_0 ]
-
-  # Create instance: vio_0, and set properties
-  set vio_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:vio:3.0 vio_0 ]
-  set_property -dict [ list \
-   CONFIG.C_EN_PROBE_IN_ACTIVITY {0} \
-   CONFIG.C_NUM_PROBE_IN {0} \
-   CONFIG.C_NUM_PROBE_OUT {1} \
- ] $vio_0
-
-  # Create instance: xlconstant_0, and set properties
-  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {0} \
-   CONFIG.CONST_WIDTH {32} \
- ] $xlconstant_0
-
-  # Create interface connections
-  connect_bd_intf_net -intf_net S_AXIS_0_1 [get_bd_intf_ports S_AXIS_0] [get_bd_intf_pins axis_data_fifo_0/S_AXIS]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI [get_bd_intf_pins axi_interconnect_0/M00_AXI] [get_bd_intf_pins mig_7series_0/S_AXI]
-  connect_bd_intf_net -intf_net axis_data_fifo_0_M_AXIS [get_bd_intf_pins axis_data_fifo_0/M_AXIS] [get_bd_intf_pins top_func_0/net_rx]
-  connect_bd_intf_net -intf_net axis_data_fifo_1_M_AXIS [get_bd_intf_ports M_AXIS_0] [get_bd_intf_pins axis_data_fifo_1/M_AXIS]
-  connect_bd_intf_net -intf_net mig_7series_0_DDR3 [get_bd_intf_ports ddr3_sdram] [get_bd_intf_pins mig_7series_0/DDR3]
-  connect_bd_intf_net -intf_net top_func_0_m_axi_gmem [get_bd_intf_pins axi_interconnect_0/S00_AXI] [get_bd_intf_pins top_func_0/m_axi_gmem]
-  connect_bd_intf_net -intf_net top_func_0_net_tx [get_bd_intf_pins axis_data_fifo_1/S_AXIS] [get_bd_intf_pins top_func_0/net_tx]
+   CONFIG.CLKOUT1_JITTER {125.247} \
+   CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {125.000} \
+   CONFIG.CLKOUT2_JITTER {175.402} \
+   CONFIG.CLKOUT2_PHASE_ERROR {98.575} \
+   CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {25.000} \
+   CONFIG.CLKOUT2_USED {true} \
+   CONFIG.CLKOUT3_JITTER {118.758} \
+   CONFIG.CLKOUT3_PHASE_ERROR {98.575} \
+   CONFIG.CLKOUT3_REQUESTED_OUT_FREQ {166.667} \
+   CONFIG.CLKOUT3_USED {true} \
+   CONFIG.CLKOUT4_JITTER {114.829} \
+   CONFIG.CLKOUT4_PHASE_ERROR {98.575} \
+   CONFIG.CLKOUT4_REQUESTED_OUT_FREQ {200.000} \
+   CONFIG.CLKOUT4_USED {true} \
+   CONFIG.CLK_IN1_BOARD_INTERFACE {sys_clock} \
+   CONFIG.MMCM_CLKOUT0_DIVIDE_F {8.000} \
+   CONFIG.MMCM_CLKOUT1_DIVIDE {40} \
+   CONFIG.MMCM_CLKOUT2_DIVIDE {6} \
+   CONFIG.MMCM_CLKOUT3_DIVIDE {5} \
+   CONFIG.MMCM_DIVCLK_DIVIDE {1} \
+   CONFIG.NUM_OUT_CLKS {4} \
+   CONFIG.RESET_BOARD_INTERFACE {reset} \
+   CONFIG.RESET_PORT {resetn} \
+   CONFIG.RESET_TYPE {ACTIVE_LOW} \
+   CONFIG.USE_BOARD_FLOW {true} \
+ ] $clk_wiz_0
 
   # Create port connections
-  connect_bd_net -net axis_data_fifo_0_axis_data_count [get_bd_pins axis_data_fifo_0/axis_data_count] [get_bd_pins ila_0/probe3]
-  connect_bd_net -net axis_data_fifo_0_axis_rd_data_count [get_bd_pins axis_data_fifo_0/axis_rd_data_count] [get_bd_pins ila_0/probe5]
-  connect_bd_net -net axis_data_fifo_0_axis_wr_data_count [get_bd_pins axis_data_fifo_0/axis_wr_data_count] [get_bd_pins ila_0/probe4]
-  connect_bd_net -net axis_data_fifo_1_axis_data_count [get_bd_pins axis_data_fifo_1/axis_data_count] [get_bd_pins ila_0/probe0]
-  connect_bd_net -net axis_data_fifo_1_axis_rd_data_count [get_bd_pins axis_data_fifo_1/axis_rd_data_count] [get_bd_pins ila_0/probe2]
-  connect_bd_net -net axis_data_fifo_1_axis_wr_data_count [get_bd_pins axis_data_fifo_1/axis_wr_data_count] [get_bd_pins ila_0/probe1]
-  connect_bd_net -net clk_wiz_0_locked [get_bd_ports mig_sys_rst_n] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axis_data_fifo_0/m_axis_aresetn] [get_bd_pins axis_data_fifo_1/s_axis_aresetn] [get_bd_pins mig_7series_0/aresetn] [get_bd_pins mig_7series_0/sys_rst]
-  connect_bd_net -net m_axis_aclk_0_1 [get_bd_ports m_axis_aclk_0] [get_bd_pins axis_data_fifo_1/m_axis_aclk]
-  connect_bd_net -net m_axis_aresetn_0_1 [get_bd_ports m_axis_aresetn_0] [get_bd_pins axis_data_fifo_1/m_axis_aresetn]
-  connect_bd_net -net mig_166MHZ_1 [get_bd_ports mig_166MHZ] [get_bd_pins mig_7series_0/sys_clk_i]
-  connect_bd_net -net mig_7series_0_ui_clk [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axis_data_fifo_0/m_axis_aclk] [get_bd_pins axis_data_fifo_1/s_axis_aclk] [get_bd_pins ila_0/clk] [get_bd_pins mig_7series_0/ui_clk] [get_bd_pins top_func_0/ap_clk] [get_bd_pins vio_0/clk]
-  connect_bd_net -net mig_ref_200MHZ_1 [get_bd_ports mig_ref_200MHZ] [get_bd_pins mig_7series_0/clk_ref_i]
-  connect_bd_net -net s_axis_aclk_0_1 [get_bd_ports s_axis_aclk_0] [get_bd_pins axis_data_fifo_0/s_axis_aclk]
-  connect_bd_net -net s_axis_aresetn_0_1 [get_bd_ports s_axis_aresetn_0] [get_bd_pins axis_data_fifo_0/s_axis_aresetn]
-  connect_bd_net -net vio_0_probe_out0 [get_bd_pins top_func_0/ap_rst_n] [get_bd_pins vio_0/probe_out0]
-  connect_bd_net -net xlconstant_0_dout [get_bd_pins top_func_0/dram] [get_bd_pins xlconstant_0/dout]
+  connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_ports clk_out1_0] [get_bd_pins clk_wiz_0/clk_out1]
+  connect_bd_net -net clk_wiz_0_clk_out2 [get_bd_ports clk_out2_0] [get_bd_pins clk_wiz_0/clk_out2]
+  connect_bd_net -net clk_wiz_0_clk_out3 [get_bd_ports clk_out3_0] [get_bd_pins clk_wiz_0/clk_out3]
+  connect_bd_net -net clk_wiz_0_clk_out4 [get_bd_ports clk_out4_0] [get_bd_pins clk_wiz_0/clk_out4]
+  connect_bd_net -net clk_wiz_0_locked [get_bd_ports locked_0] [get_bd_pins clk_wiz_0/locked]
+  connect_bd_net -net reset_1 [get_bd_ports reset] [get_bd_pins clk_wiz_0/resetn]
+  connect_bd_net -net sys_clock_1 [get_bd_ports sys_clock] [get_bd_pins clk_wiz_0/clk_in1]
 
   # Create address segments
-  create_bd_addr_seg -range 0x10000000 -offset 0x00000000 [get_bd_addr_spaces top_func_0/Data_m_axi_gmem] [get_bd_addr_segs mig_7series_0/memmap/memaddr] SEG_mig_7series_0_memaddr
 
 
   # Restore current instance

@@ -523,6 +523,7 @@ set_property -name "steps.write_bitstream.args.verbose" -value "0" -objects $obj
 
 # Create the bd design
 source create_bd.tcl
+source create_bd_clock.tcl
 
 # set the current impl run
 current_run -implementation [get_runs impl_1]
