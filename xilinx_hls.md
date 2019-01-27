@@ -25,3 +25,15 @@ sure VALID and LAST appear in Waveform.
 This might be just a trivial thing, but it took me a lot time to figure out.
 The takeway is: before integrating HLS IP into a big design,
 make sure CoSIM works and make sure Waveform has all the signals you want.
+
+__2. One HLS can only use one clock frequency__
+
+Modules written in HLS can only support one clock frequency at a time.
+If the HLS module needs to deal with two clock domains, you have to choose one and insert FIFO accordingly.
+
+For example, assume you have IP_A running at 100MHz and IP_B running at 150MHz.
+Now you are trying to write a HLS IP_C, which will communicate with both IP_A and IP_B,
+i.e., `IP_A <---> IP_C <---> IP_B`. Since HLS IP_C can only run with one clock frequency,
+you are not able to write a IP_C works like the above way without FIFOs in between.
+For simplicity, assume IP_C runs at 100MHz, then IP_A and IP_C can talk directly.
+But you have to insert a FIFO between IP_C and IP_B.
