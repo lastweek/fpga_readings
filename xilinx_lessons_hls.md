@@ -1,8 +1,8 @@
-# About Xilinx HLS
+## Xilinx HLS Lessons Learned
 
-## Lessons Learned
+Some issues I had along the way.
 
-__1. Make sure CoSim, Waveform actually work before Integration.__
+## Check CoSim and Waveform Before Integration
 
 There was a very simple module that has an AXI-S output. HLS Simulation and synthesis
 both work fine. CoSIM failed because the module accessed some invalid memory (SEGFAULT).
@@ -26,7 +26,7 @@ This might be just a trivial thing, but it took me a lot time to figure out.
 The takeway is: before integrating HLS IP into a big design,
 make sure CoSIM works and make sure Waveform has all the signals you want.
 
-__2. One HLS can only use one clock frequency__
+## HLS IP Only Use One Clock Frequency
 
 Modules written in HLS can only support one clock frequency at a time.
 If the HLS module needs to deal with two clock domains, you have to choose one and insert FIFO accordingly.
