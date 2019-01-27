@@ -109,16 +109,16 @@ module pDPM_top(
 	wire		net_125MHZ;
 	wire		net_25MHZ;
 
-	/* Do note that glbl_rst is not synced to clk */
 	design_1	clock_generator
 	(
 		.sys_clock		(sys_clk_100M),
-		.reset			(glbl_rst),
-		.locked_0		(clock_locked),
 		.clk_out1_0		(net_125MHZ),
 		.clk_out2_0		(net_25MHZ),
 		.clk_out3_0		(mig_166MHZ),
-		.clk_out4_0		(mig_ref_200MHZ)
+		.clk_out4_0		(mig_ref_200MHZ),
+
+		/* High when clock output is valid */
+		.locked_0		(clock_locked)
 	);
 
 	assign		mig_sys_rst_n = clock_locked;
@@ -197,10 +197,10 @@ module pDPM_top(
 		/* AXI-S from Network */
 		.s_axis_aclk_0		(rx_fifo_clock),
 		.s_axis_aresetn_0	(rx_fifo_resetn),
-		.S_AXIS_0_tdata		(rx_axis_fifo_tdata),
-		.S_AXIS_0_tlast		(rx_axis_fifo_tlast),
-		.S_AXIS_0_tready	(rx_axis_fifo_tready),
-		.S_AXIS_0_tvalid	(rx_axis_fifo_tvalid),
+		.s_axis_tdata_0		(rx_axis_fifo_tdata),
+		.s_axis_tlast_0		(rx_axis_fifo_tlast),
+		.s_axis_tready_0	(rx_axis_fifo_tready),
+		.s_axis_tvalid_0	(rx_axis_fifo_tvalid),
 
 		/* DDR3 */
 		.ddr3_sdram_addr	(ddr3_sdram_addr),

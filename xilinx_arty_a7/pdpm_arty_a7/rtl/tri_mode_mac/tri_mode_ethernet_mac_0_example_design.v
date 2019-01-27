@@ -132,24 +132,13 @@
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module tri_mode_ethernet_mac_0_example_design
    (
-      // asynchronous reset
+      /* async reset, now it's a button */
       input         glbl_rst,
 
-      // 100MHz clock input from board
       input clk_100MHZ,
       input clk_125MHZ,
       input clk_locked,
     
-      /*
-       * 125 MHz
-       * 100 MHz
-       * Generated Output clocks from MMCM
-       * We output these two to testbench.
-       * No needed for real hardware.
-       */
-      //output        gtx_clk_bufg_out,
-      //output        s_axi_aclk_out,
-
       output        phy_resetn,
 
       // MII Interface
@@ -332,7 +321,9 @@ module tri_mode_ethernet_mac_0_example_design
 	/* user side clocks for the axi fifos */
 	assign tx_fifo_clock = gtx_clk_bufg;
 	assign rx_fifo_clock = gtx_clk_bufg;
-   
+
+	assign tx_fifo_clock_ref = gtx_clk_bufg;
+	assign rx_fifo_clock_ref = gtx_clk_bufg; 
 
   // want to infer an IOBUF on the mdio port
   assign mdio = mdio_t ? 1'bz : mdio_o;
