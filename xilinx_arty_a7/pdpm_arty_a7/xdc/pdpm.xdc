@@ -2,9 +2,9 @@
 # Board is Arty A7 100T
 
 # Primary Clock
-create_clock -period 10.000 -name clk_in [get_ports clk_in]
-set_input_jitter clk_in 0.010
-set_property -dict {PACKAGE_PIN E3 IOSTANDARD LVCMOS33} [get_ports clk_in]
+create_clock -period 10.000 -name sys_clk_100M [get_ports sys_clk_100M]
+set_input_jitter sys_clk_100M 0.010
+set_property -dict {PACKAGE_PIN E3 IOSTANDARD LVCMOS33} [get_ports sys_clk_100M]
 
 # Module LEDs
 # LD4 activity_flash is for pat check

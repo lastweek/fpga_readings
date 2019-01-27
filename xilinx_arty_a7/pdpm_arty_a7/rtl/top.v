@@ -26,7 +26,7 @@ module pDPM_top(
 	input		mii_rx_dv,
 	input		mii_rx_er,
 	input		mii_rx_clk,
-	input		ii_tx_clk,
+	input		mii_tx_clk,
 
 	/* MDIO Interface */
 	inout		mdio,

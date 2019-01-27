@@ -237,17 +237,17 @@ if {[string equal [get_filesets -quiet constrs_1] ""]} {
 set obj [get_filesets constrs_1]
 
 # Add/Import constrs file and set constrs file properties
-set file "[file normalize "$origin_dir/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_example_design.xdc"]"
+set file "[file normalize "$origin_dir/../xdc/pdpm.xdc"]"
 set file_added [add_files -norecurse -fileset $obj [list $file]]
-set file "$origin_dir/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_example_design.xdc"
+set file "$origin_dir/../xdc/pdpm.xdc"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets constrs_1] [list "*$file"]]
 set_property -name "file_type" -value "XDC" -objects $file_obj
 
 # Add/Import constrs file and set constrs file properties
-set file "[file normalize "$origin_dir/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_user_phytiming.xdc"]"
+set file "[file normalize "$origin_dir/../xdc/user_phytiming.xdc"]"
 set file_added [add_files -norecurse -fileset $obj [list $file]]
-set file "$origin_dir/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_user_phytiming.xdc"
+set file "$origin_dir/../xdc/user_phytiming.xdc"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets constrs_1] [list "*$file"]]
 set_property -name "file_type" -value "XDC" -objects $file_obj
@@ -265,10 +265,10 @@ if {[string equal [get_filesets -quiet sim_1] ""]} {
 set obj [get_filesets sim_1]
 set files [list \
  [file normalize "${origin_dir}/../tb/pdpm_mem_tb.v"] \
- [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_frame_typ.v"] \
- [file normalize "${origin_dir}/../rtl/tri_mode_mac/demo_tb.v"] \
+ [file normalize "${origin_dir}/../tb/demo_tb.v"] \
  [file normalize "${origin_dir}/../tb/pdpm_top_tb.v"] \
  [file normalize "${origin_dir}/../rtl/top.v"] \
+ [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_frame_typ.v"] \
 ]
 add_files -norecurse -fileset $obj $files
 
@@ -279,7 +279,7 @@ set file_obj [get_files -of_objects [get_filesets sim_1] [list "*$file"]]
 set_property -name "used_in" -value "implementation simulation" -objects $file_obj
 set_property -name "used_in_synthesis" -value "0" -objects $file_obj
 
-set file "$origin_dir/../rtl/tri_mode_mac/demo_tb.v"
+set file "$origin_dir/../tb/demo_tb.v"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sim_1] [list "*$file"]]
 set_property -name "used_in" -value "implementation simulation" -objects $file_obj
