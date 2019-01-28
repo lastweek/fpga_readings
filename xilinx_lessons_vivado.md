@@ -26,3 +26,32 @@ the attribute CLOCK_DEDICATED_ROUTE=BACKBONE must be set.
 This explains. My CMTs are in two different clock regions.
 To fix the issue, I modified both reference designs and added one CMT at top-level,
 whose output clocks are used to drive both MAC and MIG.
+
+-  
+YS  
+Jan 26, 2019
+
+## Importance of Testbench
+
+So I was merging the MAC and MIG part, along with some logic.
+In order to do that, I did some hacking and added some Verilog glue code.
+Besides, I have to change the MAC reference design a little bit to use
+the new AXI-S interface. Initial merging does not work. I was not good at
+writing verilog and lazy enough to construct a new TB for the changed MAC.
+I was trying to use ILA to debug, all the way after rounds and rounds of
+Synthesis&Implementation. I could go take a shower during the compilation time.
+
+I stop wasting my time and take a step back to modify the MAC's original TB.
+I changed it to accomadate the new AXI-S interface. And bang, I got the bug:
+an `axi_s_rst` signal was not assigned, it was at `Z` state. Stupid like that.
+
+This is pretty much like an uninitialized variable in C, but in the parameter list.
+GCC won't complain it for sure. But for Verilog, this output port has to be assigned
+to something, isn't the compiler supposed to give a warning or error or something?
+
+Anyhow, the takeaway lesson is: Life is short, write testbench. Don't do that stupid
+`Synthesis->Implementation->In-system Debug` thing.
+
+-  
+YS  
+Jan 27, 2019
