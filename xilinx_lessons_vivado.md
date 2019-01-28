@@ -27,7 +27,7 @@ This explains. My CMTs are in two different clock regions.
 To fix the issue, I modified both reference designs and added one CMT at top-level,
 whose output clocks are used to drive both MAC and MIG.
 
--  
+--  
 YS  
 Jan 26, 2019
 
@@ -52,6 +52,6 @@ to something, isn't the compiler supposed to give a warning or error or somethin
 Anyhow, the takeaway lesson is: Life is short, write testbench. Don't do that stupid
 `Synthesis->Implementation->In-system Debug` thing.
 
--  
+--  
 YS  
 Jan 27, 2019
