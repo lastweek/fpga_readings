@@ -60,9 +60,9 @@ void network_parse(stream<struct my_axis<8> > *in, stream<struct my_axis<8> > *o
 void top_func(stream<struct my_axis<8> > *net_rx,
 	      stream<struct my_axis<8> > *net_tx, char *dram)
 {
-//#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE port=return
 //#pragma HLS DATAFLOW
-#pragma HLS PIPELINE II=1 enable_flush
+#pragma HLS PIPELINE
 
 /* Port-level interfaces */
 #pragma HLS INTERFACE axis both port=net_rx

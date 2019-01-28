@@ -26,10 +26,12 @@ Main contents:
 	- Basics about FPGA
 	- Relevant Courses and Books
 	- Papers about FPGA internal
-- __`xilinx.md`__ and __`xilinx_constraints.md`__
-	- Xilinx terms explained
-	- Xilinx documents summary
-	- Useful constraints
+- __`Xilinx`__
+	- `xilinx.md`
+	- `xilinx_constraints.md`
+	- `xilinx_cheatsheet.md`
+	- `xilinx_lessons_vivado.md`
+	- `xilinx_lessons_hls.md`
 - __`submodules/`__: Github repositories about FPGA
 - __`hls/`__: Sample Xilinx HLS C++ code
 	- AXI Stream
