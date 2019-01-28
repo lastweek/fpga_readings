@@ -1,3 +1,8 @@
+#
+# Note that all generated files are in generated_project/.
+# DO NOT COMMIT THESE FOLDERS.
+#
+
 generated_project/
 .*
 *.log

@@ -7,10 +7,8 @@ all:
 g:
 	$(vivado_hls) -p $(project_path)
 
-clean:
-	rm -rf generated_project/
-
 help:
 	@echo "Help"
 	@echo "  # make       <- Compile projects"
 	@echo "  # make g     <- Open GUI"
+
