@@ -1,54 +1,3 @@
-//------------------------------------------------------------------------------
-// Title      : Demo testbench
-// Project    : Tri-Mode Ethernet MAC
-//------------------------------------------------------------------------------
-// File       : demo_tb.v
-// -----------------------------------------------------------------------------
-// (c) Copyright 2004-2013 Xilinx, Inc. All rights reserved.
-//
-// This file contains confidential and proprietary information
-// of Xilinx, Inc. and is protected under U.S. and
-// international copyright and other intellectual property
-// laws.
-//
-// DISCLAIMER
-// This disclaimer is not a license and does not grant any
-// rights to the materials distributed herewith. Except as
-// otherwise provided in a valid license issued to you by
-// Xilinx, and to the maximum extent permitted by applicable
-// law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND
-// WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES
-// AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING
-// BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-
-// INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and
-// (2) Xilinx shall not be liable (whether in contract or tort,
-// including negligence, or under any other theory of
-// liability) for any loss or damage of any kind or nature
-// related to, arising under or in connection with these
-// materials, including for any direct, or any indirect,
-// special, incidental, or consequential loss or damage
-// (including loss of data, profits, goodwill, or any type of
-// loss or damage suffered as a result of any action brought
-// by a third party) even if such damage or loss was
-// reasonably foreseeable or Xilinx had been advised of the
-// possibility of the same.
-//
-// CRITICAL APPLICATIONS
-// Xilinx products are not designed or intended to be fail-
-// safe, or for use in any application requiring fail-safe
-// performance, such as life-support or safety devices or
-// systems, Class III medical devices, nuclear facilities,
-// applications related to the deployment of airbags, or any
-// other applications that could lead to death, personal
-// injury, or severe property or environmental damage
-// (individually and collectively, "Critical
-// Applications"). Customer assumes the sole risk and
-// liability of any use of Xilinx products in Critical
-// Applications, subject only to applicable laws and
-// regulations governing limitations on product liability.
-//
-// THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
-// PART OF THIS FILE AT ALL TIMES.
 // -----------------------------------------------------------------------------
 // Description: This testbench will exercise the ports of the MAC core
 //              to demonstrate the functionality.
@@ -110,16 +59,19 @@
 //                                                                     |
 //----------------------------------------------------------------------
 
+/*
+ * Note by YS:
+ *
+ * I changed the original demo_tb.v to this one.
+ * This one now is used to test if the RX_FIFO_AXI_S can have output.
+ * Later can be extended to verify TX_FIFO_AXI_S too.
+ */
 
-`timescale 1ps / 1ps
 
-//------------------------------------------------------------------------------
-// This module is the demonstration testbench
-//------------------------------------------------------------------------------
+`timescale 1ns / 1ps
 
-module demo_tb;
+module pdpm_net_tb;
 
-  
   parameter TB_MODE = "DEMO";
 
   `define FRAME_TYP [8*62+62+62+8*4+4+4+8*4+4+4+1:1]
@@ -505,10 +457,12 @@ module demo_tb;
 
   // testbench signals
   
+  reg clk_100MHZ;
+  reg clk_125MHZ;
+
   wire        gtx_clk;
   wire        s_axi_aclk;
   
-  reg         mmcm_clk_in;
   reg         reset;
   reg         demo_mode_error = 1'b0;
 
@@ -551,7 +505,51 @@ module demo_tb;
   reg          bist_mode_error;
   wire         serial_response;
 
+	wire [7:0] rx_axis_fifo_tdata;
+	wire rx_axis_fifo_tvalid;
+	reg rx_axis_fifo_tready;
+	wire rx_axis_fifo_tlast;
 
+	wire rx_fifo_clock_ref;
+	wire rx_fifo_resetn_ref;
+
+	wire [7:0] tx_axis_fifo_tdata;
+	wire tx_axis_fifo_tvalid;
+	wire tx_axis_fifo_tready;
+	wire tx_axis_fifo_tlast;
+
+	wire tx_fifo_clock_ref;
+	wire tx_fifo_resetn_ref;
+
+	initial begin
+		clk_100MHZ <= 1'b0;
+		#80000;
+		forever begin
+			clk_100MHZ <= 1'b0;
+			#5000;
+			clk_100MHZ <= 1'b1;
+			#5000;
+		end
+	end
+
+	initial begin
+		clk_125MHZ <= 1'b0;
+		#80000;
+		forever begin
+			clk_125MHZ <= 1'b0;
+			#4000;
+			clk_125MHZ <= 1'b1;
+			#4000;
+		end
+	end
+
+	initial begin
+		rx_axis_fifo_tready = 1'b1;
+	end
+
+
+	assign gtx_clk = clk_125MHZ;
+	assign s_axi_aclk = clk_100MHZ;
 
   // select between loopback or local data
   assign mii_rxd_dut   = (TB_MODE == "BIST") ? mii_txd   : mii_rxd;
@@ -567,18 +565,10 @@ module demo_tb;
       // asynchronous reset
       .glbl_rst                   (reset),
 
-      // 100MHz clock input from board
-      .clk_in                   (mmcm_clk_in),
+      .clk_100MHZ                   (clk_100MHZ),
+      .clk_125MHZ                   (clk_125MHZ),
+      .clk_locked		    (1'b1),
  
-      // 125 MHz clock output from MMCM
-      .gtx_clk_bufg_out           (gtx_clk),
-      
-      //100 MHz clock output from MMCM
-      .s_axi_aclk_out              (s_axi_aclk),
-
-      //25 MHz clock output from MMCM to PHY
-      .mii_ref_clk_out                 (mii_ref_clk),
-
       .phy_resetn                 (),
 
 
@@ -586,20 +576,13 @@ module demo_tb;
       //---------------
       .mii_txd                    (mii_txd),
       .mii_tx_en                  (mii_tx_en),
-      //.mii_tx_er                  (mii_tx_er),
       .mii_rxd                    (mii_rxd_dut),
       .mii_rx_dv                  (mii_rx_dv_dut),
       .mii_rx_er                  (mii_rx_er_dut),
       .mii_rx_clk                 (mii_rx_clk),
       .mii_tx_clk                 (mii_tx_clk),
-
-      // MDIO Interface
-      //---------------
       .mdio                       (mdio),
       .mdc                        (mdc),
-
-      // Serialised statistics vectors
-      //------------------------------
       .tx_statistics_s            (),
       .rx_statistics_s            (),
 
@@ -619,7 +602,23 @@ module demo_tb;
       .frame_error                (frame_error),
       .user_LED               (),
       .activity_flash             (),
-      .activity_flash_gen            ()
+      .activity_flash_gen            (),
+
+	/* AXI-S to Memory */
+	.rx_fifo_clock_ref	(rx_fifo_clock_ref),
+	.rx_fifo_resetn_ref	(rx_fifo_resetn_ref),
+	.rx_axis_fifo_tdata	(rx_axis_fifo_tdata),
+	.rx_axis_fifo_tvalid	(rx_axis_fifo_tvalid),
+	.rx_axis_fifo_tready	(rx_axis_fifo_tready),
+	.rx_axis_fifo_tlast	(rx_axis_fifo_tlast),
+
+	/* AXI-S from Memory */
+	.tx_fifo_clock_ref	(tx_fifo_clock_ref),
+	.tx_fifo_resetn_ref	(tx_fifo_resetn_ref),
+	.tx_axis_fifo_tdata	(tx_axis_fifo_tdata),
+	.tx_axis_fifo_tvalid	(tx_axis_fifo_tvalid),
+	.tx_axis_fifo_tready	(tx_axis_fifo_tready),
+	.tx_axis_fifo_tlast	(tx_axis_fifo_tlast)
 
     );
 
@@ -728,26 +727,6 @@ module demo_tb;
   // Clock drivers
   //----------------------------------------------------------------------------
   
-
-  //drives input to an MMCM at 100MHz which creates gtx_clk at 125 MHz
-  initial
-  begin
-    
-    mmcm_clk_in <= 1'b0;
-    
-  #80000;
-    forever
-    begin
-      mmcm_clk_in <= 1'b0;
-      
-      #gtx_period;
-      mmcm_clk_in <= 1'b1;
-      
-      #gtx_period;
-    end
-  end
-
-      
 
   // drives mii_tx_clk100 at 25 MHz
   initial
@@ -1044,9 +1023,10 @@ module demo_tb;
     $display("Rx Stimulus: sending 4 frames at 100M ... ");
 
     send_frame_10_100m(frame0.tobits(0));
-    send_frame_10_100m(frame1.tobits(1));
-    send_frame_10_100m(frame2.tobits(2));
-    send_frame_10_100m(frame3.tobits(3));
+    //send_frame_10_100m(frame1.tobits(1));
+    //send_frame_10_100m(frame2.tobits(2));
+    //send_frame_10_100m(frame3.tobits(3));
+    $display(" .. finished sending, waiting");
 
     wait (tx_monitor_finished_100M == 1);
     #10000;
@@ -1283,10 +1263,11 @@ module demo_tb;
        //-----------------------------------------------------
 
        // Check the frames
+       $display("Checking?");
        check_frame_10_100m(frame0.tobits(0));
-       check_frame_10_100m(frame1.tobits(0));
-       check_frame_10_100m(frame2.tobits(0));
-       check_frame_10_100m(frame3.tobits(0));
+       //check_frame_10_100m(frame1.tobits(0));
+       //check_frame_10_100m(frame2.tobits(0));
+       //check_frame_10_100m(frame3.tobits(0));
 
        #200000
        tx_monitor_finished_100M  <= 1;
@@ -1309,9 +1290,4 @@ module demo_tb;
 
   end // p_tx_monitor
 
-
-
-
 endmodule
-
-

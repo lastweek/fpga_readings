@@ -197,10 +197,10 @@ module pDPM_top(
 		/* AXI-S from Network */
 		.s_axis_aclk_0		(rx_fifo_clock),
 		.s_axis_aresetn_0	(rx_fifo_resetn),
-		.s_axis_tdata_0		(rx_axis_fifo_tdata),
-		.s_axis_tlast_0		(rx_axis_fifo_tlast),
-		.s_axis_tready_0	(rx_axis_fifo_tready),
-		.s_axis_tvalid_0	(rx_axis_fifo_tvalid),
+		.S_AXIS_0_tdata		(rx_axis_fifo_tdata),
+		.S_AXIS_0_tlast		(rx_axis_fifo_tlast),
+		.S_AXIS_0_tready	(rx_axis_fifo_tready),
+		.S_AXIS_0_tvalid	(rx_axis_fifo_tvalid),
 
 		/* DDR3 */
 		.ddr3_sdram_addr	(ddr3_sdram_addr),
