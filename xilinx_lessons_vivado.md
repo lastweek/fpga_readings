@@ -55,3 +55,25 @@ Anyhow, the takeaway lesson is: Life is short, write testbench. Don't do that st
 --  
 YS  
 Jan 27, 2019
+
+## Auto Timing Constraints of Clock Wizard 
+
+So today I was trying to understand how `Timing violation` and `Timing Constraints` actually work.
+And keep thinking how Vivado knows that the clock that a certain RTL module connected to,
+is using a legitimate frequency. Because it seems we only have `create_clock` for the primary clock,
+those Clock Wizard generated clocks do not have associcated timing constraints.
+So I went through `UG903 Chapter 3 Defining Clocks`. This chapter is very informative.
+
+Takeaways:
+- Use `report_clocks` to check all clocks.
+- Vivado treats all clocks as `propagated clocks`, that is, non-ideal. When you use
+`report_clocks` in TCL console, all clocks has `P` attribute.
+- Vivado automatically creates the constraint for these on the output pins of CMBs.
+This means, you don't need to add `create_clock` for Clock Wizard generated output clocks.
+
+I think, once Vivado knows what pins are clock, and what frequency they are, it will
+be able to analyze everything.
+
+--  
+YS  
+Jan 28, 2019
