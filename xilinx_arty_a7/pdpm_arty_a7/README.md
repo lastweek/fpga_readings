@@ -1,10 +1,19 @@
-# PDPM Work-In-Progress
+# PDPM
 
-All vivado auto-generated stuff will be inside `generated/` folder. Other folders such as `rtl/`, `hls/` store the real source code. Use Git to track useful source code and vivado rebuild TCL commands. DO not commit unnecessary stuff.
+Programmbale Disaggregated Persistent Memory.
 
-TODO:
-- still need to figure out how to git track block design
-- and how to track IPs properly
+## About
+
+This project is trying to deploy the following flow:
+` Host <-> PHY <-> MAC <-> Customized IP <-> Memory Controller <-> On-board DRAM`.
+This model serves as a building basis for many network processing related projects.
+The datapath of this project is established, but the control path still has issue.
+The project has been verified on board, and tested.
+
+All Vivado auto-generated stuff will be inside `generated/` folder.
+Other folders such as `rtl/`, `hls/` have the real source code.
+Use Git to track useful source code and vivado rebuild TCL commands.
+Do not commit unnecessary stuff.
 
 ## Run
 
