@@ -10,5 +10,6 @@ Come back when we reach this point.
   - Chapter 2 Timing Analysis Features
   - Chapter 5 Performing Timing Analysis
 - UG949
-  - Chapter 3 Design Creation -> defining clock constraints
+  - Chapter 3 Design Creation -> Defining clock constraints
+    - Defining Timing Constraints in Four Steps
   - Chapter 5 Design Closure -> Timing Closure
