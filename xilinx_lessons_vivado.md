@@ -72,7 +72,20 @@ Takeaways:
 This means, you don't need to add `create_clock` for Clock Wizard generated output clocks.
 
 I think, once Vivado knows what pins are clock, and what frequency they are, it will
-be able to analyze everything.
+be able to analyze everything. Just to simply what Vivado does: We let Vivado know
+what pins, wires, or ports are clock signals. Then when Vivado is doing synthesis or
+implementation, it knows what frequency a certain logic is using, all because you
+have clocks to every RTL module. Along with some additional input/output delay,
+timing exceptions, Vivado is able to do more sophisticated stuff. All in all,
+we should 1) define clocks, 2) write good timing constrains (know what commands
+belong to timing constrains catagory).
+
+Reference on Timing:
+- UG903, Chapter 3 Defining Clocks
+- UG906, Chapter 2 Timing Analysis Features
+- UG949
+  - Chapter 3 Design Creation -> defining clock constraints
+  - Chapter 5 Design Closure -> Timing Closure
 
 --  
 YS  
