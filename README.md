@@ -78,6 +78,7 @@ High-Level Synthesis (HLS)
 - [Cornell ECE5775 from Prof. Zhiru Zhang](http://www.csl.cornell.edu/courses/ece5775/)
 
 Courses
+- [Online: Real Digital](https://www.realdigital.org/)
 - [CMU ECE 18-643](http://users.ece.cmu.edu/~jhoe/doku/doku.php?id=18-643_course_schedule_fall_2017)
     - I like its slides, very informative. Slides about PR, Verilog, HLS are good.
     - Also read its references, all quite good papers.
