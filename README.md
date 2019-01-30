@@ -148,6 +148,10 @@ __Integrate with Virtual Memory__
 - [S4 Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
 	- This paper also implemented a hardware MMU, but the virtual memory system still run on Linux.
 	- Also listed in `Cloud Infrastructure` part.
+- [Lightweight Virtual Memory Support for Many-Core Accelerators in Heterogeneous Embedded SoCs, 2015](https://ieeexplore.ieee.org/document/7331367)
+- [Lightweight Virtual Memory Support for Zero-Copy Sharing of Pointer-Rich Data Structures in Heterogeneous Embedded SoCs, IEEE'17](https://ieeexplore.ieee.org/document/7797491)
+	- Part of the PULP project.
+	- Essentially a software-managed IOMMU. The control path is running as a Linux kernel module. The datapath is a lightweight AXI transation translation.
 
 __Integrate OS/CPU/FPGA__
 - [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
