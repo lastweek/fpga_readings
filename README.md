@@ -230,18 +230,40 @@ __Database__
 - [Accelerating database systems using FPGAs: A survey, FPL'18](https://pdfs.semanticscholar.org/dee1/59031eb2de0a9324829f9027b14403164489.pdf)
 
 Machine Learning
-- TODO
+- Optimizing FPGA-based Accelerator Design for Deep Convolutional Neural Networks, FPGA'15
+- From High-Level Deep Neural Models to FPGAs, ISCA'16
+- Deep Learning on FPGAs: Past, Present, and Future, arXiv'16
+- Accelerating binarized neural networks: Comparison of FPGA, CPU, GPU, and ASIC, FPT'16
+- FINN: A Framework for Fast, Scalable Binarized Neural Network Inference, FPGA'17
+- In-Datacenter Performance Analysis of a Tensor Processing Unit, ISCA'17
+- Accelerating Binarized Convolutional Neural Networks with Software-Programmable FPGAs, FPGA'17
+- A Configurable Cloud-Scale DNN Processor for Real-Time AI, ISCA'18
+- A Network-Centric Hardware/Algorithm Co-Design to Accelerate Distributed Training of Deep Neural Networks, MICRO'18
+- DNNBuilder: an Automated Tool for Building High-Performance DNN Hardware Accelerators for FPGAs, ICCAD'18
+- FA3C : FPGA-Accelerated Deep Reinforcement Learning， ASPLOS’19
 
 Graph
-- TODO
+- A Scalable Processing-in-Memory Accelerator for Parallel Graph Processing, ISCA'15
+- Energy Efficient Architecture for Graph Analytics Accelerators, ISCA'16
+- Boosting the Performance of FPGA-based Graph Processor using Hybrid Memory Cube: A Case for Breadth First Search, FPGA'17
+- FPGA-Accelerated Transactional Execution of Graph Workloads, FPGA'17
+- An FPGA Framework for Edge-Centric Graph Processing, CF'18
 
 KVS
-- [KV-Direct: High-Performance In-Memory Key-Value Store with Programmable NIC](https://dl.acm.org/citation.cfm?id=3132756)
+- Achieving 10Gbps line-rate key-value stores with FPGAs, HotCloud'13
+- Thin Servers with Smart Pipes: Designing SoC Accelerators for Memcached, ISCA'13
+- An FPGA Memcached Appliance, FPGA'13
+- Scaling out to a Single-Node 80Gbps Memcached Server with 40Terabytes of Memory, HotStorage'15
+- [KV-Direct: High-Performance In-Memory Key-Value Store with Programmable NIC, SOSP'17](https://dl.acm.org/citation.cfm?id=3132756)
 	- This link is also useful for better understading [Morning Paper](https://blog.acolyer.org/2017/11/23/kv-direct-high-performance-in-memory-key-value-store-with-programmable-nic/)
+- Ultra-Low-Latency and Flexible In-Memory Key-Value Store System Design on CPU-FPGA, FPT'18
 
 Genome
 - [When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
 - hpca19
+
+Consensus
+- Consensus in a Box: Inexpensive Coordination in Hardware, NSDI'16
 
 Video Processing
 - TODO
@@ -253,8 +275,7 @@ Micro-services
 - TODO
 
 Languages
-- UCB GC
-- UCLA Java
+- From JVM to FPGA: Bridging Abstraction Hierarchy via Optimized Deep Pipelining, HotCloud'18
 
 ### FPGA Internal
 
