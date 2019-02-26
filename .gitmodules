@@ -55,3 +55,6 @@
 [submodule "xilinx_arty_a7/Arty"]
 	path = xilinx_arty_a7/Arty
 	url = https://github.com/Digilent/Arty
+[submodule "submodules/verilog-axi"]
+	path = submodules/verilog-axi
+	url = https://github.com/alexforencich/verilog-axi
