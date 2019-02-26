@@ -60,6 +60,7 @@ Digital Basics
 - [Wiki: Differential signaling](https://en.wikipedia.org/wiki/Differential_signaling) and [Wiki: Single-ended signaling](https://en.wikipedia.org/wiki/Single-ended_signaling)
     - [Paper: Differential Signals The Differential Difference! Douglas Brooks](https://www.ultracad.com/articles/differentialsignals.pdf)
 - [Book: Digital design and computer architecture](https://www.amazon.com/Digital-Design-Computer-Architecture-Harris/dp/0123944244/ref=asc_df_0123944244/?tag=hyprod-20&linkCode=df0&hvadid=312060980065&hvpos=1o4&hvnetw=g&hvrand=12891765886685173497&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9016722&hvtargid=aud-467599743108:pla-459777269741&psc=1)
+- [Content-Addressable Memory Introduction](https://www.pagiamtzis.com/cam/camintro/)
 
 Verilog
 - [Verilog Introduction](http://www.lsi.upc.edu/~jordicf/Teaching/secretsofhardware/VerilogIntroduction_Nyasulu.pdf)
@@ -78,6 +79,7 @@ High-Level Synthesis (HLS)
 - [Cornell ECE5775 from Prof. Zhiru Zhang](http://www.csl.cornell.edu/courses/ece5775/)
 
 Courses
+- [Online: Real Digital](https://www.realdigital.org/)
 - [CMU ECE 18-643](http://users.ece.cmu.edu/~jhoe/doku/doku.php?id=18-643_course_schedule_fall_2017)
     - I like its slides, very informative. Slides about PR, Verilog, HLS are good.
     - Also read its references, all quite good papers.
@@ -148,6 +150,10 @@ __Integrate with Virtual Memory__
 - [S4 Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
 	- This paper also implemented a hardware MMU, but the virtual memory system still run on Linux.
 	- Also listed in `Cloud Infrastructure` part.
+- [Lightweight Virtual Memory Support for Many-Core Accelerators in Heterogeneous Embedded SoCs, 2015](https://ieeexplore.ieee.org/document/7331367)
+- [Lightweight Virtual Memory Support for Zero-Copy Sharing of Pointer-Rich Data Structures in Heterogeneous Embedded SoCs, IEEE'17](https://ieeexplore.ieee.org/document/7797491)
+	- Part of the PULP project.
+	- Essentially a software-managed IOMMU. The control path is running as a Linux kernel module. The datapath is a lightweight AXI transation translation.
 
 __Integrate OS/CPU/FPGA__
 - [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
@@ -224,18 +230,40 @@ __Database__
 - [Accelerating database systems using FPGAs: A survey, FPL'18](https://pdfs.semanticscholar.org/dee1/59031eb2de0a9324829f9027b14403164489.pdf)
 
 Machine Learning
-- TODO
+- Optimizing FPGA-based Accelerator Design for Deep Convolutional Neural Networks, FPGA'15
+- From High-Level Deep Neural Models to FPGAs, ISCA'16
+- Deep Learning on FPGAs: Past, Present, and Future, arXiv'16
+- Accelerating binarized neural networks: Comparison of FPGA, CPU, GPU, and ASIC, FPT'16
+- FINN: A Framework for Fast, Scalable Binarized Neural Network Inference, FPGA'17
+- In-Datacenter Performance Analysis of a Tensor Processing Unit, ISCA'17
+- Accelerating Binarized Convolutional Neural Networks with Software-Programmable FPGAs, FPGA'17
+- A Configurable Cloud-Scale DNN Processor for Real-Time AI, ISCA'18
+- A Network-Centric Hardware/Algorithm Co-Design to Accelerate Distributed Training of Deep Neural Networks, MICRO'18
+- DNNBuilder: an Automated Tool for Building High-Performance DNN Hardware Accelerators for FPGAs, ICCAD'18
+- FA3C : FPGA-Accelerated Deep Reinforcement Learning， ASPLOS’19
 
 Graph
-- TODO
+- A Scalable Processing-in-Memory Accelerator for Parallel Graph Processing, ISCA'15
+- Energy Efficient Architecture for Graph Analytics Accelerators, ISCA'16
+- Boosting the Performance of FPGA-based Graph Processor using Hybrid Memory Cube: A Case for Breadth First Search, FPGA'17
+- FPGA-Accelerated Transactional Execution of Graph Workloads, FPGA'17
+- An FPGA Framework for Edge-Centric Graph Processing, CF'18
 
 KVS
-- [KV-Direct: High-Performance In-Memory Key-Value Store with Programmable NIC](https://dl.acm.org/citation.cfm?id=3132756)
+- Achieving 10Gbps line-rate key-value stores with FPGAs, HotCloud'13
+- Thin Servers with Smart Pipes: Designing SoC Accelerators for Memcached, ISCA'13
+- An FPGA Memcached Appliance, FPGA'13
+- Scaling out to a Single-Node 80Gbps Memcached Server with 40Terabytes of Memory, HotStorage'15
+- [KV-Direct: High-Performance In-Memory Key-Value Store with Programmable NIC, SOSP'17](https://dl.acm.org/citation.cfm?id=3132756)
 	- This link is also useful for better understading [Morning Paper](https://blog.acolyer.org/2017/11/23/kv-direct-high-performance-in-memory-key-value-store-with-programmable-nic/)
+- Ultra-Low-Latency and Flexible In-Memory Key-Value Store System Design on CPU-FPGA, FPT'18
 
 Genome
 - [When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
 - hpca19
+
+Consensus
+- Consensus in a Box: Inexpensive Coordination in Hardware, NSDI'16
 
 Video Processing
 - TODO
@@ -247,8 +275,7 @@ Micro-services
 - TODO
 
 Languages
-- UCB GC
-- UCLA Java
+- From JVM to FPGA: Bridging Abstraction Hierarchy via Optimized Deep Pipelining, HotCloud'18
 
 ### FPGA Internal
 
