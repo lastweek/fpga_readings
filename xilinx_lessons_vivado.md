@@ -90,3 +90,19 @@ Reference on Timing:
 --  
 YS  
 Jan 28, 2019
+
+## Rename an auto-generated clock, the processing_order matters.
+
+At some point, we will want to rename those auto-generated clocks (mostly output of clock wizard).
+In order to do this, we will put `create_generated_clock` command on our xdc file.
+
+But I found the `processing_order` of the constraint file which the command is in, matters a lot.
+If the `processing_order` is `EARLY`, Vivado will complain it cannot find the name of the auto-generated clock.
+Setting the `processing_order` to `NORMAL` will work.
+
+I suspect `EARLY` is just way to early, even before the clock wizard (CMBs) are processed, which means
+before the auto-generated clocks are created.
+
+--  
+YS  
+Mar 15, 2019
