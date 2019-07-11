@@ -6,6 +6,9 @@
 |_|   |_|    \____/_/   \_\
 ```
 
+I will add more resources starting from Sep 2019.  
+    - Yizhou Shan (Jul 2019)  
+
 # Cook FPGA
 
 This repository is intended for folks who are new and want to learn something about FPGA.
