@@ -170,11 +170,22 @@ __Integrate OS/CPU/FPGA__
 	- They implemented their own MMU (using pre-established pgtables) to let FPGA logic to access system memory. [Ref](https://ieeexplore.ieee.org/document/6044806).
 	- Read the "Operating Systems for Reconfigurable Computing" sidebar, nice summary.
 
-### Applications
+### Language, Runtime, and Application
 
-What are the typical applications that can be offloaded into FPGA?
-What has already been done before? This section lists many interesting
-applications and systems deployed on FPGA.
+__Languages and Platforms__
+- [Design Patterns for Code Reuse in HLS Packet Processing Pipelines, FCCM'19]
+    - A very good HLS library. Haggai rocks as always. Read and learn something.
+- [Just-in-Time Compilation for Verilog, ASPLOS'19](https://research.vmware.com/publications/just-in-time-compilation-for-verilog-a-new-technique-for-improving-the-fpga-programming-experience)
+    - You need this dope.
+- [Templatised Soft Floating-Point for High-Level Synthesis, FCCM'19](https://github.com/template-hls/template-hls-floa)
+    - Of course FP is evil. But you need it for lift. Yummy.
+- ST-Accel: A High-Level Programming Platform for Streaming Applications on FPGA, FCCM'18
+    - Yum.
+- Chisel: Constructing Hardware in a Scala Embedded Language, DAC'12
+    - The good.
+- HeteroCL: A Multi-Paradigm Programming Infrastructure for Software-Defined Reconfigurable Computing, FPGA'19
+- Rosetta: A Realistic High-Level Synthesis Benchmark Suite for Software Programmable FPGAs, FPGA'18
+- From JVM to FPGA: Bridging Abstraction Hierarchy via Optimized Deep Pipelining, HotCloud'18
 
 __Integrate with Frameworks__
 - [Map-reduce as a Programming Model for Custom Computing Machines, FCCM'08](https://ieeexplore.ieee.org/document/4724898)
@@ -288,9 +299,6 @@ Blockchain
 
 Micro-services
 - TODO
-
-Languages
-- From JVM to FPGA: Bridging Abstraction Hierarchy via Optimized Deep Pipelining, HotCloud'18
 
 ### FPGA Internal
 
