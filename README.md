@@ -6,9 +6,6 @@
 |_|   |_|    \____/_/   \_\
 ```
 
-I will add more resources starting from Sep 2019.  
-    - Yizhou Shan (Jul 2019)  
-
 # Cook FPGA
 
 This repository is intended for folks who are new and want to learn something about FPGA.
@@ -173,13 +170,13 @@ Papers in this section could give you some hint.
 ### Language, Runtime, and Application
 
 #### __Languages and Platforms__
-- [Design Patterns for Code Reuse in HLS Packet Processing Pipelines, FCCM'19]
+- [Design Patterns for Code Reuse in HLS Packet Processing Pipelines, FCCM'19](https://zistvan.github.io/doc/ntl-fccm19.pdf)
     - A very good HLS library. Haggai rocks as always. Read and learn something.
 - [Just-in-Time Compilation for Verilog, ASPLOS'19](https://research.vmware.com/publications/just-in-time-compilation-for-verilog-a-new-technique-for-improving-the-fpga-programming-experience)
     - You need this dope.
 - [Templatised Soft Floating-Point for High-Level Synthesis, FCCM'19](https://github.com/template-hls/template-hls-floa)
     - Of course FP is evil. But you need it for lift. Yummy.
-- ST-Accel: A High-Level Programming Platform for Streaming Applications on FPGA, FCCM'18
+- [ST-Accel: A High-Level Programming Platform for Streaming Applications on FPGA, FCCM'18](https://vast.cs.ucla.edu/sites/default/files/publications/st-accel-high.pdf)
     - Yum.
 - Chisel: Constructing Hardware in a Scala Embedded Language, DAC'12
     - The good.
