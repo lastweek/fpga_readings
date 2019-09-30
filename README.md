@@ -228,11 +228,22 @@ __Programmable Network__
 - [MS: ClickNP: Highly Flexible and High Performance Network Processing with Reconfigurable Hardware, SIGCOMM'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/main-4.pdf)
 - [MS: Multi-Path Transport for RDMA in Datacenters, NSDI'18](https://www.usenix.org/conference/nsdi18/presentation/lu)
 - [MS: Azure Accelerated Networking: SmartNICs in the Public Cloud, NSDI'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
+- [Mellanox. NICA: An Infrastructure for Inline Acceleration of Network Applications, ATC'19](https://www.usenix.org/conference/atc19/presentation/eran)
+- [The Case For In-Network Computing On Demand, EuroSys'19](https://dl.acm.org/citation.cfm?id=3303979)
+- [Fast, Scalable, and Programmable Packet Scheduler in Hardware, SIGCOMM'19](https://dl.acm.org/citation.cfm?id=3303979)
+- [HPCC: high precision congestion control, SIGCOMM'19](https://dl.acm.org/citation.cfm?id=3342085)
+- [Offloading Distributed Applications onto SmartNICs using iPipe, SIGCOMM'19](https://homes.cs.washington.edu/~arvind/papers/ipipe.pdf)
+    - Not necessary FPGA, but SmartNICs. The actor programming model seems a good fit. There is another paper from ATC'19 that optimizes [distributed actor runtime](https://www.usenix.org/system/files/atc19-meiklejohn.pdf).
+
 
 __Database__
 - [Accelerating database systems using FPGAs: A survey, FPL'18](https://pdfs.semanticscholar.org/dee1/59031eb2de0a9324829f9027b14403164489.pdf)
 
-Machine Learning
+__Storage__
+- [Cognitive SSD: A Deep Learning Engine for In-Storage Data Retrieval, ATC'19](https://www.usenix.org/conference/atc19/presentation/liang)
+- [INSIDER: Designing In-Storage Computing System for Emerging High-Performance Drive, ATC'19](https://www.usenix.org/conference/atc19/presentation/ruan)
+
+__Machine Learning__
 - Optimizing FPGA-based Accelerator Design for Deep Convolutional Neural Networks, FPGA'15
 - From High-Level Deep Neural Models to FPGAs, ISCA'16
 - Deep Learning on FPGAs: Past, Present, and Future, arXiv'16
@@ -244,15 +255,16 @@ Machine Learning
 - A Network-Centric Hardware/Algorithm Co-Design to Accelerate Distributed Training of Deep Neural Networks, MICRO'18
 - DNNBuilder: an Automated Tool for Building High-Performance DNN Hardware Accelerators for FPGAs, ICCAD'18
 - FA3C : FPGA-Accelerated Deep Reinforcement Learning， ASPLOS’19
+- Cognitive SSD: A Deep Learning Engine for In-Storage Data Retrieval, ATC'19
 
-Graph
+__Graph__
 - A Scalable Processing-in-Memory Accelerator for Parallel Graph Processing, ISCA'15
 - Energy Efficient Architecture for Graph Analytics Accelerators, ISCA'16
 - Boosting the Performance of FPGA-based Graph Processor using Hybrid Memory Cube: A Case for Breadth First Search, FPGA'17
 - FPGA-Accelerated Transactional Execution of Graph Workloads, FPGA'17
 - An FPGA Framework for Edge-Centric Graph Processing, CF'18
 
-KVS
+__KVS__
 - Achieving 10Gbps line-rate key-value stores with FPGAs, HotCloud'13
 - Thin Servers with Smart Pipes: Designing SoC Accelerators for Memcached, ISCA'13
 - An FPGA Memcached Appliance, FPGA'13
@@ -263,7 +275,7 @@ KVS
 
 Genome
 - [When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
-- hpca19
+- FPGA Accelerated INDEL Realignment in the Cloud, HPCA'19
 
 Consensus
 - Consensus in a Box: Inexpensive Coordination in Hardware, NSDI'16
@@ -292,8 +304,10 @@ General
 - [Three Ages of FPGAs: A Retrospective on the First Thirty Years of FPGA Technology, IEEE'15](https://ieeexplore.ieee.org/document/7086413)
 
 Partial Reconfiguration
-- [DyRACT: A partial reconfiguration enabled accelerator and test platform, FPL'14](https://ieeexplore.ieee.org/document/6927507)
 - [FPGA Dynamic and Partial Reconfiguration: A Survey of Architectures, Methods, and Applications, CSUR'18](https://dl.acm.org/citation.cfm?id=3193827)
+    - Must read.
+- [DyRACT: A partial reconfiguration enabled accelerator and test platform, FPL'14](https://ieeexplore.ieee.org/document/6927507)
+- A high speed open source controller for FPGA partial reconfiguration
 
 Logical Optimization and Technology Mapping
 - [FlowMap: An Optimal Technology Mapping Algorithm for Delay Optimization in Lookup-Table Based FPGA Designs, 1994](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.22.9473&rep=rep1&type=pdf)
