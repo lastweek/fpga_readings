@@ -97,17 +97,15 @@ Books
 
 ## Papers
 
+A list of academic papers.
+
 ### Virtualization
 
 How to apply Operating System concept to FPGA? How to virtualize on-board memory and on-chip logic?
 And, how is FPGA ultimately different from CPU in items of resource sharing?
-Papers in this section could give you some hint.
+Papers in this section could give us some hints.
 
-__General__
-- [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
-- [The LEAP Operating System for FPGAs](https://github.com/LEAP-FPGA/leap-documentation/wiki)
-
-__Memory Hierarchy__
+#### __Memory Hierarchy__
 - (Papers deal with BRAM, registers, on-board DRAM, and system DRAM)
 - [LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11](https://people.csail.mit.edu/emer/papers/2011.02.isfpga.leap_scratchpads.pdf)
 	- Main design hierarchy: Use BRAM as L1 cache, use on-board DRAM as L2 cache, and host memory as the backing store. Everthing is abstracted away through their interface (similar to load/store). Programming is pretty much the same as if you are writing for CPU.
@@ -116,19 +114,22 @@ __Memory Hierarchy__
 	- Follow up work on LEAP Scratchpads, extends the work to have cache coherence between multiple FPGAs.
 	- Coherent Scatchpads with MOSI protocol.
 - [CoRAM: An In-Fabric Memory Architecture for FPGA-Based Computing](https://users.ece.cmu.edu/~jhoe/distribution/2011/chung.pdf)
-	- CoRAM provides an interface for managing the on- and off-chip memory resource of an FPGA.
-	- Cache, TLB, NoC, it has almost everything. The thesis is very comprehensive and informative.
+	- CoRAM provides an interface for managing the on- and off-chip memory resource of an FPGA. It use "control threads" enforce low-level control on data movement.
+	- Seriously, the CoRAM is just like Processor L1-L3 caches.
+- [CoRAM Prototype and evaluation of the CoRAM memory architecture for FPGA-based computing, FPGA'12]
+	- Prototype on FPGA.
 - [Sharing, Protection, and Compatibility for Reconfigurable Fabric with AMORPHOS, OSDI'18](https://www.usenix.org/conference/osdi18/presentation/khawaja)
 	- Hull: provides memory protection for on-board DRAM using __segment-based__ address translation.
 - [Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
 
-__Dynamic Memory Allocation__
+#### __Dynamic Memory Allocation__
+`malloc()` and `free()` for FPGA on-board DRAM.
+
 - [A High-Performance Memory Allocator for Object-Oriented Systems, IEEE'96](https://ieeexplore.ieee.org/document/485574/)
 - [SysAlloc: A Hardware Manager for Dynamic Memory Allocation in Heterogeneous Systems, FPL'15](https://ieeexplore.ieee.org/document/7293959)
-	- `malloc()` and `free()` for FPGA on-board DRAM.
 - [Hi-DMM: High-Performance Dynamic Memory Management in High-Level Synthesis, IEEE'18](https://github.com/zslwyuan/Hi-DMM)
 
-__Integrate with Virtual Memory__
+#### Integrate with Host Virtual Memory
 - (Papers deal with OS Virtual Memory System. Note that, all these papers, they introduce some form of MMU into FPGA to let FPGA work with host virtual memory systems. This added MMU is similar to CPU's MMU in the sense that they both do address translation. But, do note that the virtual memory system still runs in Linux, these include page fault handling, swapping, TLB shootdown stuff. What could really stands out, is to implement virtual memory system in FPGA. :-/ )
 - [Virtual Memory Window for Application-Specific Reconfigurable Coprocessors, DAC'04](https://ieeexplore.ieee.org/document/1664911)
 	- Early work that adds a new MMU to FPGA to let FPGA logic access `on-chip DRAM`. Note, it's not the system main memory. Thus the translation pgtable is different.
@@ -147,7 +148,16 @@ __Integrate with Virtual Memory__
 	- This paper also implemented a hardware MMU, but the virtual memory system still run on Linux.
 	- Also listed in `Cloud Infrastructure` part.
 
-__Integrate OS/CPU/FPGA__
+#### Scheduling Related
+
+- [hthreads: a hardware/software co-designed multithreaded RTOS kernel, 2005](https://ieeexplore.ieee.org/document/1612697)
+- [hthreads: Enabling a Uniform Programming Model Across the Software/Hardware Boundary, FCCM'16]
+- [ReconOS Cooperative multithreading in dynamically reconfigurable systems, FPL'09]
+    - Let FPGA apps use `yield()`.
+    - A lot issues, but, sure.
+ - AmophOS, OSDI'18
+
+#### Integrate with Host OS
 - [A Virtual Hardware Operating System for the Xilinx XC6200, FPL'96](https://link.springer.com/chapter/10.1007/3-540-61730-2_35)
 - [Operating systems for reconfigurable embedded platforms: online scheduling of real-time tasks, IEEE'04](https://ieeexplore.ieee.org/document/1336761)
 - [hthreads: a hardware/software co-designed multithreaded RTOS kernel, 2005](https://ieeexplore.ieee.org/document/1612697)
@@ -158,6 +168,21 @@ __Integrate OS/CPU/FPGA__
 	- Invoke kernel from FPGA. They built a shell in FPGA and delegation threads in CPU to achieve this.
 	- They implemented their own MMU (using pre-established pgtables) to let FPGA logic to access system memory. [Ref](https://ieeexplore.ieee.org/document/6044806).
 	- Read the "Operating Systems for Reconfigurable Computing" sidebar, nice summary.
+- LEAP
+	- LEAP Soft connections: Addressing the hardware-design modularity problem, DAC'09
+		- Channel concept. Good.
+	- LEAP Scratchpads: Automatic Memory and Cache Management for Reconfigurable Logic, FPGA'11
+		- BRAM/on-board DRAM/host DRAM layering. Caching.
+	- LEAP Shared Memories: Automating the Construction of FPGA Coherent Memories
+		- Add cache-coherence on top of previous work.
+		- Also check out my note on [Cache Coherence](http://lastweek.io/notes/cache_coherence/).
+	- LEAP FPGA Operating System, FPL'14.
+
+#### Summary on current FPGA Virtualization Status
+
+Prior art mainly focus on: 1) How to virtualize on-chip BRAM (e.g., CoRAM, LEAP Scratchpad),
+2) How to work with host, specifically, how to use the host DRAM, how to use host virtual memory.
+3) How to schedule bitstreams inside a FPGA chip. 4) How to provide certain services to make FPGA programming easier (mostly work with host OS).
 
 ### Applications
 
