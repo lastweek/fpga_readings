@@ -1,4 +1,7 @@
+# Change the absolute path to your own one.
 vivado_hls=/opt/Xilinx/Vivado/2018.2/bin/vivado_hls
+
+# DO NOT CHANGE THIS. This is coded in .gitignore.
 project_path=generated_project
 
 all:

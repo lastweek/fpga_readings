@@ -6,7 +6,7 @@ add_files	top.cpp
 add_files -tb	top_test.cpp
 
 # Specify the top-level function for synthesis
-set_top		top_func
+set_top		dram_write
 
 ###########################
 # Solution settings

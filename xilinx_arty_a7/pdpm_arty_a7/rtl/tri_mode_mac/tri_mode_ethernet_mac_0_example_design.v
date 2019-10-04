@@ -132,24 +132,13 @@
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module tri_mode_ethernet_mac_0_example_design
    (
-      // asynchronous reset
+      /* async reset, now it's a button */
       input         glbl_rst,
 
-      // 100MHz clock input from board
       input clk_100MHZ,
       input clk_125MHZ,
       input clk_locked,
     
-      /*
-       * 125 MHz
-       * 100 MHz
-       * Generated Output clocks from MMCM
-       * We output these two to testbench.
-       * No needed for real hardware.
-       */
-      //output        gtx_clk_bufg_out,
-      //output        s_axi_aclk_out,
-
       output        phy_resetn,
 
       // MII Interface
@@ -230,12 +219,6 @@ module tri_mode_ethernet_mac_0_example_design
    //----------------------------------------------------------------------------
    // internal signals used in this top level wrapper.
    //----------------------------------------------------------------------------
-
-   wire			rx_fifo_clock;
-   wire			tx_fifo_clock;
-
-   wire			rx_fifo_resetn;
-   wire			tx_fifo_resetn;
 
    // example design clocks
    wire                 gtx_clk_bufg;
@@ -330,9 +313,8 @@ module tri_mode_ethernet_mac_0_example_design
 	assign dcm_locked	= clk_locked;
 
 	/* user side clocks for the axi fifos */
-	assign tx_fifo_clock = gtx_clk_bufg;
-	assign rx_fifo_clock = gtx_clk_bufg;
-   
+	assign tx_fifo_clock_ref = gtx_clk_bufg;
+	assign rx_fifo_clock_ref = gtx_clk_bufg; 
 
   // want to infer an IOBUF on the mdio port
   assign mdio = mdio_t ? 1'bz : mdio_o;
@@ -389,12 +371,11 @@ module tri_mode_ethernet_mac_0_example_design
       .chk_resetn       (chk_resetn)
    );
 
-
    // generate the user side resets for the axi fifos
-   
    assign tx_fifo_resetn = gtx_resetn;
    assign rx_fifo_resetn = gtx_resetn;
-   
+   assign tx_fifo_resetn_ref = gtx_resetn;
+   assign rx_fifo_resetn_ref = gtx_resetn;
 
   //----------------------------------------------------------------------------
   // Serialize the stats vectors
@@ -559,12 +540,21 @@ module tri_mode_ethernet_mac_0_example_design
 
       // Receiver (AXI-S) Interface
       //----------------------------------------
-      .rx_fifo_clock                (rx_fifo_clock),
-      .rx_fifo_resetn               (rx_fifo_resetn),
+      .rx_fifo_clock                (rx_fifo_clock_ref),
+      .rx_fifo_resetn               (rx_fifo_resetn_ref),
       .rx_axis_fifo_tdata           (rx_axis_fifo_tdata),
       .rx_axis_fifo_tvalid          (rx_axis_fifo_tvalid),
       .rx_axis_fifo_tready          (rx_axis_fifo_tready),
       .rx_axis_fifo_tlast           (rx_axis_fifo_tlast),
+       
+      // Transmitter (AXI-S) Interface
+      //-------------------------------------------
+      .tx_fifo_clock                (tx_fifo_clock_ref),
+      .tx_fifo_resetn               (tx_fifo_resetn_ref),
+      .tx_axis_fifo_tdata           (tx_axis_fifo_tdata),
+      .tx_axis_fifo_tvalid          (tx_axis_fifo_tvalid),
+      .tx_axis_fifo_tready          (tx_axis_fifo_tready),
+      .tx_axis_fifo_tlast           (tx_axis_fifo_tlast),
        
       // Transmitter Statistics Interface
       //------------------------------------------
@@ -574,15 +564,6 @@ module tri_mode_ethernet_mac_0_example_design
       .tx_statistics_vector         (tx_statistics_vector),
       .tx_statistics_valid          (tx_statistics_valid),
 
-      // Transmitter (AXI-S) Interface
-      //-------------------------------------------
-      .tx_fifo_clock                (tx_fifo_clock),
-      .tx_fifo_resetn               (tx_fifo_resetn),
-      .tx_axis_fifo_tdata           (tx_axis_fifo_tdata),
-      .tx_axis_fifo_tvalid          (tx_axis_fifo_tvalid),
-      .tx_axis_fifo_tready          (tx_axis_fifo_tready),
-      .tx_axis_fifo_tlast           (tx_axis_fifo_tlast),
-       
 
       // MAC Control Interface
       //------------------------

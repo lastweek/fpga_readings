@@ -26,10 +26,12 @@ Main contents:
 	- Basics about FPGA
 	- Relevant Courses and Books
 	- Papers about FPGA internal
-- __`xilinx.md`__ and __`xilinx_constraints.md`__
-	- Xilinx terms explained
-	- Xilinx documents summary
-	- Useful constraints
+- __`Xilinx`__
+	- `xilinx.md`
+	- `xilinx_constraints.md`
+	- `xilinx_cheatsheet.md`
+	- `xilinx_lessons_vivado.md`
+	- `xilinx_lessons_hls.md`
 - __`submodules/`__: Github repositories about FPGA
 - __`hls/`__: Sample Xilinx HLS C++ code
 	- AXI Stream
@@ -43,7 +45,7 @@ Main contents:
 
 ## Get Started
 
-FPGA Intro
+### FPGA Intro
 - [URL: RapidWright FPGA Architecture Basics](http://www.rapidwright.io/docs/FPGA_Architecture.html)
 - [URL: RapidWright Xilinx Architecture Terminology](http://www.rapidwright.io/docs/Xilinx_Architecture.html)
 - [Book: Parallel Programming for FPGAs](https://arxiv.org/abs/1805.03648)
@@ -53,18 +55,19 @@ FPGA Intro
 - [URL: I/O Pads](http://www2.eng.cam.ac.uk/~dmh/4b7/resource/section14.htm)
   	- BGA Wiki: In a BGA the pins are replaced by __pads__ on the bottom of the package. If you check PGA package, you will know the difference between pin and pad, and immediately get why it is called pad. And you will also know what's the pad in the IO Block diagram.
 
-Digital Basics
+### Digital Basics
 - [PDF: The Digital World](http://web.mit.edu/6.111/volume2/www/f2018/handouts/TheDigitalWorld.pdf)
 - [Wiki: Differential signaling](https://en.wikipedia.org/wiki/Differential_signaling) and [Wiki: Single-ended signaling](https://en.wikipedia.org/wiki/Single-ended_signaling)
     - [Paper: Differential Signals The Differential Difference! Douglas Brooks](https://www.ultracad.com/articles/differentialsignals.pdf)
 - [Book: Digital design and computer architecture](https://www.amazon.com/Digital-Design-Computer-Architecture-Harris/dp/0123944244/ref=asc_df_0123944244/?tag=hyprod-20&linkCode=df0&hvadid=312060980065&hvpos=1o4&hvnetw=g&hvrand=12891765886685173497&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9016722&hvtargid=aud-467599743108:pla-459777269741&psc=1)
+- [Content-Addressable Memory Introduction](https://www.pagiamtzis.com/cam/camintro/)
 
-Verilog
+### Verilog
 - [Verilog Introduction](http://www.lsi.upc.edu/~jordicf/Teaching/secretsofhardware/VerilogIntroduction_Nyasulu.pdf)
 - [Verilog HDL Quick Reference Card](http://www.ece.uvic.ca/~fayez/courses/ceng465/vlogref.pdf)
 - [Xilinx UG901 Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_1/ug901-vivado-synthesis.pdf)
 
-High-Level Synthesis (HLS)
+### High-Level Synthesis (HLS)
 - [A Survey and Evaluation of FPGA High-Level Synthesis Tools](https://janders.eecg.utoronto.ca/pdfs/tcad_hls.pdf)
 - [Xilinx Introduction to FPGA Design with Vivado High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/ug998-vivado-intro-fpga-design-hls.pdf)
 - [Xilinx Vivado Design Suite User Guide High-Level Synthesis](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2018_2/ug902-vivado-high-level-synthesis.pdf)
@@ -75,7 +78,8 @@ High-Level Synthesis (HLS)
 - [CMU ECE 18-643](http://users.ece.cmu.edu/~jhoe/doku/doku.php?id=18-643_course_schedule_fall_2017)
 - [Cornell ECE5775 from Prof. Zhiru Zhang](http://www.csl.cornell.edu/courses/ece5775/)
 
-Courses
+### Courses
+- [Online: Real Digital](https://www.realdigital.org/)
 - [CMU ECE 18-643](http://users.ece.cmu.edu/~jhoe/doku/doku.php?id=18-643_course_schedule_fall_2017)
     - I like its slides, very informative. Slides about PR, Verilog, HLS are good.
     - Also read its references, all quite good papers.
@@ -87,7 +91,7 @@ Courses
 - [MIT 6.375 Complex Digital Systems](http://csg.csail.mit.edu/6.375/6_375_2016_www/index.html)
 - [UCB EECS 151/251A](http://inst.eecs.berkeley.edu/~eecs151/sp18/)
 
-Books
+### Books
 - [Parallel Programming for FPGAs](https://arxiv.org/abs/1805.03648)
 - [The Zynq book](http://www.zynqbook.com/)
     - 15.5.3 Pipelining
@@ -147,6 +151,10 @@ Papers in this section could give us some hints.
 - [S4 Virtualized Execution Runtime for FPGA Accelerators in the Cloud, IEEE Access'17](https://ieeexplore.ieee.org/abstract/document/7840018)
 	- This paper also implemented a hardware MMU, but the virtual memory system still run on Linux.
 	- Also listed in `Cloud Infrastructure` part.
+- [Lightweight Virtual Memory Support for Many-Core Accelerators in Heterogeneous Embedded SoCs, 2015](https://ieeexplore.ieee.org/document/7331367)
+- [Lightweight Virtual Memory Support for Zero-Copy Sharing of Pointer-Rich Data Structures in Heterogeneous Embedded SoCs, IEEE'17](https://ieeexplore.ieee.org/document/7797491)
+	- Part of the PULP project.
+	- Essentially a software-managed IOMMU. The control path is running as a Linux kernel module. The datapath is a lightweight AXI transation translation.
 
 #### Scheduling Related
 
@@ -184,13 +192,24 @@ Prior art mainly focus on: 1) How to virtualize on-chip BRAM (e.g., CoRAM, LEAP 
 2) How to work with host, specifically, how to use the host DRAM, how to use host virtual memory.
 3) How to schedule bitstreams inside a FPGA chip. 4) How to provide certain services to make FPGA programming easier (mostly work with host OS).
 
-### Applications
+### Language, Runtime, and Application
 
-What are the typical applications that can be offloaded into FPGA?
-What has already been done before? This section lists many interesting
-applications and systems deployed on FPGA.
+#### __Languages and Platforms__
+- [Design Patterns for Code Reuse in HLS Packet Processing Pipelines, FCCM'19](https://zistvan.github.io/doc/ntl-fccm19.pdf)
+    - A very good HLS library. Haggai rocks as always. Read and learn something.
+- [Just-in-Time Compilation for Verilog, ASPLOS'19](https://research.vmware.com/publications/just-in-time-compilation-for-verilog-a-new-technique-for-improving-the-fpga-programming-experience)
+    - You need this dope.
+- [Templatised Soft Floating-Point for High-Level Synthesis, FCCM'19](https://github.com/template-hls/template-hls-floa)
+    - Of course FP is evil. But you need it for lift. Yummy.
+- [ST-Accel: A High-Level Programming Platform for Streaming Applications on FPGA, FCCM'18](https://vast.cs.ucla.edu/sites/default/files/publications/st-accel-high.pdf)
+    - Yum.
+- Chisel: Constructing Hardware in a Scala Embedded Language, DAC'12
+    - The good.
+- HeteroCL: A Multi-Paradigm Programming Infrastructure for Software-Defined Reconfigurable Computing, FPGA'19
+- Rosetta: A Realistic High-Level Synthesis Benchmark Suite for Software Programmable FPGAs, FPGA'18
+- From JVM to FPGA: Bridging Abstraction Hierarchy via Optimized Deep Pipelining, HotCloud'18
 
-__Integrate with Frameworks__
+#### __Integrate with Frameworks__
 - [Map-reduce as a Programming Model for Custom Computing Machines, FCCM'08](https://ieeexplore.ieee.org/document/4724898)
 	- This paper proposes a model to translate MapReduce code written in C to code that could run on FPGA and GPU. Many details are omitted, and they don't really have the compiler.
 	- Single-host framework, everything is in FPGA and GPU.
@@ -211,7 +230,7 @@ __Integrate with Frameworks__
 - [UCLA: Heterogeneous Datacenters: Options and Opportunities, DAC'16](https://ieeexplore.ieee.org/document/7544260)
 	- Follow up work of Blaze. Nice comparison of big and wimpy cores.
 
-__Cloud Infrastructure__
+#### __Cloud Infrastructure__
 - [Huawei: FPGA as a Service in the Cloud](https://indico.cern.ch/event/669648/contributions/2838181/attachments/1581893/2500031/Huawei_Cloud_FPGA_as_a_Service_CERN_openlab.pdf)
 - [UCLA: Customizable Computing: From Single Chip to Datacenters, IEEE'18](https://vast.cs.ucla.edu/sites/default/files/publications/08566145.pdf)
 - [UCLA: Accelerator-Rich Architectures: Opportunities and Progresses, DAC'14](https://dl.acm.org/citation.cfm?id=2596667)
@@ -238,44 +257,74 @@ __Cloud Infrastructure__
 	- Catapult is just sweet, isn't it?
 - [ASIC Clouds: Specializing the Datacenter, ISCA'16](https://cseweb.ucsd.edu/~mbtaylor/papers/ASIC_Cloud_ISCA_2016_Proceedings.pdf)
 
-__Programmable Network__
+#### __Programmable Network__
 - [MS: ClickNP: Highly Flexible and High Performance Network Processing with Reconfigurable Hardware, SIGCOMM'16](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/main-4.pdf)
 - [MS: Multi-Path Transport for RDMA in Datacenters, NSDI'18](https://www.usenix.org/conference/nsdi18/presentation/lu)
 - [MS: Azure Accelerated Networking: SmartNICs in the Public Cloud, NSDI'18](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/Azure_SmartNIC_NSDI_2018.pdf)
+- [Mellanox. NICA: An Infrastructure for Inline Acceleration of Network Applications, ATC'19](https://www.usenix.org/conference/atc19/presentation/eran)
+- [The Case For In-Network Computing On Demand, EuroSys'19](https://dl.acm.org/citation.cfm?id=3303979)
+- [Fast, Scalable, and Programmable Packet Scheduler in Hardware, SIGCOMM'19](https://dl.acm.org/citation.cfm?id=3303979)
+- [HPCC: high precision congestion control, SIGCOMM'19](https://dl.acm.org/citation.cfm?id=3342085)
+- [Offloading Distributed Applications onto SmartNICs using iPipe, SIGCOMM'19](https://homes.cs.washington.edu/~arvind/papers/ipipe.pdf)
+    - Not necessary FPGA, but SmartNICs. The actor programming model seems a good fit. There is another paper from ATC'19 that optimizes [distributed actor runtime](https://www.usenix.org/system/files/atc19-meiklejohn.pdf).
 
-__Database__
+
+#### __Database__
 - [Accelerating database systems using FPGAs: A survey, FPL'18](https://pdfs.semanticscholar.org/dee1/59031eb2de0a9324829f9027b14403164489.pdf)
 
-Machine Learning
-- TODO
+#### __Storage__
+- [Cognitive SSD: A Deep Learning Engine for In-Storage Data Retrieval, ATC'19](https://www.usenix.org/conference/atc19/presentation/liang)
+- [INSIDER: Designing In-Storage Computing System for Emerging High-Performance Drive, ATC'19](https://www.usenix.org/conference/atc19/presentation/ruan)
 
-Graph
-- TODO
+#### __Machine Learning__
+- Optimizing FPGA-based Accelerator Design for Deep Convolutional Neural Networks, FPGA'15
+- From High-Level Deep Neural Models to FPGAs, ISCA'16
+- Deep Learning on FPGAs: Past, Present, and Future, arXiv'16
+- Accelerating binarized neural networks: Comparison of FPGA, CPU, GPU, and ASIC, FPT'16
+- FINN: A Framework for Fast, Scalable Binarized Neural Network Inference, FPGA'17
+- In-Datacenter Performance Analysis of a Tensor Processing Unit, ISCA'17
+- Accelerating Binarized Convolutional Neural Networks with Software-Programmable FPGAs, FPGA'17
+- A Configurable Cloud-Scale DNN Processor for Real-Time AI, ISCA'18
+- A Network-Centric Hardware/Algorithm Co-Design to Accelerate Distributed Training of Deep Neural Networks, MICRO'18
+- DNNBuilder: an Automated Tool for Building High-Performance DNN Hardware Accelerators for FPGAs, ICCAD'18
+- FA3C : FPGA-Accelerated Deep Reinforcement Learning， ASPLOS’19
+- Cognitive SSD: A Deep Learning Engine for In-Storage Data Retrieval, ATC'19
 
-KVS
-- [KV-Direct: High-Performance In-Memory Key-Value Store with Programmable NIC](https://dl.acm.org/citation.cfm?id=3132756)
+#### __Graph__
+- A Scalable Processing-in-Memory Accelerator for Parallel Graph Processing, ISCA'15
+- Energy Efficient Architecture for Graph Analytics Accelerators, ISCA'16
+- Boosting the Performance of FPGA-based Graph Processor using Hybrid Memory Cube: A Case for Breadth First Search, FPGA'17
+- FPGA-Accelerated Transactional Execution of Graph Workloads, FPGA'17
+- An FPGA Framework for Edge-Centric Graph Processing, CF'18
+
+#### __KVS__
+- Achieving 10Gbps line-rate key-value stores with FPGAs, HotCloud'13
+- Thin Servers with Smart Pipes: Designing SoC Accelerators for Memcached, ISCA'13
+- An FPGA Memcached Appliance, FPGA'13
+- Scaling out to a Single-Node 80Gbps Memcached Server with 40Terabytes of Memory, HotStorage'15
+- [KV-Direct: High-Performance In-Memory Key-Value Store with Programmable NIC, SOSP'17](https://dl.acm.org/citation.cfm?id=3132756)
 	- This link is also useful for better understading [Morning Paper](https://blog.acolyer.org/2017/11/23/kv-direct-high-performance-in-memory-key-value-store-with-programmable-nic/)
+- Ultra-Low-Latency and Flexible In-Memory Key-Value Store System Design on CPU-FPGA, FPT'18
 
-Genome
+#### Genome
 - [When Apache Spark Meets FPGAs: A Case Study for Next-Generation DNA Sequencing Acceleration, HotCloud'16](https://vast.cs.ucla.edu/sites/default/files/publications/usenix-hotcloud-2016.pdf)
-- hpca19
+- FPGA Accelerated INDEL Realignment in the Cloud, HPCA'19
 
-Video Processing
+#### Consensus
+- Consensus in a Box: Inexpensive Coordination in Hardware, NSDI'16
+
+#### Video Processing
 - TODO
 
-Blockchain
+#### Blockchain
 - TODO
 
-Micro-services
+#### Micro-services
 - TODO
-
-Languages
-- UCB GC
-- UCLA Java
 
 ### FPGA Internal
 
-General
+#### General
 - [FPGA and CPLD architectures: a tutorial, 1996](http://www.eecg.toronto.edu/~jayar/pubs/brown/DTSurvey.pdf)
 - [Reconfigurable computing: a survey of systems and software, 2002](https://people.ece.uw.edu/hauck/publications/ConfigCompute.pdf)
 - [Reconfigurable computing: architectures and design methods](http://www.doc.ic.ac.uk/~wl/papers/05/iee05tjt.pdf)
@@ -284,20 +333,22 @@ General
 - [RAMP: Research Accelerator For Multiple Processors, 2007](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.437.4076&rep=rep1&type=pdf)
 - [Three Ages of FPGAs: A Retrospective on the First Thirty Years of FPGA Technology, IEEE'15](https://ieeexplore.ieee.org/document/7086413)
 
-Partial Reconfiguration
-- [DyRACT: A partial reconfiguration enabled accelerator and test platform, FPL'14](https://ieeexplore.ieee.org/document/6927507)
+#### Partial Reconfiguration
 - [FPGA Dynamic and Partial Reconfiguration: A Survey of Architectures, Methods, and Applications, CSUR'18](https://dl.acm.org/citation.cfm?id=3193827)
+    - Must read.
+- [DyRACT: A partial reconfiguration enabled accelerator and test platform, FPL'14](https://ieeexplore.ieee.org/document/6927507)
+- A high speed open source controller for FPGA partial reconfiguration
 
-Logical Optimization and Technology Mapping
+#### Logical Optimization and Technology Mapping
 - [FlowMap: An Optimal Technology Mapping Algorithm for Delay Optimization in Lookup-Table Based FPGA Designs, 1994](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.22.9473&rep=rep1&type=pdf)
 - [Combinational Logic Synthesis for LUT Based Field Programmable Gate Arrays, 1996](http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=A93A485E9AAE008EE16450279ED1CE63?doi=10.1.1.5.3571&rep=rep1&type=pdf)
 - [DAOmap: A Depth-optimal Area Optimization Mapping Algorithm for FPGA Designs, 2004](https://cadlab.cs.ucla.edu/~cong/papers/CRU79_chen.pdf)
 
-Place and Route
+#### Place and Route
 - [VPR: A New Packing, Placement and Routing Tool for FPGA Research, 1997](http://www.eecg.toronto.edu/~vaughn/papers/fpl97.pdf)
 - [VTR 7.0: Next Generation Architecture and CAD System for FPGAs, 2014](http://www.eecg.toronto.edu/~jayar/pubs/luu/luutrets14.pdf)
 
-RTL2FPGA
+#### RTL2FPGA
 - [A Case for FAME: FPGA Architecture Model Execution, 2010](https://people.eecs.berkeley.edu/~krste/papers/fame-isca2010.pdf)
 - [Strober: Fast and Accurate Sample-Based Energy Simulation for Arbitrary RTL, 2016](https://people.eecs.berkeley.edu/~krste/papers/fame-isca2010.pdf)
 - [Evaluation of RISC-V RTL with FPGA-Accelerated Simulation, 2017](https://pdfs.semanticscholar.org/f4dd/f85e953f30a25250baf958c2a2619380bf9b.pdf)

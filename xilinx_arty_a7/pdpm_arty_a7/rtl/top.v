@@ -109,16 +109,16 @@ module pDPM_top(
 	wire		net_125MHZ;
 	wire		net_25MHZ;
 
-	/* Do note that glbl_rst is not synced to clk */
 	design_1	clock_generator
 	(
 		.sys_clock		(sys_clk_100M),
-		.reset			(glbl_rst),
-		.locked_0		(clock_locked),
 		.clk_out1_0		(net_125MHZ),
 		.clk_out2_0		(net_25MHZ),
 		.clk_out3_0		(mig_166MHZ),
-		.clk_out4_0		(mig_ref_200MHZ)
+		.clk_out4_0		(mig_ref_200MHZ),
+
+		/* High when clock output is valid */
+		.locked_0		(clock_locked)
 	);
 
 	assign		mig_sys_rst_n = clock_locked;

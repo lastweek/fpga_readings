@@ -13,49 +13,6 @@
 # * Note that the runs in the created project will be configured the same way as the
 #   original project, however they will not be launched automatically. To regenerate the
 #   run results please launch the synthesis/implementation runs as needed.
-#
-#*****************************************************************************************
-# NOTE: In order to use this script for source control purposes, please make sure that the
-#       following files are added to the source control system:-
-#
-# 1. This project restoration tcl script (test.tcl) that was generated.
-#
-# 2. The following source(s) files that were local or imported into the original project.
-#    (Please see the '$orig_proj_dir' and '$origin_dir' variable setting below at the start of the script)
-#
-#    <none>
-#
-# 3. The following remote source files that were added to the original project:-
-#
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/ip/tri_mode_ethernet_mac_0/tri_mode_ethernet_mac_0.xci"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_lite_sm.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_bram_tdp.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_clk_wiz.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_example_design_clocks.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_example_design_resets.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_fifo_block.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_reset_sync.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_rx_client_fifo.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_support.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_sync_block.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_ten_100_1g_eth_fifo.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_tx_client_fifo.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_example_design.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_address_swap.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_mux.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_pat_check.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_pat_gen.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_axi_pipe.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_basic_pat_gen.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_example_design.xdc"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_user_phytiming.xdc"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/tb/pdpm_mem_tb.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/tri_mode_ethernet_mac_0_frame_typ.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/tri_mode_mac/demo_tb.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/tb/pdpm_top_tb.v"
-#    "/home/ys/Github/fpga-related/FPGA/xilinx_arty_a7/pdpm_arty_a7/rtl/top.v"
-#
-#*****************************************************************************************
 
 # Set the reference directory for source file relative paths (by default the value is script directory path)
 set origin_dir "."
@@ -178,7 +135,7 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
 
 # Set IP repository paths
 set obj [get_filesets sources_1]
-set_property "ip_repo_paths" "[file normalize "$origin_dir/../hls/generated_project/solution1/impl/ip"]" $obj
+set_property "ip_repo_paths" "[file normalize "$origin_dir/../hls"]" $obj
 
 # Rebuild user ip_repo's index before adding any source files
 update_ip_catalog -rebuild
@@ -264,10 +221,9 @@ if {[string equal [get_filesets -quiet sim_1] ""]} {
 # Set 'sim_1' fileset object
 set obj [get_filesets sim_1]
 set files [list \
- [file normalize "${origin_dir}/../tb/pdpm_mem_tb.v"] \
- [file normalize "${origin_dir}/../tb/demo_tb.v"] \
  [file normalize "${origin_dir}/../tb/pdpm_top_tb.v"] \
- [file normalize "${origin_dir}/../rtl/top.v"] \
+ [file normalize "${origin_dir}/../tb/pdpm_mem_tb.v"] \
+ [file normalize "${origin_dir}/../tb/pdpm_net_tb.v"] \
  [file normalize "${origin_dir}/../rtl/tri_mode_mac/tri_mode_ethernet_mac_0_frame_typ.v"] \
 ]
 add_files -norecurse -fileset $obj $files
@@ -279,7 +235,7 @@ set file_obj [get_files -of_objects [get_filesets sim_1] [list "*$file"]]
 set_property -name "used_in" -value "implementation simulation" -objects $file_obj
 set_property -name "used_in_synthesis" -value "0" -objects $file_obj
 
-set file "$origin_dir/../tb/demo_tb.v"
+set file "$origin_dir/../tb/pdpm_net_tb.v"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sim_1] [list "*$file"]]
 set_property -name "used_in" -value "implementation simulation" -objects $file_obj

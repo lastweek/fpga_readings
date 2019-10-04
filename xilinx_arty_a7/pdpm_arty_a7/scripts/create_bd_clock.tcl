@@ -205,10 +205,6 @@ proc create_root_design { parentCell } {
    CONFIG.FREQ_HZ {200000000} \
  ] $clk_out4_0
   set locked_0 [ create_bd_port -dir O locked_0 ]
-  set reset [ create_bd_port -dir I -type rst reset ]
-  set_property -dict [ list \
-   CONFIG.POLARITY {ACTIVE_LOW} \
- ] $reset
   set sys_clock [ create_bd_port -dir I -type clk sys_clock ]
   set_property -dict [ list \
    CONFIG.FREQ_HZ {100000000} \
@@ -243,6 +239,7 @@ proc create_root_design { parentCell } {
    CONFIG.RESET_PORT {resetn} \
    CONFIG.RESET_TYPE {ACTIVE_LOW} \
    CONFIG.USE_BOARD_FLOW {true} \
+   CONFIG.USE_RESET {false} \
  ] $clk_wiz_0
 
   # Create port connections
@@ -251,7 +248,6 @@ proc create_root_design { parentCell } {
   connect_bd_net -net clk_wiz_0_clk_out3 [get_bd_ports clk_out3_0] [get_bd_pins clk_wiz_0/clk_out3]
   connect_bd_net -net clk_wiz_0_clk_out4 [get_bd_ports clk_out4_0] [get_bd_pins clk_wiz_0/clk_out4]
   connect_bd_net -net clk_wiz_0_locked [get_bd_ports locked_0] [get_bd_pins clk_wiz_0/locked]
-  connect_bd_net -net reset_1 [get_bd_ports reset] [get_bd_pins clk_wiz_0/resetn]
   connect_bd_net -net sys_clock_1 [get_bd_ports sys_clock] [get_bd_pins clk_wiz_0/clk_in1]
 
   # Create address segments
