@@ -1,11 +1,5 @@
 # List of FPGA Papers
 
-??? note "Version History"
-	|Date|Description|
-	|:---|-----------|
-	|Oct 4, 2019| Add more papers extracted from AmophOS|
-	|Oct 3, 2019| Initial version from [Github](https://github.com/lastweek/FPGA)|
-
 A list of academic papers. Enjoy.
 
 Table of Contents
