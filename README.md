@@ -6,6 +6,29 @@
 |_|   |_|    \____/_/   \_\
 ```
 
+## Updates
+
+07/14/2021:
+
+Just a couple thoughts I want to share.
+
+This repo has not been updated for a while. Although I'm still collecting FPGA pages in my own Zotero, I haven't added them here.
+Also, I no longer use Xilinx HLS as my main development language.
+I started using Scala-based languages such as SpinalHDL and Chisel (mostly SpinalHDL). I think they are very expressive,
+practical, and fit the hardware model very well. And they have been used across many successful projects (e.g., Xiangshan, BOOM, etc).
+
+Xilinx HLS still has its place in Industy, at least for now. Google's latest Video Processing Unit (ASPLOS'21) is designed using HLS.
+They praise for HLS's C++ model, hence able to enjoy a lot language sanity checking. I guess they must have a set of good HLS
+practices to make it work.
+
+Also, if you are into network-related processing, go checkout the Corundum.io project. In fact, check out all the projects from Alex Forencich.
+Dude is a lengend in the open-source FPGA world, he is making such a big impact on the whole research community.
+
+FPGA has never been so hot for system researchers. People are using it to build various things, prototyping for ASIC etc.
+It aids networking, storage, machine learning. With those high-quality open-source RISC-V cores, network stack and so on, sky is the limit.
+
+Everyone is welcomed to contribute. You can add new papers, new code, new practice lessons, and so on.
+
 # Cook FPGA
 
 This repository is intended for folks who are new and want to learn something about FPGA.
